@@ -1,1 +1,2 @@
 hello
+It is interesting to use git

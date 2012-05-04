@@ -1,4 +1,4 @@
-#Fri May 04 07:35:24 GMT 2012
+#Fri May 04 20:15:07 CST 2012
 avrtarget/ClockFrequency=16000000
 avrtarget/ExtRAMSize=0
 avrtarget/ExtendedRAM=false
@@ -16,8 +16,9 @@ avrtarget/avrdude/NoSigCheck=false
 avrtarget/avrdude/NoVerify=false
 avrtarget/avrdude/NoWrite=false
 avrtarget/avrdude/OtherOptions=
-avrtarget/avrdude/ProgrammerID=programmerconfig.15
+avrtarget/avrdude/ProgrammerID=programmerconfig.49
 avrtarget/avrdude/UseCounter=false
 avrtarget/avrdude/WriteEEPROM=false
 avrtarget/avrdude/WriteFlash=true
+avrtarget/perConfig=false
 eclipse.preferences.version=1

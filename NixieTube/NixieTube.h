@@ -26,12 +26,12 @@
 class NixieTube
 {
 public:
-	NixieTube(byte section_count);
+	NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh, uint8_t pin_oe, byte section_count = 1);
 	virtual ~NixieTube();
 private:
 	byte *_buff;
 	byte _section_count;
-	uint8_t _pin_dt;	// DATA, #1
+	uint8_t _pin_dt;	// DIN, #1
 	uint8_t _pin_st;	// STCP, #2
 	uint8_t _pin_sh;	// SHCP, #3
 	uint8_t _pin_oe;	// OE,	 #4

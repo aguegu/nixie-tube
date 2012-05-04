@@ -20,10 +20,11 @@
 
 #include "NixieTube.h"
 
-NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh, uint8_t pin_oe, byte section_count)
+NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
+		uint8_t pin_oe, byte section_count)
 {
 	_section_count = section_count;
-	_buff = (byte *)malloc(sizeof(byte) * section_count * 2);
+	_buff = (byte *) malloc(sizeof(byte) * section_count * 2);
 
 	_pin_dt = pin_din;
 	_pin_st = pin_st;
@@ -34,6 +35,19 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh, uint8_t pi
 	pinMode(_pin_st, OUTPUT);
 	pinMode(_pin_sh, OUTPUT);
 	pinMode(_pin_oe, OUTPUT);
+
+	digitalWrite(_pin_oe, LOW);
+}
+
+void NixieTube::putByte(byte h, byte l)
+{
+
+	shiftOut(_pin_dt, _pin_sh, MSBFIRST, h);
+	shiftOut(_pin_dt, _pin_sh, MSBFIRST, l);
+
+	digitalWrite(_pin_st, LOW);
+	digitalWrite(_pin_st, HIGH);
+
 }
 
 NixieTube::~NixieTube()

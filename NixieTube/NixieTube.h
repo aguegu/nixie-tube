@@ -28,6 +28,7 @@ class NixieTube
 public:
 	NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh, uint8_t pin_oe, byte section_count = 1);
 	virtual ~NixieTube();
+	void putByte(byte h, byte l);
 private:
 	byte *_buff;
 	byte _section_count;

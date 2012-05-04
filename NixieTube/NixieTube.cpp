@@ -1,20 +1,24 @@
 /*
  * NixieTube.cpp
  *
- *  Created on: 2012-5-4
- *      Author: gmb-gwh
+ * Library for Nixie (Tube) Module for Arduino,
+ * developed by Yan Zeyuan @ http://nixieclock.org
+ *
+ * Created on: 2012-5-4
+ * Author: Weihong Guan (aGuegu) @ http://aguegu.net
+ *
  */
-
 #include "NixieTube.h"
 
-NixieTube::NixieTube()
+NixieTube::NixieTube(byte section_count)
 {
-	// TODO Auto-generated constructor stub
+	_section_count = section_count;
+	_buff = malloc(sizeof(byte) * section_count * 2);
 
 }
 
 NixieTube::~NixieTube()
 {
-	// TODO Auto-generated destructor stub
+	free(_buff);
 }
 

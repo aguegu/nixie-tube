@@ -3,40 +3,40 @@ nixie-tube.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000e  00800100  00000864  000008f8  2**0
+  0 .data         0000000e  00800100  00000a8a  00000b1e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000864  00000000  00000000  00000094  2**1
+  1 .text         00000a8a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000016  0080010e  0080010e  00000906  2**0
+  2 .bss          00000018  0080010e  0080010e  00000b2c  2**0
                   ALLOC
-  3 .debug_aranges 00000190  00000000  00000000  00000906  2**0
+  3 .debug_aranges 000001d0  00000000  00000000  00000b2c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_pubnames 00000318  00000000  00000000  00000a96  2**0
+  4 .debug_pubnames 000003eb  00000000  00000000  00000cfc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000012d2  00000000  00000000  00000dae  2**0
+  5 .debug_info   000016df  00000000  00000000  000010e7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000791  00000000  00000000  00002080  2**0
+  6 .debug_abbrev 00000842  00000000  00000000  000027c6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000fbd  00000000  00000000  00002811  2**0
+  7 .debug_line   000011c8  00000000  00000000  00003008  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000240  00000000  00000000  000037d0  2**2
+  8 .debug_frame  000002c0  00000000  00000000  000041d0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000050a  00000000  00000000  00003a10  2**0
+  9 .debug_str    0000069a  00000000  00000000  00004490  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000006bc  00000000  00000000  00003f1a  2**0
+ 10 .debug_loc    00000a77  00000000  00000000  00004b2a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000158  00000000  00000000  000045d6  2**0
+ 11 .debug_ranges 00000198  00000000  00000000  000055a1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
-	digitalWrite(_pin_st, LOW);
-	digitalWrite(_pin_st, HIGH);
 
+void NixieTube::clear(word value)
+{
+	for (byte i = 0; i < _section_count; i++)
+		_buff[i] = value;
 }
-
-NixieTube::~NixieTube()
    0:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__dtors_end>
 
 int __cxa_guard_acquire(__guard *g) {return !*(char *)(g);};
@@ -77,7 +77,7 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
   34:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
   38:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
   3c:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
-  40:	0c 94 87 02 	jmp	0x50e	; 0x50e <__vector_16>
+  40:	0c 94 36 03 	jmp	0x66c	; 0x66c <__vector_16>
   44:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
   48:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
   4c:	0c 94 8b 00 	jmp	0x116	; 0x116 <__bad_interrupt>
@@ -110,10 +110,10 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
   be:	00 00 00 00                                         ....
 
 000000c2 <__ctors_start>:
-  c2:	31 02       	muls	r19, r17
+  c2:	f2 02       	muls	r31, r18
 
 000000c4 <__ctors_end>:
-  c4:	2a 02       	muls	r18, r26
+  c4:	eb 02       	muls	r30, r27
 
 000000c6 <__dtors_end>:
   c6:	11 24       	eor	r1, r1
@@ -127,8 +127,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
   d2:	11 e0       	ldi	r17, 0x01	; 1
   d4:	a0 e0       	ldi	r26, 0x00	; 0
   d6:	b1 e0       	ldi	r27, 0x01	; 1
-  d8:	e4 e6       	ldi	r30, 0x64	; 100
-  da:	f8 e0       	ldi	r31, 0x08	; 8
+  d8:	ea e8       	ldi	r30, 0x8A	; 138
+  da:	fa e0       	ldi	r31, 0x0A	; 10
   dc:	02 c0       	rjmp	.+4      	; 0xe2 <.do_copy_data_start>
 
 000000de <.do_copy_data_loop>:
@@ -150,7 +150,7 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
   f0:	1d 92       	st	X+, r1
 
 000000f2 <.do_clear_bss_start>:
-  f2:	a4 32       	cpi	r26, 0x24	; 36
+  f2:	a6 32       	cpi	r26, 0x26	; 38
   f4:	b1 07       	cpc	r27, r17
   f6:	e1 f7       	brne	.-8      	; 0xf0 <.do_clear_bss_loop>
 
@@ -163,14 +163,14 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
 00000100 <.do_global_ctors_loop>:
  100:	22 97       	sbiw	r28, 0x02	; 2
  102:	fe 01       	movw	r30, r28
- 104:	0e 94 21 04 	call	0x842	; 0x842 <__tablejump__>
+ 104:	0e 94 34 05 	call	0xa68	; 0xa68 <__tablejump__>
 
 00000108 <.do_global_ctors_start>:
  108:	c2 3c       	cpi	r28, 0xC2	; 194
  10a:	d1 07       	cpc	r29, r17
  10c:	c9 f7       	brne	.-14     	; 0x100 <.do_global_ctors_loop>
- 10e:	0e 94 75 02 	call	0x4ea	; 0x4ea <main>
- 112:	0c 94 25 04 	jmp	0x84a	; 0x84a <__do_global_dtors>
+ 10e:	0e 94 24 03 	call	0x648	; 0x648 <main>
+ 112:	0c 94 38 05 	jmp	0xa70	; 0xa70 <__do_global_dtors>
 
 00000116 <__bad_interrupt>:
  116:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -184,8 +184,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  124:	10 f4       	brcc	.+4      	; 0x12a <malloc+0x10>
  126:	62 e0       	ldi	r22, 0x02	; 2
  128:	70 e0       	ldi	r23, 0x00	; 0
- 12a:	a0 91 22 01 	lds	r26, 0x0122
- 12e:	b0 91 23 01 	lds	r27, 0x0123
+ 12a:	a0 91 24 01 	lds	r26, 0x0124
+ 12e:	b0 91 25 01 	lds	r27, 0x0125
  132:	ed 01       	movw	r28, r26
  134:	e0 e0       	ldi	r30, 0x00	; 0
  136:	f0 e0       	ldi	r31, 0x00	; 0
@@ -204,8 +204,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  150:	93 83       	std	Z+3, r25	; 0x03
  152:	82 83       	std	Z+2, r24	; 0x02
  154:	04 c0       	rjmp	.+8      	; 0x15e <malloc+0x44>
- 156:	90 93 23 01 	sts	0x0123, r25
- 15a:	80 93 22 01 	sts	0x0122, r24
+ 156:	90 93 25 01 	sts	0x0125, r25
+ 15a:	80 93 24 01 	sts	0x0124, r24
  15e:	fe 01       	movw	r30, r28
  160:	34 c0       	rjmp	.+104    	; 0x1ca <malloc+0xb0>
  162:	68 17       	cp	r22, r24
@@ -255,8 +255,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  1ba:	93 83       	std	Z+3, r25	; 0x03
  1bc:	82 83       	std	Z+2, r24	; 0x02
  1be:	04 c0       	rjmp	.+8      	; 0x1c8 <malloc+0xae>
- 1c0:	90 93 23 01 	sts	0x0123, r25
- 1c4:	80 93 22 01 	sts	0x0122, r24
+ 1c0:	90 93 25 01 	sts	0x0125, r25
+ 1c4:	80 93 24 01 	sts	0x0124, r24
  1c8:	fd 01       	movw	r30, r26
  1ca:	32 96       	adiw	r30, 0x02	; 2
  1cc:	4c c0       	rjmp	.+152    	; 0x266 <malloc+0x14c>
@@ -279,14 +279,14 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  1ee:	d9 01       	movw	r26, r18
  1f0:	10 97       	sbiw	r26, 0x00	; 0
  1f2:	a1 f6       	brne	.-88     	; 0x19c <malloc+0x82>
- 1f4:	80 91 20 01 	lds	r24, 0x0120
- 1f8:	90 91 21 01 	lds	r25, 0x0121
+ 1f4:	80 91 22 01 	lds	r24, 0x0122
+ 1f8:	90 91 23 01 	lds	r25, 0x0123
  1fc:	89 2b       	or	r24, r25
  1fe:	41 f4       	brne	.+16     	; 0x210 <malloc+0xf6>
  200:	80 91 02 01 	lds	r24, 0x0102
  204:	90 91 03 01 	lds	r25, 0x0103
- 208:	90 93 21 01 	sts	0x0121, r25
- 20c:	80 93 20 01 	sts	0x0120, r24
+ 208:	90 93 23 01 	sts	0x0123, r25
+ 20c:	80 93 22 01 	sts	0x0122, r24
  210:	40 91 04 01 	lds	r20, 0x0104
  214:	50 91 05 01 	lds	r21, 0x0105
  218:	41 15       	cp	r20, r1
@@ -298,8 +298,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  226:	90 91 01 01 	lds	r25, 0x0101
  22a:	48 1b       	sub	r20, r24
  22c:	59 0b       	sbc	r21, r25
- 22e:	20 91 20 01 	lds	r18, 0x0120
- 232:	30 91 21 01 	lds	r19, 0x0121
+ 22e:	20 91 22 01 	lds	r18, 0x0122
+ 232:	30 91 23 01 	lds	r19, 0x0123
  236:	ca 01       	movw	r24, r20
  238:	82 1b       	sub	r24, r18
  23a:	93 0b       	sbc	r25, r19
@@ -314,8 +314,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  24c:	50 f0       	brcs	.+20     	; 0x262 <malloc+0x148>
  24e:	42 0f       	add	r20, r18
  250:	53 1f       	adc	r21, r19
- 252:	50 93 21 01 	sts	0x0121, r21
- 256:	40 93 20 01 	sts	0x0120, r20
+ 252:	50 93 23 01 	sts	0x0123, r21
+ 256:	40 93 22 01 	sts	0x0122, r20
  25a:	f9 01       	movw	r30, r18
  25c:	61 93       	st	Z+, r22
  25e:	71 93       	st	Z+, r23
@@ -337,8 +337,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  27a:	22 97       	sbiw	r28, 0x02	; 2
  27c:	1b 82       	std	Y+3, r1	; 0x03
  27e:	1a 82       	std	Y+2, r1	; 0x02
- 280:	a0 91 22 01 	lds	r26, 0x0122
- 284:	b0 91 23 01 	lds	r27, 0x0123
+ 280:	a0 91 24 01 	lds	r26, 0x0124
+ 284:	b0 91 25 01 	lds	r27, 0x0125
  288:	10 97       	sbiw	r26, 0x00	; 0
  28a:	09 f1       	breq	.+66     	; 0x2ce <free+0x60>
  28c:	40 e0       	ldi	r20, 0x00	; 0
@@ -374,8 +374,8 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  2c8:	41 15       	cp	r20, r1
  2ca:	51 05       	cpc	r21, r1
  2cc:	71 f4       	brne	.+28     	; 0x2ea <free+0x7c>
- 2ce:	d0 93 23 01 	sts	0x0123, r29
- 2d2:	c0 93 22 01 	sts	0x0122, r28
+ 2ce:	d0 93 25 01 	sts	0x0125, r29
+ 2d2:	c0 93 24 01 	sts	0x0124, r28
  2d6:	20 c0       	rjmp	.+64     	; 0x318 <free+0xaa>
  2d8:	12 96       	adiw	r26, 0x02	; 2
  2da:	8d 91       	ld	r24, X+
@@ -413,1090 +413,1467 @@ uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
  31a:	cf 91       	pop	r28
  31c:	08 95       	ret
 
-0000031e <_ZN9NixieTubeD1Ev>:
+0000031e <_ZN9NixieTube18setBackgroundColorEh5Color>:
+	{
+		this->setBackgroundColor(i, color);
+	}
+}
+
+void NixieTube::setBackgroundColor(byte index, Color color)
  31e:	fc 01       	movw	r30, r24
- 320:	8a e0       	ldi	r24, 0x0A	; 10
- 322:	91 e0       	ldi	r25, 0x01	; 1
- 324:	91 83       	std	Z+1, r25	; 0x01
- 326:	80 83       	st	Z, r24
+ 320:	86 2f       	mov	r24, r22
+{
+	index %= _section_count;
+ 322:	64 81       	ldd	r22, Z+4	; 0x04
+ 324:	90 e0       	ldi	r25, 0x00	; 0
+ 326:	70 e0       	ldi	r23, 0x00	; 0
+ 328:	0e 94 ce 04 	call	0x99c	; 0x99c <__udivmodhi4>
+	_buff[index] &= 0x8fff;
+ 32c:	90 e0       	ldi	r25, 0x00	; 0
+ 32e:	88 0f       	add	r24, r24
+ 330:	99 1f       	adc	r25, r25
+ 332:	02 80       	ldd	r0, Z+2	; 0x02
+ 334:	f3 81       	ldd	r31, Z+3	; 0x03
+ 336:	e0 2d       	mov	r30, r0
+ 338:	e8 0f       	add	r30, r24
+ 33a:	f9 1f       	adc	r31, r25
+ 33c:	20 81       	ld	r18, Z
+ 33e:	31 81       	ldd	r19, Z+1	; 0x01
+ 340:	3f 78       	andi	r19, 0x8F	; 143
+	_buff[index] |= color << 12;
+ 342:	94 2f       	mov	r25, r20
+ 344:	92 95       	swap	r25
+ 346:	90 7f       	andi	r25, 0xF0	; 240
+ 348:	80 e0       	ldi	r24, 0x00	; 0
+ 34a:	28 2b       	or	r18, r24
+ 34c:	39 2b       	or	r19, r25
+ 34e:	31 83       	std	Z+1, r19	; 0x01
+ 350:	20 83       	st	Z, r18
+}
+ 352:	08 95       	ret
+
+00000354 <_ZN9NixieTube18setBackgroundColorE5Color>:
+{
+	for (byte i = 0; i < _section_count; i++)
+		_buff[i] = value;
+}
+
+void NixieTube::setBackgroundColor(Color color)
+ 354:	ef 92       	push	r14
+ 356:	ff 92       	push	r15
+ 358:	1f 93       	push	r17
+ 35a:	cf 93       	push	r28
+ 35c:	df 93       	push	r29
+ 35e:	ec 01       	movw	r28, r24
+ 360:	7b 01       	movw	r14, r22
+ 362:	10 e0       	ldi	r17, 0x00	; 0
+ 364:	06 c0       	rjmp	.+12     	; 0x372 <_ZN9NixieTube18setBackgroundColorE5Color+0x1e>
+{
+	for (byte i = 0; i < _section_count; i++)
+	{
+		this->setBackgroundColor(i, color);
+ 366:	ce 01       	movw	r24, r28
+ 368:	61 2f       	mov	r22, r17
+ 36a:	a7 01       	movw	r20, r14
+ 36c:	0e 94 8f 01 	call	0x31e	; 0x31e <_ZN9NixieTube18setBackgroundColorEh5Color>
+		_buff[i] = value;
+}
+
+void NixieTube::setBackgroundColor(Color color)
+{
+	for (byte i = 0; i < _section_count; i++)
+ 370:	1f 5f       	subi	r17, 0xFF	; 255
+ 372:	8c 81       	ldd	r24, Y+4	; 0x04
+ 374:	18 17       	cp	r17, r24
+ 376:	b8 f3       	brcs	.-18     	; 0x366 <_ZN9NixieTube18setBackgroundColorE5Color+0x12>
+	{
+		this->setBackgroundColor(i, color);
+	}
+}
+ 378:	df 91       	pop	r29
+ 37a:	cf 91       	pop	r28
+ 37c:	1f 91       	pop	r17
+ 37e:	ff 90       	pop	r15
+ 380:	ef 90       	pop	r14
+ 382:	08 95       	ret
+
+00000384 <_ZN9NixieTube9setNumberEhh>:
+	index %= _section_count;
+	_buff[index] &= 0x8fff;
+	_buff[index] |= color << 12;
+}
+
+void NixieTube::setNumber(byte index, byte num)
+ 384:	cf 93       	push	r28
+ 386:	df 93       	push	r29
+{
+	_buff[index] &= 0xfc00;
+ 388:	70 e0       	ldi	r23, 0x00	; 0
+ 38a:	66 0f       	add	r22, r22
+ 38c:	77 1f       	adc	r23, r23
+ 38e:	fc 01       	movw	r30, r24
+ 390:	c2 81       	ldd	r28, Z+2	; 0x02
+ 392:	d3 81       	ldd	r29, Z+3	; 0x03
+ 394:	c6 0f       	add	r28, r22
+ 396:	d7 1f       	adc	r29, r23
+ 398:	e8 81       	ld	r30, Y
+ 39a:	f9 81       	ldd	r31, Y+1	; 0x01
+ 39c:	e0 70       	andi	r30, 0x00	; 0
+ 39e:	fc 7f       	andi	r31, 0xFC	; 252
+ 3a0:	f9 83       	std	Y+1, r31	; 0x01
+ 3a2:	e8 83       	st	Y, r30
+
+	if (num == 0xff) return;
+ 3a4:	4f 3f       	cpi	r20, 0xFF	; 255
+ 3a6:	91 f0       	breq	.+36     	; 0x3cc <_ZN9NixieTube9setNumberEhh+0x48>
+
+	num = (num + 9) % 10;
+ 3a8:	84 2f       	mov	r24, r20
+ 3aa:	90 e0       	ldi	r25, 0x00	; 0
+ 3ac:	09 96       	adiw	r24, 0x09	; 9
+ 3ae:	6a e0       	ldi	r22, 0x0A	; 10
+ 3b0:	70 e0       	ldi	r23, 0x00	; 0
+ 3b2:	0e 94 e2 04 	call	0x9c4	; 0x9c4 <__divmodhi4>
+	_buff[index] |= _BV(num);
+ 3b6:	21 e0       	ldi	r18, 0x01	; 1
+ 3b8:	30 e0       	ldi	r19, 0x00	; 0
+ 3ba:	02 c0       	rjmp	.+4      	; 0x3c0 <_ZN9NixieTube9setNumberEhh+0x3c>
+ 3bc:	22 0f       	add	r18, r18
+ 3be:	33 1f       	adc	r19, r19
+ 3c0:	8a 95       	dec	r24
+ 3c2:	e2 f7       	brpl	.-8      	; 0x3bc <_ZN9NixieTube9setNumberEhh+0x38>
+ 3c4:	e2 2b       	or	r30, r18
+ 3c6:	f3 2b       	or	r31, r19
+ 3c8:	f9 83       	std	Y+1, r31	; 0x01
+ 3ca:	e8 83       	st	Y, r30
+}
+ 3cc:	df 91       	pop	r29
+ 3ce:	cf 91       	pop	r28
+ 3d0:	08 95       	ret
+
+000003d2 <_ZN9NixieTube9putNumberElh>:
+{
+	_buff[index] &= 0xf3ff;
+	_buff[index] |= colon << 10;
+}
+
+void NixieTube::putNumber(long value, byte minLength)
+ 3d2:	cf 92       	push	r12
+ 3d4:	df 92       	push	r13
+ 3d6:	ef 92       	push	r14
+ 3d8:	ff 92       	push	r15
+ 3da:	0f 93       	push	r16
+ 3dc:	1f 93       	push	r17
+ 3de:	cf 93       	push	r28
+ 3e0:	df 93       	push	r29
+ 3e2:	ec 01       	movw	r28, r24
+ 3e4:	7a 01       	movw	r14, r20
+ 3e6:	8b 01       	movw	r16, r22
+ 3e8:	c2 2e       	mov	r12, r18
+ 3ea:	dd 24       	eor	r13, r13
+ 3ec:	26 c0       	rjmp	.+76     	; 0x43a <_ZN9NixieTube9putNumberElh+0x68>
+{
+	for (byte i=0; i< _section_count; i++)
+	{
+		byte num = value % 10;
+		this->setNumber(i, num);
+ 3ee:	c8 01       	movw	r24, r16
+ 3f0:	b7 01       	movw	r22, r14
+ 3f2:	2a e0       	ldi	r18, 0x0A	; 10
+ 3f4:	30 e0       	ldi	r19, 0x00	; 0
+ 3f6:	40 e0       	ldi	r20, 0x00	; 0
+ 3f8:	50 e0       	ldi	r21, 0x00	; 0
+ 3fa:	0e 94 f5 04 	call	0x9ea	; 0x9ea <__divmodsi4>
+ 3fe:	46 2f       	mov	r20, r22
+ 400:	ce 01       	movw	r24, r28
+ 402:	6d 2d       	mov	r22, r13
+ 404:	0e 94 c2 01 	call	0x384	; 0x384 <_ZN9NixieTube9setNumberEhh>
+		if (value==0 && i>=minLength)
+ 408:	e1 14       	cp	r14, r1
+ 40a:	f1 04       	cpc	r15, r1
+ 40c:	01 05       	cpc	r16, r1
+ 40e:	11 05       	cpc	r17, r1
+ 410:	39 f4       	brne	.+14     	; 0x420 <_ZN9NixieTube9putNumberElh+0x4e>
+ 412:	dc 14       	cp	r13, r12
+ 414:	28 f0       	brcs	.+10     	; 0x420 <_ZN9NixieTube9putNumberElh+0x4e>
+			this->setNumber(i, -1);
+ 416:	ce 01       	movw	r24, r28
+ 418:	6d 2d       	mov	r22, r13
+ 41a:	4f ef       	ldi	r20, 0xFF	; 255
+ 41c:	0e 94 c2 01 	call	0x384	; 0x384 <_ZN9NixieTube9setNumberEhh>
+		value /= 10;
+ 420:	c8 01       	movw	r24, r16
+ 422:	b7 01       	movw	r22, r14
+ 424:	2a e0       	ldi	r18, 0x0A	; 10
+ 426:	30 e0       	ldi	r19, 0x00	; 0
+ 428:	40 e0       	ldi	r20, 0x00	; 0
+ 42a:	50 e0       	ldi	r21, 0x00	; 0
+ 42c:	0e 94 f5 04 	call	0x9ea	; 0x9ea <__divmodsi4>
+ 430:	c9 01       	movw	r24, r18
+ 432:	da 01       	movw	r26, r20
+ 434:	7c 01       	movw	r14, r24
+ 436:	8d 01       	movw	r16, r26
+	_buff[index] |= colon << 10;
+}
+
+void NixieTube::putNumber(long value, byte minLength)
+{
+	for (byte i=0; i< _section_count; i++)
+ 438:	d3 94       	inc	r13
+ 43a:	8c 81       	ldd	r24, Y+4	; 0x04
+ 43c:	d8 16       	cp	r13, r24
+ 43e:	b8 f2       	brcs	.-82     	; 0x3ee <_ZN9NixieTube9putNumberElh+0x1c>
+		this->setNumber(i, num);
+		if (value==0 && i>=minLength)
+			this->setNumber(i, -1);
+		value /= 10;
+	}
+}
+ 440:	df 91       	pop	r29
+ 442:	cf 91       	pop	r28
+ 444:	1f 91       	pop	r17
+ 446:	0f 91       	pop	r16
+ 448:	ff 90       	pop	r15
+ 44a:	ef 90       	pop	r14
+ 44c:	df 90       	pop	r13
+ 44e:	cf 90       	pop	r12
+ 450:	08 95       	ret
+
+00000452 <_ZN9NixieTubeD1Ev>:
+
+NixieTube::~NixieTube()
+ 452:	fc 01       	movw	r30, r24
+ 454:	8a e0       	ldi	r24, 0x0A	; 10
+ 456:	91 e0       	ldi	r25, 0x01	; 1
+ 458:	91 83       	std	Z+1, r25	; 0x01
+ 45a:	80 83       	st	Z, r24
 {
 	free(_buff);
- 328:	82 81       	ldd	r24, Z+2	; 0x02
- 32a:	93 81       	ldd	r25, Z+3	; 0x03
- 32c:	0e 94 37 01 	call	0x26e	; 0x26e <free>
+ 45c:	82 81       	ldd	r24, Z+2	; 0x02
+ 45e:	93 81       	ldd	r25, Z+3	; 0x03
+ 460:	0e 94 37 01 	call	0x26e	; 0x26e <free>
 }
- 330:	08 95       	ret
+ 464:	08 95       	ret
 
-00000332 <_ZN9NixieTubeD0Ev>:
-	digitalWrite(_pin_st, LOW);
-	digitalWrite(_pin_st, HIGH);
-
+00000466 <_ZN9NixieTubeD0Ev>:
+			this->setNumber(i, -1);
+		value /= 10;
+	}
 }
 
 NixieTube::~NixieTube()
- 332:	0f 93       	push	r16
- 334:	1f 93       	push	r17
- 336:	8c 01       	movw	r16, r24
- 338:	8a e0       	ldi	r24, 0x0A	; 10
- 33a:	91 e0       	ldi	r25, 0x01	; 1
- 33c:	f8 01       	movw	r30, r16
- 33e:	91 83       	std	Z+1, r25	; 0x01
- 340:	80 83       	st	Z, r24
+ 466:	0f 93       	push	r16
+ 468:	1f 93       	push	r17
+ 46a:	8c 01       	movw	r16, r24
+ 46c:	8a e0       	ldi	r24, 0x0A	; 10
+ 46e:	91 e0       	ldi	r25, 0x01	; 1
+ 470:	f8 01       	movw	r30, r16
+ 472:	91 83       	std	Z+1, r25	; 0x01
+ 474:	80 83       	st	Z, r24
 {
 	free(_buff);
- 342:	82 81       	ldd	r24, Z+2	; 0x02
- 344:	93 81       	ldd	r25, Z+3	; 0x03
- 346:	0e 94 37 01 	call	0x26e	; 0x26e <free>
+ 476:	82 81       	ldd	r24, Z+2	; 0x02
+ 478:	93 81       	ldd	r25, Z+3	; 0x03
+ 47a:	0e 94 37 01 	call	0x26e	; 0x26e <free>
 }
- 34a:	c8 01       	movw	r24, r16
- 34c:	0e 94 84 02 	call	0x508	; 0x508 <_ZdlPv>
- 350:	1f 91       	pop	r17
- 352:	0f 91       	pop	r16
- 354:	08 95       	ret
+ 47e:	c8 01       	movw	r24, r16
+ 480:	0e 94 33 03 	call	0x666	; 0x666 <_ZdlPv>
+ 484:	1f 91       	pop	r17
+ 486:	0f 91       	pop	r16
+ 488:	08 95       	ret
 
-00000356 <_ZN9NixieTube7putByteEhh>:
-	pinMode(_pin_oe, OUTPUT);
-
-	digitalWrite(_pin_oe, LOW);
-}
-
-void NixieTube::putByte(byte h, byte l)
- 356:	ff 92       	push	r15
- 358:	0f 93       	push	r16
- 35a:	1f 93       	push	r17
- 35c:	8c 01       	movw	r16, r24
- 35e:	26 2f       	mov	r18, r22
- 360:	f4 2e       	mov	r15, r20
-{
-
-	shiftOut(_pin_dt, _pin_sh, MSBFIRST, h);
- 362:	fc 01       	movw	r30, r24
- 364:	85 81       	ldd	r24, Z+5	; 0x05
- 366:	67 81       	ldd	r22, Z+7	; 0x07
- 368:	41 e0       	ldi	r20, 0x01	; 1
- 36a:	0e 94 dd 03 	call	0x7ba	; 0x7ba <shiftOut>
-	shiftOut(_pin_dt, _pin_sh, MSBFIRST, l);
- 36e:	f8 01       	movw	r30, r16
- 370:	85 81       	ldd	r24, Z+5	; 0x05
- 372:	67 81       	ldd	r22, Z+7	; 0x07
- 374:	41 e0       	ldi	r20, 0x01	; 1
- 376:	2f 2d       	mov	r18, r15
- 378:	0e 94 dd 03 	call	0x7ba	; 0x7ba <shiftOut>
+0000048a <_ZN9NixieTube7displayEv>:
 
 	digitalWrite(_pin_st, LOW);
- 37c:	f8 01       	movw	r30, r16
- 37e:	86 81       	ldd	r24, Z+6	; 0x06
- 380:	60 e0       	ldi	r22, 0x00	; 0
- 382:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
 	digitalWrite(_pin_st, HIGH);
- 386:	f8 01       	movw	r30, r16
- 388:	86 81       	ldd	r24, Z+6	; 0x06
- 38a:	61 e0       	ldi	r22, 0x01	; 1
- 38c:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
+}
+
+void NixieTube::display()
+ 48a:	cf 92       	push	r12
+ 48c:	df 92       	push	r13
+ 48e:	ff 92       	push	r15
+ 490:	0f 93       	push	r16
+ 492:	1f 93       	push	r17
+ 494:	cf 93       	push	r28
+ 496:	df 93       	push	r29
+ 498:	ec 01       	movw	r28, r24
+{
+	for (byte i = _section_count; i > 0 ; i--)
+ 49a:	fc 80       	ldd	r15, Y+4	; 0x04
+	{
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, highByte(_buff[i-1]));
+ 49c:	b1 e0       	ldi	r27, 0x01	; 1
+ 49e:	cb 2e       	mov	r12, r27
+ 4a0:	d1 2c       	mov	r13, r1
+ 4a2:	1d c0       	rjmp	.+58     	; 0x4de <_ZN9NixieTube7displayEv+0x54>
+ 4a4:	86 01       	movw	r16, r12
+ 4a6:	0f 19       	sub	r16, r15
+ 4a8:	11 09       	sbc	r17, r1
+ 4aa:	00 0f       	add	r16, r16
+ 4ac:	11 1f       	adc	r17, r17
+ 4ae:	10 95       	com	r17
+ 4b0:	01 95       	neg	r16
+ 4b2:	1f 4f       	sbci	r17, 0xFF	; 255
+ 4b4:	ea 81       	ldd	r30, Y+2	; 0x02
+ 4b6:	fb 81       	ldd	r31, Y+3	; 0x03
+ 4b8:	e0 0f       	add	r30, r16
+ 4ba:	f1 1f       	adc	r31, r17
+ 4bc:	21 81       	ldd	r18, Z+1	; 0x01
+ 4be:	8d 81       	ldd	r24, Y+5	; 0x05
+ 4c0:	6f 81       	ldd	r22, Y+7	; 0x07
+ 4c2:	41 e0       	ldi	r20, 0x01	; 1
+ 4c4:	0e 94 8c 04 	call	0x918	; 0x918 <shiftOut>
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, lowByte(_buff[i-1]));
+ 4c8:	ea 81       	ldd	r30, Y+2	; 0x02
+ 4ca:	fb 81       	ldd	r31, Y+3	; 0x03
+ 4cc:	e0 0f       	add	r30, r16
+ 4ce:	f1 1f       	adc	r31, r17
+ 4d0:	8d 81       	ldd	r24, Y+5	; 0x05
+ 4d2:	6f 81       	ldd	r22, Y+7	; 0x07
+ 4d4:	41 e0       	ldi	r20, 0x01	; 1
+ 4d6:	20 81       	ld	r18, Z
+ 4d8:	0e 94 8c 04 	call	0x918	; 0x918 <shiftOut>
+	digitalWrite(_pin_st, HIGH);
+}
+
+void NixieTube::display()
+{
+	for (byte i = _section_count; i > 0 ; i--)
+ 4dc:	fa 94       	dec	r15
+ 4de:	ff 20       	and	r15, r15
+ 4e0:	09 f7       	brne	.-62     	; 0x4a4 <_ZN9NixieTube7displayEv+0x1a>
+	{
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, highByte(_buff[i-1]));
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, lowByte(_buff[i-1]));
+	}
+
+	digitalWrite(_pin_st, LOW);
+ 4e2:	8e 81       	ldd	r24, Y+6	; 0x06
+ 4e4:	60 e0       	ldi	r22, 0x00	; 0
+ 4e6:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
+	digitalWrite(_pin_st, HIGH);
+ 4ea:	8e 81       	ldd	r24, Y+6	; 0x06
+ 4ec:	61 e0       	ldi	r22, 0x01	; 1
+ 4ee:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
 
 }
- 390:	1f 91       	pop	r17
- 392:	0f 91       	pop	r16
- 394:	ff 90       	pop	r15
- 396:	08 95       	ret
+ 4f2:	df 91       	pop	r29
+ 4f4:	cf 91       	pop	r28
+ 4f6:	1f 91       	pop	r17
+ 4f8:	0f 91       	pop	r16
+ 4fa:	ff 90       	pop	r15
+ 4fc:	df 90       	pop	r13
+ 4fe:	cf 90       	pop	r12
+ 500:	08 95       	ret
 
-00000398 <_ZN9NixieTubeC1Ehhhhh>:
+00000502 <_ZN9NixieTubeC1Ehhhhh>:
  */
 
 #include "NixieTube.h"
 
 NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 		uint8_t pin_oe, byte section_count)
- 398:	bf 92       	push	r11
- 39a:	cf 92       	push	r12
- 39c:	df 92       	push	r13
- 39e:	ef 92       	push	r14
- 3a0:	ff 92       	push	r15
- 3a2:	0f 93       	push	r16
- 3a4:	1f 93       	push	r17
- 3a6:	6c 01       	movw	r12, r24
- 3a8:	16 2f       	mov	r17, r22
- 3aa:	f4 2e       	mov	r15, r20
- 3ac:	b2 2e       	mov	r11, r18
- 3ae:	8e 2d       	mov	r24, r14
- 3b0:	2a e0       	ldi	r18, 0x0A	; 10
- 3b2:	31 e0       	ldi	r19, 0x01	; 1
- 3b4:	f6 01       	movw	r30, r12
- 3b6:	31 83       	std	Z+1, r19	; 0x01
- 3b8:	20 83       	st	Z, r18
+ 502:	df 92       	push	r13
+ 504:	ef 92       	push	r14
+ 506:	ff 92       	push	r15
+ 508:	0f 93       	push	r16
+ 50a:	1f 93       	push	r17
+ 50c:	cf 93       	push	r28
+ 50e:	df 93       	push	r29
+ 510:	ec 01       	movw	r28, r24
+ 512:	16 2f       	mov	r17, r22
+ 514:	f4 2e       	mov	r15, r20
+ 516:	d2 2e       	mov	r13, r18
+ 518:	8e 2d       	mov	r24, r14
+ 51a:	2a e0       	ldi	r18, 0x0A	; 10
+ 51c:	31 e0       	ldi	r19, 0x01	; 1
+ 51e:	39 83       	std	Y+1, r19	; 0x01
+ 520:	28 83       	st	Y, r18
 {
 	_section_count = section_count;
- 3ba:	e4 82       	std	Z+4, r14	; 0x04
-	_buff = (byte *) malloc(sizeof(byte) * section_count * 2);
- 3bc:	90 e0       	ldi	r25, 0x00	; 0
- 3be:	88 0f       	add	r24, r24
- 3c0:	99 1f       	adc	r25, r25
- 3c2:	0e 94 8d 00 	call	0x11a	; 0x11a <malloc>
- 3c6:	f6 01       	movw	r30, r12
- 3c8:	82 83       	std	Z+2, r24	; 0x02
- 3ca:	93 83       	std	Z+3, r25	; 0x03
+ 522:	ec 82       	std	Y+4, r14	; 0x04
+	_buff = (word *) malloc(sizeof(word) * section_count);
+ 524:	90 e0       	ldi	r25, 0x00	; 0
+ 526:	88 0f       	add	r24, r24
+ 528:	99 1f       	adc	r25, r25
+ 52a:	0e 94 8d 00 	call	0x11a	; 0x11a <malloc>
+ 52e:	8a 83       	std	Y+2, r24	; 0x02
+ 530:	9b 83       	std	Y+3, r25	; 0x03
 
 	_pin_dt = pin_din;
- 3cc:	15 83       	std	Z+5, r17	; 0x05
+ 532:	1d 83       	std	Y+5, r17	; 0x05
 	_pin_st = pin_st;
- 3ce:	f6 82       	std	Z+6, r15	; 0x06
+ 534:	fe 82       	std	Y+6, r15	; 0x06
 	_pin_sh = pin_sh;
- 3d0:	b7 82       	std	Z+7, r11	; 0x07
+ 536:	df 82       	std	Y+7, r13	; 0x07
 	_pin_oe = pin_oe;
- 3d2:	00 87       	std	Z+8, r16	; 0x08
+ 538:	08 87       	std	Y+8, r16	; 0x08
 
 	pinMode(_pin_dt, OUTPUT);
- 3d4:	81 2f       	mov	r24, r17
- 3d6:	61 e0       	ldi	r22, 0x01	; 1
- 3d8:	0e 94 63 03 	call	0x6c6	; 0x6c6 <pinMode>
+ 53a:	81 2f       	mov	r24, r17
+ 53c:	61 e0       	ldi	r22, 0x01	; 1
+ 53e:	0e 94 12 04 	call	0x824	; 0x824 <pinMode>
 	pinMode(_pin_st, OUTPUT);
- 3dc:	f6 01       	movw	r30, r12
- 3de:	86 81       	ldd	r24, Z+6	; 0x06
- 3e0:	61 e0       	ldi	r22, 0x01	; 1
- 3e2:	0e 94 63 03 	call	0x6c6	; 0x6c6 <pinMode>
+ 542:	8e 81       	ldd	r24, Y+6	; 0x06
+ 544:	61 e0       	ldi	r22, 0x01	; 1
+ 546:	0e 94 12 04 	call	0x824	; 0x824 <pinMode>
 	pinMode(_pin_sh, OUTPUT);
- 3e6:	f6 01       	movw	r30, r12
- 3e8:	87 81       	ldd	r24, Z+7	; 0x07
- 3ea:	61 e0       	ldi	r22, 0x01	; 1
- 3ec:	0e 94 63 03 	call	0x6c6	; 0x6c6 <pinMode>
+ 54a:	8f 81       	ldd	r24, Y+7	; 0x07
+ 54c:	61 e0       	ldi	r22, 0x01	; 1
+ 54e:	0e 94 12 04 	call	0x824	; 0x824 <pinMode>
 	pinMode(_pin_oe, OUTPUT);
- 3f0:	f6 01       	movw	r30, r12
- 3f2:	80 85       	ldd	r24, Z+8	; 0x08
- 3f4:	61 e0       	ldi	r22, 0x01	; 1
- 3f6:	0e 94 63 03 	call	0x6c6	; 0x6c6 <pinMode>
+ 552:	88 85       	ldd	r24, Y+8	; 0x08
+ 554:	61 e0       	ldi	r22, 0x01	; 1
+ 556:	0e 94 12 04 	call	0x824	; 0x824 <pinMode>
 
 	digitalWrite(_pin_oe, LOW);
- 3fa:	f6 01       	movw	r30, r12
- 3fc:	80 85       	ldd	r24, Z+8	; 0x08
- 3fe:	60 e0       	ldi	r22, 0x00	; 0
- 400:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
+ 55a:	88 85       	ldd	r24, Y+8	; 0x08
+ 55c:	60 e0       	ldi	r22, 0x00	; 0
+ 55e:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
+ 562:	20 e0       	ldi	r18, 0x00	; 0
 }
- 404:	1f 91       	pop	r17
- 406:	0f 91       	pop	r16
- 408:	ff 90       	pop	r15
- 40a:	ef 90       	pop	r14
- 40c:	df 90       	pop	r13
- 40e:	cf 90       	pop	r12
- 410:	bf 90       	pop	r11
- 412:	08 95       	ret
 
-00000414 <setup>:
-NixieTube tube(11, 12, 13, 10);
+void NixieTube::clear(word value)
+{
+	for (byte i = 0; i < _section_count; i++)
+		_buff[i] = value;
+ 564:	41 e0       	ldi	r20, 0x01	; 1
+ 566:	50 e0       	ldi	r21, 0x00	; 0
+ 568:	0b c0       	rjmp	.+22     	; 0x580 <_ZN9NixieTubeC1Ehhhhh+0x7e>
+ 56a:	82 2f       	mov	r24, r18
+ 56c:	90 e0       	ldi	r25, 0x00	; 0
+ 56e:	88 0f       	add	r24, r24
+ 570:	99 1f       	adc	r25, r25
+ 572:	ea 81       	ldd	r30, Y+2	; 0x02
+ 574:	fb 81       	ldd	r31, Y+3	; 0x03
+ 576:	e8 0f       	add	r30, r24
+ 578:	f9 1f       	adc	r31, r25
+ 57a:	51 83       	std	Z+1, r21	; 0x01
+ 57c:	40 83       	st	Z, r20
+
+}
+
+void NixieTube::clear(word value)
+{
+	for (byte i = 0; i < _section_count; i++)
+ 57e:	2f 5f       	subi	r18, 0xFF	; 255
+ 580:	8c 81       	ldd	r24, Y+4	; 0x04
+ 582:	28 17       	cp	r18, r24
+ 584:	90 f3       	brcs	.-28     	; 0x56a <_ZN9NixieTubeC1Ehhhhh+0x68>
+	pinMode(_pin_oe, OUTPUT);
+
+	digitalWrite(_pin_oe, LOW);
+
+	this->clear(0x01);
+}
+ 586:	df 91       	pop	r29
+ 588:	cf 91       	pop	r28
+ 58a:	1f 91       	pop	r17
+ 58c:	0f 91       	pop	r16
+ 58e:	ff 90       	pop	r15
+ 590:	ef 90       	pop	r14
+ 592:	df 90       	pop	r13
+ 594:	08 95       	ret
+
+00000596 <setup>:
 
 void setup()
 {
+	//tube.setBackgroundColor(Blue);
 
 }
- 414:	08 95       	ret
+ 596:	08 95       	ret
 
-00000416 <_Z41__static_initialization_and_destruction_0ii>:
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(_BV(i), 0x00);
-		delay(500);
-	}
+00000598 <_Z41__static_initialization_and_destruction_0ii>:
+	static word k = 0;
+	tube.setBackgroundColor((Color)(k%8));
+	tube.putNumber(k++,1);
+	tube.display();
+	delay(1000);
 }
- 416:	ef 92       	push	r14
- 418:	0f 93       	push	r16
- 41a:	81 30       	cpi	r24, 0x01	; 1
- 41c:	91 05       	cpc	r25, r1
- 41e:	71 f4       	brne	.+28     	; 0x43c <_Z41__static_initialization_and_destruction_0ii+0x26>
- 420:	6f 5f       	subi	r22, 0xFF	; 255
- 422:	7f 4f       	sbci	r23, 0xFF	; 255
- 424:	a1 f4       	brne	.+40     	; 0x44e <_Z41__static_initialization_and_destruction_0ii+0x38>
+ 598:	ef 92       	push	r14
+ 59a:	0f 93       	push	r16
+ 59c:	81 30       	cpi	r24, 0x01	; 1
+ 59e:	91 05       	cpc	r25, r1
+ 5a0:	71 f4       	brne	.+28     	; 0x5be <_Z41__static_initialization_and_destruction_0ii+0x26>
+ 5a2:	6f 5f       	subi	r22, 0xFF	; 255
+ 5a4:	7f 4f       	sbci	r23, 0xFF	; 255
+ 5a6:	a1 f4       	brne	.+40     	; 0x5d0 <_Z41__static_initialization_and_destruction_0ii+0x38>
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
 
-NixieTube tube(11, 12, 13, 10);
- 426:	8e e0       	ldi	r24, 0x0E	; 14
- 428:	91 e0       	ldi	r25, 0x01	; 1
- 42a:	6b e0       	ldi	r22, 0x0B	; 11
- 42c:	4c e0       	ldi	r20, 0x0C	; 12
- 42e:	2d e0       	ldi	r18, 0x0D	; 13
- 430:	0a e0       	ldi	r16, 0x0A	; 10
- 432:	ee 24       	eor	r14, r14
- 434:	e3 94       	inc	r14
- 436:	0e 94 cc 01 	call	0x398	; 0x398 <_ZN9NixieTubeC1Ehhhhh>
- 43a:	09 c0       	rjmp	.+18     	; 0x44e <_Z41__static_initialization_and_destruction_0ii+0x38>
- 43c:	89 2b       	or	r24, r25
- 43e:	39 f4       	brne	.+14     	; 0x44e <_Z41__static_initialization_and_destruction_0ii+0x38>
- 440:	6f 5f       	subi	r22, 0xFF	; 255
- 442:	7f 4f       	sbci	r23, 0xFF	; 255
- 444:	21 f4       	brne	.+8      	; 0x44e <_Z41__static_initialization_and_destruction_0ii+0x38>
- 446:	8e e0       	ldi	r24, 0x0E	; 14
- 448:	91 e0       	ldi	r25, 0x01	; 1
- 44a:	0e 94 8f 01 	call	0x31e	; 0x31e <_ZN9NixieTubeD1Ev>
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(_BV(i), 0x00);
-		delay(500);
-	}
+NixieTube tube(11, 12, 13, 10, 5);
+ 5a8:	8e e0       	ldi	r24, 0x0E	; 14
+ 5aa:	91 e0       	ldi	r25, 0x01	; 1
+ 5ac:	6b e0       	ldi	r22, 0x0B	; 11
+ 5ae:	4c e0       	ldi	r20, 0x0C	; 12
+ 5b0:	2d e0       	ldi	r18, 0x0D	; 13
+ 5b2:	0a e0       	ldi	r16, 0x0A	; 10
+ 5b4:	35 e0       	ldi	r19, 0x05	; 5
+ 5b6:	e3 2e       	mov	r14, r19
+ 5b8:	0e 94 81 02 	call	0x502	; 0x502 <_ZN9NixieTubeC1Ehhhhh>
+ 5bc:	09 c0       	rjmp	.+18     	; 0x5d0 <_Z41__static_initialization_and_destruction_0ii+0x38>
+ 5be:	89 2b       	or	r24, r25
+ 5c0:	39 f4       	brne	.+14     	; 0x5d0 <_Z41__static_initialization_and_destruction_0ii+0x38>
+ 5c2:	6f 5f       	subi	r22, 0xFF	; 255
+ 5c4:	7f 4f       	sbci	r23, 0xFF	; 255
+ 5c6:	21 f4       	brne	.+8      	; 0x5d0 <_Z41__static_initialization_and_destruction_0ii+0x38>
+ 5c8:	8e e0       	ldi	r24, 0x0E	; 14
+ 5ca:	91 e0       	ldi	r25, 0x01	; 1
+ 5cc:	0e 94 29 02 	call	0x452	; 0x452 <_ZN9NixieTubeD1Ev>
+	static word k = 0;
+	tube.setBackgroundColor((Color)(k%8));
+	tube.putNumber(k++,1);
+	tube.display();
+	delay(1000);
 }
- 44e:	0f 91       	pop	r16
- 450:	ef 90       	pop	r14
- 452:	08 95       	ret
+ 5d0:	0f 91       	pop	r16
+ 5d2:	ef 90       	pop	r14
+ 5d4:	08 95       	ret
 
-00000454 <_GLOBAL__D_tube>:
- 454:	80 e0       	ldi	r24, 0x00	; 0
- 456:	90 e0       	ldi	r25, 0x00	; 0
- 458:	6f ef       	ldi	r22, 0xFF	; 255
- 45a:	7f ef       	ldi	r23, 0xFF	; 255
- 45c:	0e 94 0b 02 	call	0x416	; 0x416 <_Z41__static_initialization_and_destruction_0ii>
- 460:	08 95       	ret
+000005d6 <_GLOBAL__D_tube>:
+ 5d6:	80 e0       	ldi	r24, 0x00	; 0
+ 5d8:	90 e0       	ldi	r25, 0x00	; 0
+ 5da:	6f ef       	ldi	r22, 0xFF	; 255
+ 5dc:	7f ef       	ldi	r23, 0xFF	; 255
+ 5de:	0e 94 cc 02 	call	0x598	; 0x598 <_Z41__static_initialization_and_destruction_0ii>
+ 5e2:	08 95       	ret
 
-00000462 <_GLOBAL__I_tube>:
- 462:	81 e0       	ldi	r24, 0x01	; 1
- 464:	90 e0       	ldi	r25, 0x00	; 0
- 466:	6f ef       	ldi	r22, 0xFF	; 255
- 468:	7f ef       	ldi	r23, 0xFF	; 255
- 46a:	0e 94 0b 02 	call	0x416	; 0x416 <_Z41__static_initialization_and_destruction_0ii>
- 46e:	08 95       	ret
+000005e4 <_GLOBAL__I_tube>:
+ 5e4:	81 e0       	ldi	r24, 0x01	; 1
+ 5e6:	90 e0       	ldi	r25, 0x00	; 0
+ 5e8:	6f ef       	ldi	r22, 0xFF	; 255
+ 5ea:	7f ef       	ldi	r23, 0xFF	; 255
+ 5ec:	0e 94 cc 02 	call	0x598	; 0x598 <_Z41__static_initialization_and_destruction_0ii>
+ 5f0:	08 95       	ret
 
-00000470 <loop>:
-void setup()
+000005f2 <loop>:
 {
+	//tube.setBackgroundColor(Blue);
 
 }
 
 void loop()
- 470:	0f 93       	push	r16
- 472:	1f 93       	push	r17
- 474:	cf 93       	push	r28
- 476:	df 93       	push	r29
- 478:	c0 e0       	ldi	r28, 0x00	; 0
- 47a:	d0 e0       	ldi	r29, 0x00	; 0
+ 5f2:	0f 93       	push	r16
+ 5f4:	1f 93       	push	r17
 {
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(0x40, _BV(i));
- 47c:	01 e0       	ldi	r16, 0x01	; 1
- 47e:	10 e0       	ldi	r17, 0x00	; 0
- 480:	a8 01       	movw	r20, r16
- 482:	0c 2e       	mov	r0, r28
- 484:	02 c0       	rjmp	.+4      	; 0x48a <loop+0x1a>
- 486:	44 0f       	add	r20, r20
- 488:	55 1f       	adc	r21, r21
- 48a:	0a 94       	dec	r0
- 48c:	e2 f7       	brpl	.-8      	; 0x486 <loop+0x16>
- 48e:	8e e0       	ldi	r24, 0x0E	; 14
- 490:	91 e0       	ldi	r25, 0x01	; 1
- 492:	60 e4       	ldi	r22, 0x40	; 64
- 494:	0e 94 ab 01 	call	0x356	; 0x356 <_ZN9NixieTube7putByteEhh>
-		delay(500);
- 498:	64 ef       	ldi	r22, 0xF4	; 244
- 49a:	71 e0       	ldi	r23, 0x01	; 1
- 49c:	80 e0       	ldi	r24, 0x00	; 0
- 49e:	90 e0       	ldi	r25, 0x00	; 0
- 4a0:	0e 94 cf 02 	call	0x59e	; 0x59e <delay>
- 4a4:	21 96       	adiw	r28, 0x01	; 1
-
+	static word k = 0;
+	tube.setBackgroundColor((Color)(k%8));
+ 5f6:	0e e0       	ldi	r16, 0x0E	; 14
+ 5f8:	11 e0       	ldi	r17, 0x01	; 1
+ 5fa:	60 91 17 01 	lds	r22, 0x0117
+ 5fe:	70 91 18 01 	lds	r23, 0x0118
+ 602:	67 70       	andi	r22, 0x07	; 7
+ 604:	70 70       	andi	r23, 0x00	; 0
+ 606:	c8 01       	movw	r24, r16
+ 608:	0e 94 aa 01 	call	0x354	; 0x354 <_ZN9NixieTube18setBackgroundColorE5Color>
+	tube.putNumber(k++,1);
+ 60c:	40 91 17 01 	lds	r20, 0x0117
+ 610:	50 91 18 01 	lds	r21, 0x0118
+ 614:	4f 5f       	subi	r20, 0xFF	; 255
+ 616:	5f 4f       	sbci	r21, 0xFF	; 255
+ 618:	50 93 18 01 	sts	0x0118, r21
+ 61c:	40 93 17 01 	sts	0x0117, r20
+ 620:	41 50       	subi	r20, 0x01	; 1
+ 622:	50 40       	sbci	r21, 0x00	; 0
+ 624:	60 e0       	ldi	r22, 0x00	; 0
+ 626:	70 e0       	ldi	r23, 0x00	; 0
+ 628:	c8 01       	movw	r24, r16
+ 62a:	21 e0       	ldi	r18, 0x01	; 1
+ 62c:	0e 94 e9 01 	call	0x3d2	; 0x3d2 <_ZN9NixieTube9putNumberElh>
+	tube.display();
+ 630:	c8 01       	movw	r24, r16
+ 632:	0e 94 45 02 	call	0x48a	; 0x48a <_ZN9NixieTube7displayEv>
+	delay(1000);
+ 636:	68 ee       	ldi	r22, 0xE8	; 232
+ 638:	73 e0       	ldi	r23, 0x03	; 3
+ 63a:	80 e0       	ldi	r24, 0x00	; 0
+ 63c:	90 e0       	ldi	r25, 0x00	; 0
+ 63e:	0e 94 7e 03 	call	0x6fc	; 0x6fc <delay>
 }
+ 642:	1f 91       	pop	r17
+ 644:	0f 91       	pop	r16
+ 646:	08 95       	ret
 
-void loop()
-{
-	for (byte i = 0; i < 8; i++)
- 4a6:	c8 30       	cpi	r28, 0x08	; 8
- 4a8:	d1 05       	cpc	r29, r1
- 4aa:	51 f7       	brne	.-44     	; 0x480 <loop+0x10>
- 4ac:	c0 e0       	ldi	r28, 0x00	; 0
- 4ae:	d0 e0       	ldi	r29, 0x00	; 0
-		delay(500);
-	}
-
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(_BV(i), 0x00);
- 4b0:	01 e0       	ldi	r16, 0x01	; 1
- 4b2:	10 e0       	ldi	r17, 0x00	; 0
- 4b4:	b8 01       	movw	r22, r16
- 4b6:	0c 2e       	mov	r0, r28
- 4b8:	02 c0       	rjmp	.+4      	; 0x4be <loop+0x4e>
- 4ba:	66 0f       	add	r22, r22
- 4bc:	77 1f       	adc	r23, r23
- 4be:	0a 94       	dec	r0
- 4c0:	e2 f7       	brpl	.-8      	; 0x4ba <loop+0x4a>
- 4c2:	8e e0       	ldi	r24, 0x0E	; 14
- 4c4:	91 e0       	ldi	r25, 0x01	; 1
- 4c6:	40 e0       	ldi	r20, 0x00	; 0
- 4c8:	0e 94 ab 01 	call	0x356	; 0x356 <_ZN9NixieTube7putByteEhh>
-		delay(500);
- 4cc:	64 ef       	ldi	r22, 0xF4	; 244
- 4ce:	71 e0       	ldi	r23, 0x01	; 1
- 4d0:	80 e0       	ldi	r24, 0x00	; 0
- 4d2:	90 e0       	ldi	r25, 0x00	; 0
- 4d4:	0e 94 cf 02 	call	0x59e	; 0x59e <delay>
- 4d8:	21 96       	adiw	r28, 0x01	; 1
-	{
-		tube.putByte(0x40, _BV(i));
-		delay(500);
-	}
-
-	for (byte i = 0; i < 8; i++)
- 4da:	c8 30       	cpi	r28, 0x08	; 8
- 4dc:	d1 05       	cpc	r29, r1
- 4de:	51 f7       	brne	.-44     	; 0x4b4 <loop+0x44>
-	{
-		tube.putByte(_BV(i), 0x00);
-		delay(500);
-	}
-}
- 4e0:	df 91       	pop	r29
- 4e2:	cf 91       	pop	r28
- 4e4:	1f 91       	pop	r17
- 4e6:	0f 91       	pop	r16
- 4e8:	08 95       	ret
-
-000004ea <main>:
+00000648 <main>:
 #include <Arduino.h>
 
 int main(void)
- 4ea:	cf 93       	push	r28
- 4ec:	df 93       	push	r29
+ 648:	cf 93       	push	r28
+ 64a:	df 93       	push	r29
 {
 	init();
- 4ee:	0e 94 28 03 	call	0x650	; 0x650 <init>
+ 64c:	0e 94 d7 03 	call	0x7ae	; 0x7ae <init>
 
 #if defined(USBCON)
 	USB.attach();
 #endif
 	
 	setup();
- 4f2:	0e 94 0a 02 	call	0x414	; 0x414 <setup>
+ 650:	0e 94 cb 02 	call	0x596	; 0x596 <setup>
     
 	for (;;) {
 		loop();
 		if (serialEventRun) serialEventRun();
- 4f6:	c0 e0       	ldi	r28, 0x00	; 0
- 4f8:	d0 e0       	ldi	r29, 0x00	; 0
+ 654:	c0 e0       	ldi	r28, 0x00	; 0
+ 656:	d0 e0       	ldi	r29, 0x00	; 0
 #endif
 	
 	setup();
     
 	for (;;) {
 		loop();
- 4fa:	0e 94 38 02 	call	0x470	; 0x470 <loop>
+ 658:	0e 94 f9 02 	call	0x5f2	; 0x5f2 <loop>
 		if (serialEventRun) serialEventRun();
- 4fe:	20 97       	sbiw	r28, 0x00	; 0
- 500:	e1 f3       	breq	.-8      	; 0x4fa <main+0x10>
- 502:	0e 94 00 00 	call	0	; 0x0 <__vectors>
- 506:	f9 cf       	rjmp	.-14     	; 0x4fa <main+0x10>
+ 65c:	20 97       	sbiw	r28, 0x00	; 0
+ 65e:	e1 f3       	breq	.-8      	; 0x658 <main+0x10>
+ 660:	0e 94 00 00 	call	0	; 0x0 <__vectors>
+ 664:	f9 cf       	rjmp	.-14     	; 0x658 <main+0x10>
 
-00000508 <_ZdlPv>:
+00000666 <_ZdlPv>:
   return malloc(size);
 }
 
 void operator delete(void * ptr)
 {
   free(ptr);
- 508:	0e 94 37 01 	call	0x26e	; 0x26e <free>
+ 666:	0e 94 37 01 	call	0x26e	; 0x26e <free>
 } 
- 50c:	08 95       	ret
+ 66a:	08 95       	ret
 
-0000050e <__vector_16>:
+0000066c <__vector_16>:
 #if defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
 SIGNAL(TIM0_OVF_vect)
 #else
 SIGNAL(TIMER0_OVF_vect)
 #endif
 {
- 50e:	1f 92       	push	r1
- 510:	0f 92       	push	r0
- 512:	0f b6       	in	r0, 0x3f	; 63
- 514:	0f 92       	push	r0
- 516:	11 24       	eor	r1, r1
- 518:	2f 93       	push	r18
- 51a:	3f 93       	push	r19
- 51c:	8f 93       	push	r24
- 51e:	9f 93       	push	r25
- 520:	af 93       	push	r26
- 522:	bf 93       	push	r27
+ 66c:	1f 92       	push	r1
+ 66e:	0f 92       	push	r0
+ 670:	0f b6       	in	r0, 0x3f	; 63
+ 672:	0f 92       	push	r0
+ 674:	11 24       	eor	r1, r1
+ 676:	2f 93       	push	r18
+ 678:	3f 93       	push	r19
+ 67a:	8f 93       	push	r24
+ 67c:	9f 93       	push	r25
+ 67e:	af 93       	push	r26
+ 680:	bf 93       	push	r27
 	// copy these to local variables so they can be stored in registers
 	// (volatile variables must be read from memory on every access)
 	unsigned long m = timer0_millis;
- 524:	80 91 1b 01 	lds	r24, 0x011B
- 528:	90 91 1c 01 	lds	r25, 0x011C
- 52c:	a0 91 1d 01 	lds	r26, 0x011D
- 530:	b0 91 1e 01 	lds	r27, 0x011E
+ 682:	80 91 1d 01 	lds	r24, 0x011D
+ 686:	90 91 1e 01 	lds	r25, 0x011E
+ 68a:	a0 91 1f 01 	lds	r26, 0x011F
+ 68e:	b0 91 20 01 	lds	r27, 0x0120
 	unsigned char f = timer0_fract;
- 534:	30 91 1f 01 	lds	r19, 0x011F
+ 692:	30 91 21 01 	lds	r19, 0x0121
 
 	m += MILLIS_INC;
- 538:	01 96       	adiw	r24, 0x01	; 1
- 53a:	a1 1d       	adc	r26, r1
- 53c:	b1 1d       	adc	r27, r1
+ 696:	01 96       	adiw	r24, 0x01	; 1
+ 698:	a1 1d       	adc	r26, r1
+ 69a:	b1 1d       	adc	r27, r1
 	f += FRACT_INC;
- 53e:	23 2f       	mov	r18, r19
- 540:	2d 5f       	subi	r18, 0xFD	; 253
+ 69c:	23 2f       	mov	r18, r19
+ 69e:	2d 5f       	subi	r18, 0xFD	; 253
 	if (f >= FRACT_MAX) {
- 542:	2d 37       	cpi	r18, 0x7D	; 125
- 544:	20 f0       	brcs	.+8      	; 0x54e <__vector_16+0x40>
+ 6a0:	2d 37       	cpi	r18, 0x7D	; 125
+ 6a2:	20 f0       	brcs	.+8      	; 0x6ac <__vector_16+0x40>
 		f -= FRACT_MAX;
- 546:	2d 57       	subi	r18, 0x7D	; 125
+ 6a4:	2d 57       	subi	r18, 0x7D	; 125
 		m += 1;
- 548:	01 96       	adiw	r24, 0x01	; 1
- 54a:	a1 1d       	adc	r26, r1
- 54c:	b1 1d       	adc	r27, r1
+ 6a6:	01 96       	adiw	r24, 0x01	; 1
+ 6a8:	a1 1d       	adc	r26, r1
+ 6aa:	b1 1d       	adc	r27, r1
 	}
 
 	timer0_fract = f;
- 54e:	20 93 1f 01 	sts	0x011F, r18
+ 6ac:	20 93 21 01 	sts	0x0121, r18
 	timer0_millis = m;
- 552:	80 93 1b 01 	sts	0x011B, r24
- 556:	90 93 1c 01 	sts	0x011C, r25
- 55a:	a0 93 1d 01 	sts	0x011D, r26
- 55e:	b0 93 1e 01 	sts	0x011E, r27
+ 6b0:	80 93 1d 01 	sts	0x011D, r24
+ 6b4:	90 93 1e 01 	sts	0x011E, r25
+ 6b8:	a0 93 1f 01 	sts	0x011F, r26
+ 6bc:	b0 93 20 01 	sts	0x0120, r27
 	timer0_overflow_count++;
- 562:	80 91 17 01 	lds	r24, 0x0117
- 566:	90 91 18 01 	lds	r25, 0x0118
- 56a:	a0 91 19 01 	lds	r26, 0x0119
- 56e:	b0 91 1a 01 	lds	r27, 0x011A
- 572:	01 96       	adiw	r24, 0x01	; 1
- 574:	a1 1d       	adc	r26, r1
- 576:	b1 1d       	adc	r27, r1
- 578:	80 93 17 01 	sts	0x0117, r24
- 57c:	90 93 18 01 	sts	0x0118, r25
- 580:	a0 93 19 01 	sts	0x0119, r26
- 584:	b0 93 1a 01 	sts	0x011A, r27
+ 6c0:	80 91 19 01 	lds	r24, 0x0119
+ 6c4:	90 91 1a 01 	lds	r25, 0x011A
+ 6c8:	a0 91 1b 01 	lds	r26, 0x011B
+ 6cc:	b0 91 1c 01 	lds	r27, 0x011C
+ 6d0:	01 96       	adiw	r24, 0x01	; 1
+ 6d2:	a1 1d       	adc	r26, r1
+ 6d4:	b1 1d       	adc	r27, r1
+ 6d6:	80 93 19 01 	sts	0x0119, r24
+ 6da:	90 93 1a 01 	sts	0x011A, r25
+ 6de:	a0 93 1b 01 	sts	0x011B, r26
+ 6e2:	b0 93 1c 01 	sts	0x011C, r27
 }
- 588:	bf 91       	pop	r27
- 58a:	af 91       	pop	r26
- 58c:	9f 91       	pop	r25
- 58e:	8f 91       	pop	r24
- 590:	3f 91       	pop	r19
- 592:	2f 91       	pop	r18
- 594:	0f 90       	pop	r0
- 596:	0f be       	out	0x3f, r0	; 63
- 598:	0f 90       	pop	r0
- 59a:	1f 90       	pop	r1
- 59c:	18 95       	reti
+ 6e6:	bf 91       	pop	r27
+ 6e8:	af 91       	pop	r26
+ 6ea:	9f 91       	pop	r25
+ 6ec:	8f 91       	pop	r24
+ 6ee:	3f 91       	pop	r19
+ 6f0:	2f 91       	pop	r18
+ 6f2:	0f 90       	pop	r0
+ 6f4:	0f be       	out	0x3f, r0	; 63
+ 6f6:	0f 90       	pop	r0
+ 6f8:	1f 90       	pop	r1
+ 6fa:	18 95       	reti
 
-0000059e <delay>:
+000006fc <delay>:
 	
 	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
 }
 
 void delay(unsigned long ms)
 {
- 59e:	9b 01       	movw	r18, r22
- 5a0:	ac 01       	movw	r20, r24
+ 6fc:	9b 01       	movw	r18, r22
+ 6fe:	ac 01       	movw	r20, r24
 	return m;
 }
 
 unsigned long micros() {
 	unsigned long m;
 	uint8_t oldSREG = SREG, t;
- 5a2:	7f b7       	in	r23, 0x3f	; 63
+ 700:	7f b7       	in	r23, 0x3f	; 63
 	
 	cli();
- 5a4:	f8 94       	cli
+ 702:	f8 94       	cli
 	m = timer0_overflow_count;
- 5a6:	80 91 17 01 	lds	r24, 0x0117
- 5aa:	90 91 18 01 	lds	r25, 0x0118
- 5ae:	a0 91 19 01 	lds	r26, 0x0119
- 5b2:	b0 91 1a 01 	lds	r27, 0x011A
+ 704:	80 91 19 01 	lds	r24, 0x0119
+ 708:	90 91 1a 01 	lds	r25, 0x011A
+ 70c:	a0 91 1b 01 	lds	r26, 0x011B
+ 710:	b0 91 1c 01 	lds	r27, 0x011C
 #if defined(TCNT0)
 	t = TCNT0;
- 5b6:	66 b5       	in	r22, 0x26	; 38
+ 714:	66 b5       	in	r22, 0x26	; 38
 	#error TIMER 0 not defined
 #endif
 
   
 #ifdef TIFR0
 	if ((TIFR0 & _BV(TOV0)) && (t < 255))
- 5b8:	a8 9b       	sbis	0x15, 0	; 21
- 5ba:	05 c0       	rjmp	.+10     	; 0x5c6 <delay+0x28>
- 5bc:	6f 3f       	cpi	r22, 0xFF	; 255
- 5be:	19 f0       	breq	.+6      	; 0x5c6 <delay+0x28>
+ 716:	a8 9b       	sbis	0x15, 0	; 21
+ 718:	05 c0       	rjmp	.+10     	; 0x724 <delay+0x28>
+ 71a:	6f 3f       	cpi	r22, 0xFF	; 255
+ 71c:	19 f0       	breq	.+6      	; 0x724 <delay+0x28>
 		m++;
- 5c0:	01 96       	adiw	r24, 0x01	; 1
- 5c2:	a1 1d       	adc	r26, r1
- 5c4:	b1 1d       	adc	r27, r1
+ 71e:	01 96       	adiw	r24, 0x01	; 1
+ 720:	a1 1d       	adc	r26, r1
+ 722:	b1 1d       	adc	r27, r1
 #else
 	if ((TIFR & _BV(TOV0)) && (t < 255))
 		m++;
 #endif
 
 	SREG = oldSREG;
- 5c6:	7f bf       	out	0x3f, r23	; 63
+ 724:	7f bf       	out	0x3f, r23	; 63
 	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
 }
 
 void delay(unsigned long ms)
 {
 	uint16_t start = (uint16_t)micros();
- 5c8:	ba 2f       	mov	r27, r26
- 5ca:	a9 2f       	mov	r26, r25
- 5cc:	98 2f       	mov	r25, r24
- 5ce:	88 27       	eor	r24, r24
- 5d0:	86 0f       	add	r24, r22
- 5d2:	91 1d       	adc	r25, r1
- 5d4:	a1 1d       	adc	r26, r1
- 5d6:	b1 1d       	adc	r27, r1
- 5d8:	62 e0       	ldi	r22, 0x02	; 2
- 5da:	88 0f       	add	r24, r24
- 5dc:	99 1f       	adc	r25, r25
- 5de:	aa 1f       	adc	r26, r26
- 5e0:	bb 1f       	adc	r27, r27
- 5e2:	6a 95       	dec	r22
- 5e4:	d1 f7       	brne	.-12     	; 0x5da <delay+0x3c>
- 5e6:	bc 01       	movw	r22, r24
- 5e8:	2d c0       	rjmp	.+90     	; 0x644 <delay+0xa6>
+ 726:	ba 2f       	mov	r27, r26
+ 728:	a9 2f       	mov	r26, r25
+ 72a:	98 2f       	mov	r25, r24
+ 72c:	88 27       	eor	r24, r24
+ 72e:	86 0f       	add	r24, r22
+ 730:	91 1d       	adc	r25, r1
+ 732:	a1 1d       	adc	r26, r1
+ 734:	b1 1d       	adc	r27, r1
+ 736:	62 e0       	ldi	r22, 0x02	; 2
+ 738:	88 0f       	add	r24, r24
+ 73a:	99 1f       	adc	r25, r25
+ 73c:	aa 1f       	adc	r26, r26
+ 73e:	bb 1f       	adc	r27, r27
+ 740:	6a 95       	dec	r22
+ 742:	d1 f7       	brne	.-12     	; 0x738 <delay+0x3c>
+ 744:	bc 01       	movw	r22, r24
+ 746:	2d c0       	rjmp	.+90     	; 0x7a2 <delay+0xa6>
 	return m;
 }
 
 unsigned long micros() {
 	unsigned long m;
 	uint8_t oldSREG = SREG, t;
- 5ea:	ff b7       	in	r31, 0x3f	; 63
+ 748:	ff b7       	in	r31, 0x3f	; 63
 	
 	cli();
- 5ec:	f8 94       	cli
+ 74a:	f8 94       	cli
 	m = timer0_overflow_count;
- 5ee:	80 91 17 01 	lds	r24, 0x0117
- 5f2:	90 91 18 01 	lds	r25, 0x0118
- 5f6:	a0 91 19 01 	lds	r26, 0x0119
- 5fa:	b0 91 1a 01 	lds	r27, 0x011A
+ 74c:	80 91 19 01 	lds	r24, 0x0119
+ 750:	90 91 1a 01 	lds	r25, 0x011A
+ 754:	a0 91 1b 01 	lds	r26, 0x011B
+ 758:	b0 91 1c 01 	lds	r27, 0x011C
 #if defined(TCNT0)
 	t = TCNT0;
- 5fe:	e6 b5       	in	r30, 0x26	; 38
+ 75c:	e6 b5       	in	r30, 0x26	; 38
 	#error TIMER 0 not defined
 #endif
 
   
 #ifdef TIFR0
 	if ((TIFR0 & _BV(TOV0)) && (t < 255))
- 600:	a8 9b       	sbis	0x15, 0	; 21
- 602:	05 c0       	rjmp	.+10     	; 0x60e <delay+0x70>
- 604:	ef 3f       	cpi	r30, 0xFF	; 255
- 606:	19 f0       	breq	.+6      	; 0x60e <delay+0x70>
+ 75e:	a8 9b       	sbis	0x15, 0	; 21
+ 760:	05 c0       	rjmp	.+10     	; 0x76c <delay+0x70>
+ 762:	ef 3f       	cpi	r30, 0xFF	; 255
+ 764:	19 f0       	breq	.+6      	; 0x76c <delay+0x70>
 		m++;
- 608:	01 96       	adiw	r24, 0x01	; 1
- 60a:	a1 1d       	adc	r26, r1
- 60c:	b1 1d       	adc	r27, r1
+ 766:	01 96       	adiw	r24, 0x01	; 1
+ 768:	a1 1d       	adc	r26, r1
+ 76a:	b1 1d       	adc	r27, r1
 #else
 	if ((TIFR & _BV(TOV0)) && (t < 255))
 		m++;
 #endif
 
 	SREG = oldSREG;
- 60e:	ff bf       	out	0x3f, r31	; 63
+ 76c:	ff bf       	out	0x3f, r31	; 63
 void delay(unsigned long ms)
 {
 	uint16_t start = (uint16_t)micros();
 
 	while (ms > 0) {
 		if (((uint16_t)micros() - start) >= 1000) {
- 610:	ba 2f       	mov	r27, r26
- 612:	a9 2f       	mov	r26, r25
- 614:	98 2f       	mov	r25, r24
- 616:	88 27       	eor	r24, r24
- 618:	8e 0f       	add	r24, r30
- 61a:	91 1d       	adc	r25, r1
- 61c:	a1 1d       	adc	r26, r1
- 61e:	b1 1d       	adc	r27, r1
- 620:	e2 e0       	ldi	r30, 0x02	; 2
- 622:	88 0f       	add	r24, r24
- 624:	99 1f       	adc	r25, r25
- 626:	aa 1f       	adc	r26, r26
- 628:	bb 1f       	adc	r27, r27
- 62a:	ea 95       	dec	r30
- 62c:	d1 f7       	brne	.-12     	; 0x622 <delay+0x84>
- 62e:	86 1b       	sub	r24, r22
- 630:	97 0b       	sbc	r25, r23
- 632:	88 5e       	subi	r24, 0xE8	; 232
- 634:	93 40       	sbci	r25, 0x03	; 3
- 636:	c8 f2       	brcs	.-78     	; 0x5ea <delay+0x4c>
+ 76e:	ba 2f       	mov	r27, r26
+ 770:	a9 2f       	mov	r26, r25
+ 772:	98 2f       	mov	r25, r24
+ 774:	88 27       	eor	r24, r24
+ 776:	8e 0f       	add	r24, r30
+ 778:	91 1d       	adc	r25, r1
+ 77a:	a1 1d       	adc	r26, r1
+ 77c:	b1 1d       	adc	r27, r1
+ 77e:	e2 e0       	ldi	r30, 0x02	; 2
+ 780:	88 0f       	add	r24, r24
+ 782:	99 1f       	adc	r25, r25
+ 784:	aa 1f       	adc	r26, r26
+ 786:	bb 1f       	adc	r27, r27
+ 788:	ea 95       	dec	r30
+ 78a:	d1 f7       	brne	.-12     	; 0x780 <delay+0x84>
+ 78c:	86 1b       	sub	r24, r22
+ 78e:	97 0b       	sbc	r25, r23
+ 790:	88 5e       	subi	r24, 0xE8	; 232
+ 792:	93 40       	sbci	r25, 0x03	; 3
+ 794:	c8 f2       	brcs	.-78     	; 0x748 <delay+0x4c>
 			ms--;
- 638:	21 50       	subi	r18, 0x01	; 1
- 63a:	30 40       	sbci	r19, 0x00	; 0
- 63c:	40 40       	sbci	r20, 0x00	; 0
- 63e:	50 40       	sbci	r21, 0x00	; 0
+ 796:	21 50       	subi	r18, 0x01	; 1
+ 798:	30 40       	sbci	r19, 0x00	; 0
+ 79a:	40 40       	sbci	r20, 0x00	; 0
+ 79c:	50 40       	sbci	r21, 0x00	; 0
 			start += 1000;
- 640:	68 51       	subi	r22, 0x18	; 24
- 642:	7c 4f       	sbci	r23, 0xFC	; 252
+ 79e:	68 51       	subi	r22, 0x18	; 24
+ 7a0:	7c 4f       	sbci	r23, 0xFC	; 252
 
 void delay(unsigned long ms)
 {
 	uint16_t start = (uint16_t)micros();
 
 	while (ms > 0) {
- 644:	21 15       	cp	r18, r1
- 646:	31 05       	cpc	r19, r1
- 648:	41 05       	cpc	r20, r1
- 64a:	51 05       	cpc	r21, r1
- 64c:	71 f6       	brne	.-100    	; 0x5ea <delay+0x4c>
+ 7a2:	21 15       	cp	r18, r1
+ 7a4:	31 05       	cpc	r19, r1
+ 7a6:	41 05       	cpc	r20, r1
+ 7a8:	51 05       	cpc	r21, r1
+ 7aa:	71 f6       	brne	.-100    	; 0x748 <delay+0x4c>
 		if (((uint16_t)micros() - start) >= 1000) {
 			ms--;
 			start += 1000;
 		}
 	}
 }
- 64e:	08 95       	ret
+ 7ac:	08 95       	ret
 
-00000650 <init>:
+000007ae <init>:
 
 void init()
 {
 	// this needs to be called before setup() or some functions won't
 	// work there
 	sei();
- 650:	78 94       	sei
+ 7ae:	78 94       	sei
 	
 	// on the ATmega168, timer 0 is also used for fast hardware pwm
 	// (using phase-correct PWM would mean that timer 0 overflowed half as often
 	// resulting in different millis() behavior on the ATmega8 and ATmega168)
 #if defined(TCCR0A) && defined(WGM01)
 	sbi(TCCR0A, WGM01);
- 652:	84 b5       	in	r24, 0x24	; 36
- 654:	82 60       	ori	r24, 0x02	; 2
- 656:	84 bd       	out	0x24, r24	; 36
+ 7b0:	84 b5       	in	r24, 0x24	; 36
+ 7b2:	82 60       	ori	r24, 0x02	; 2
+ 7b4:	84 bd       	out	0x24, r24	; 36
 	sbi(TCCR0A, WGM00);
- 658:	84 b5       	in	r24, 0x24	; 36
- 65a:	81 60       	ori	r24, 0x01	; 1
- 65c:	84 bd       	out	0x24, r24	; 36
+ 7b6:	84 b5       	in	r24, 0x24	; 36
+ 7b8:	81 60       	ori	r24, 0x01	; 1
+ 7ba:	84 bd       	out	0x24, r24	; 36
 	// this combination is for the standard atmega8
 	sbi(TCCR0, CS01);
 	sbi(TCCR0, CS00);
 #elif defined(TCCR0B) && defined(CS01) && defined(CS00)
 	// this combination is for the standard 168/328/1280/2560
 	sbi(TCCR0B, CS01);
- 65e:	85 b5       	in	r24, 0x25	; 37
- 660:	82 60       	ori	r24, 0x02	; 2
- 662:	85 bd       	out	0x25, r24	; 37
+ 7bc:	85 b5       	in	r24, 0x25	; 37
+ 7be:	82 60       	ori	r24, 0x02	; 2
+ 7c0:	85 bd       	out	0x25, r24	; 37
 	sbi(TCCR0B, CS00);
- 664:	85 b5       	in	r24, 0x25	; 37
- 666:	81 60       	ori	r24, 0x01	; 1
- 668:	85 bd       	out	0x25, r24	; 37
+ 7c2:	85 b5       	in	r24, 0x25	; 37
+ 7c4:	81 60       	ori	r24, 0x01	; 1
+ 7c6:	85 bd       	out	0x25, r24	; 37
 
 	// enable timer 0 overflow interrupt
 #if defined(TIMSK) && defined(TOIE0)
 	sbi(TIMSK, TOIE0);
 #elif defined(TIMSK0) && defined(TOIE0)
 	sbi(TIMSK0, TOIE0);
- 66a:	ee e6       	ldi	r30, 0x6E	; 110
- 66c:	f0 e0       	ldi	r31, 0x00	; 0
- 66e:	80 81       	ld	r24, Z
- 670:	81 60       	ori	r24, 0x01	; 1
- 672:	80 83       	st	Z, r24
+ 7c8:	ee e6       	ldi	r30, 0x6E	; 110
+ 7ca:	f0 e0       	ldi	r31, 0x00	; 0
+ 7cc:	80 81       	ld	r24, Z
+ 7ce:	81 60       	ori	r24, 0x01	; 1
+ 7d0:	80 83       	st	Z, r24
 	// this is better for motors as it ensures an even waveform
 	// note, however, that fast pwm mode can achieve a frequency of up
 	// 8 MHz (with a 16 MHz clock) at 50% duty cycle
 
 #if defined(TCCR1B) && defined(CS11) && defined(CS10)
 	TCCR1B = 0;
- 674:	e1 e8       	ldi	r30, 0x81	; 129
- 676:	f0 e0       	ldi	r31, 0x00	; 0
- 678:	10 82       	st	Z, r1
+ 7d2:	e1 e8       	ldi	r30, 0x81	; 129
+ 7d4:	f0 e0       	ldi	r31, 0x00	; 0
+ 7d6:	10 82       	st	Z, r1
 
 	// set timer 1 prescale factor to 64
 	sbi(TCCR1B, CS11);
- 67a:	80 81       	ld	r24, Z
- 67c:	82 60       	ori	r24, 0x02	; 2
- 67e:	80 83       	st	Z, r24
+ 7d8:	80 81       	ld	r24, Z
+ 7da:	82 60       	ori	r24, 0x02	; 2
+ 7dc:	80 83       	st	Z, r24
 #if F_CPU >= 8000000L
 	sbi(TCCR1B, CS10);
- 680:	80 81       	ld	r24, Z
- 682:	81 60       	ori	r24, 0x01	; 1
- 684:	80 83       	st	Z, r24
+ 7de:	80 81       	ld	r24, Z
+ 7e0:	81 60       	ori	r24, 0x01	; 1
+ 7e2:	80 83       	st	Z, r24
 	sbi(TCCR1, CS10);
 #endif
 #endif
 	// put timer 1 in 8-bit phase correct pwm mode
 #if defined(TCCR1A) && defined(WGM10)
 	sbi(TCCR1A, WGM10);
- 686:	e0 e8       	ldi	r30, 0x80	; 128
- 688:	f0 e0       	ldi	r31, 0x00	; 0
- 68a:	80 81       	ld	r24, Z
- 68c:	81 60       	ori	r24, 0x01	; 1
- 68e:	80 83       	st	Z, r24
+ 7e4:	e0 e8       	ldi	r30, 0x80	; 128
+ 7e6:	f0 e0       	ldi	r31, 0x00	; 0
+ 7e8:	80 81       	ld	r24, Z
+ 7ea:	81 60       	ori	r24, 0x01	; 1
+ 7ec:	80 83       	st	Z, r24
 
 	// set timer 2 prescale factor to 64
 #if defined(TCCR2) && defined(CS22)
 	sbi(TCCR2, CS22);
 #elif defined(TCCR2B) && defined(CS22)
 	sbi(TCCR2B, CS22);
- 690:	e1 eb       	ldi	r30, 0xB1	; 177
- 692:	f0 e0       	ldi	r31, 0x00	; 0
- 694:	80 81       	ld	r24, Z
- 696:	84 60       	ori	r24, 0x04	; 4
- 698:	80 83       	st	Z, r24
+ 7ee:	e1 eb       	ldi	r30, 0xB1	; 177
+ 7f0:	f0 e0       	ldi	r31, 0x00	; 0
+ 7f2:	80 81       	ld	r24, Z
+ 7f4:	84 60       	ori	r24, 0x04	; 4
+ 7f6:	80 83       	st	Z, r24
 
 	// configure timer 2 for phase correct pwm (8-bit)
 #if defined(TCCR2) && defined(WGM20)
 	sbi(TCCR2, WGM20);
 #elif defined(TCCR2A) && defined(WGM20)
 	sbi(TCCR2A, WGM20);
- 69a:	e0 eb       	ldi	r30, 0xB0	; 176
- 69c:	f0 e0       	ldi	r31, 0x00	; 0
- 69e:	80 81       	ld	r24, Z
- 6a0:	81 60       	ori	r24, 0x01	; 1
- 6a2:	80 83       	st	Z, r24
+ 7f8:	e0 eb       	ldi	r30, 0xB0	; 176
+ 7fa:	f0 e0       	ldi	r31, 0x00	; 0
+ 7fc:	80 81       	ld	r24, Z
+ 7fe:	81 60       	ori	r24, 0x01	; 1
+ 800:	80 83       	st	Z, r24
 #if defined(ADCSRA)
 	// set a2d prescale factor to 128
 	// 16 MHz / 128 = 125 KHz, inside the desired 50-200 KHz range.
 	// XXX: this will not work properly for other clock speeds, and
 	// this code should use F_CPU to determine the prescale factor.
 	sbi(ADCSRA, ADPS2);
- 6a4:	ea e7       	ldi	r30, 0x7A	; 122
- 6a6:	f0 e0       	ldi	r31, 0x00	; 0
- 6a8:	80 81       	ld	r24, Z
- 6aa:	84 60       	ori	r24, 0x04	; 4
- 6ac:	80 83       	st	Z, r24
+ 802:	ea e7       	ldi	r30, 0x7A	; 122
+ 804:	f0 e0       	ldi	r31, 0x00	; 0
+ 806:	80 81       	ld	r24, Z
+ 808:	84 60       	ori	r24, 0x04	; 4
+ 80a:	80 83       	st	Z, r24
 	sbi(ADCSRA, ADPS1);
- 6ae:	80 81       	ld	r24, Z
- 6b0:	82 60       	ori	r24, 0x02	; 2
- 6b2:	80 83       	st	Z, r24
+ 80c:	80 81       	ld	r24, Z
+ 80e:	82 60       	ori	r24, 0x02	; 2
+ 810:	80 83       	st	Z, r24
 	sbi(ADCSRA, ADPS0);
- 6b4:	80 81       	ld	r24, Z
- 6b6:	81 60       	ori	r24, 0x01	; 1
- 6b8:	80 83       	st	Z, r24
+ 812:	80 81       	ld	r24, Z
+ 814:	81 60       	ori	r24, 0x01	; 1
+ 816:	80 83       	st	Z, r24
 
 	// enable a2d conversions
 	sbi(ADCSRA, ADEN);
- 6ba:	80 81       	ld	r24, Z
- 6bc:	80 68       	ori	r24, 0x80	; 128
- 6be:	80 83       	st	Z, r24
+ 818:	80 81       	ld	r24, Z
+ 81a:	80 68       	ori	r24, 0x80	; 128
+ 81c:	80 83       	st	Z, r24
 	// here so they can be used as normal digital i/o; they will be
 	// reconnected in Serial.begin()
 #if defined(UCSRB)
 	UCSRB = 0;
 #elif defined(UCSR0B)
 	UCSR0B = 0;
- 6c0:	10 92 c1 00 	sts	0x00C1, r1
+ 81e:	10 92 c1 00 	sts	0x00C1, r1
 #endif
 }
- 6c4:	08 95       	ret
+ 822:	08 95       	ret
 
-000006c6 <pinMode>:
+00000824 <pinMode>:
 #include "wiring_private.h"
 #include "pins_arduino.h"
 
 void pinMode(uint8_t pin, uint8_t mode)
 {
 	uint8_t bit = digitalPinToBitMask(pin);
- 6c6:	48 2f       	mov	r20, r24
- 6c8:	50 e0       	ldi	r21, 0x00	; 0
- 6ca:	ca 01       	movw	r24, r20
- 6cc:	86 56       	subi	r24, 0x66	; 102
- 6ce:	9f 4f       	sbci	r25, 0xFF	; 255
- 6d0:	fc 01       	movw	r30, r24
- 6d2:	24 91       	lpm	r18, Z+
+ 824:	48 2f       	mov	r20, r24
+ 826:	50 e0       	ldi	r21, 0x00	; 0
+ 828:	ca 01       	movw	r24, r20
+ 82a:	86 56       	subi	r24, 0x66	; 102
+ 82c:	9f 4f       	sbci	r25, 0xFF	; 255
+ 82e:	fc 01       	movw	r30, r24
+ 830:	24 91       	lpm	r18, Z+
 	uint8_t port = digitalPinToPort(pin);
- 6d4:	4a 57       	subi	r20, 0x7A	; 122
- 6d6:	5f 4f       	sbci	r21, 0xFF	; 255
- 6d8:	fa 01       	movw	r30, r20
- 6da:	84 91       	lpm	r24, Z+
+ 832:	4a 57       	subi	r20, 0x7A	; 122
+ 834:	5f 4f       	sbci	r21, 0xFF	; 255
+ 836:	fa 01       	movw	r30, r20
+ 838:	84 91       	lpm	r24, Z+
 	volatile uint8_t *reg;
 
 	if (port == NOT_A_PIN) return;
- 6dc:	88 23       	and	r24, r24
- 6de:	c1 f0       	breq	.+48     	; 0x710 <pinMode+0x4a>
+ 83a:	88 23       	and	r24, r24
+ 83c:	c1 f0       	breq	.+48     	; 0x86e <pinMode+0x4a>
 
 	// JWS: can I let the optimizer do this?
 	reg = portModeRegister(port);
- 6e0:	e8 2f       	mov	r30, r24
- 6e2:	f0 e0       	ldi	r31, 0x00	; 0
- 6e4:	ee 0f       	add	r30, r30
- 6e6:	ff 1f       	adc	r31, r31
- 6e8:	e8 59       	subi	r30, 0x98	; 152
- 6ea:	ff 4f       	sbci	r31, 0xFF	; 255
- 6ec:	a5 91       	lpm	r26, Z+
- 6ee:	b4 91       	lpm	r27, Z+
+ 83e:	e8 2f       	mov	r30, r24
+ 840:	f0 e0       	ldi	r31, 0x00	; 0
+ 842:	ee 0f       	add	r30, r30
+ 844:	ff 1f       	adc	r31, r31
+ 846:	e8 59       	subi	r30, 0x98	; 152
+ 848:	ff 4f       	sbci	r31, 0xFF	; 255
+ 84a:	a5 91       	lpm	r26, Z+
+ 84c:	b4 91       	lpm	r27, Z+
 
 	if (mode == INPUT) { 
- 6f0:	66 23       	and	r22, r22
- 6f2:	41 f4       	brne	.+16     	; 0x704 <pinMode+0x3e>
+ 84e:	66 23       	and	r22, r22
+ 850:	41 f4       	brne	.+16     	; 0x862 <pinMode+0x3e>
 		uint8_t oldSREG = SREG;
- 6f4:	9f b7       	in	r25, 0x3f	; 63
+ 852:	9f b7       	in	r25, 0x3f	; 63
                 cli();
- 6f6:	f8 94       	cli
+ 854:	f8 94       	cli
 		*reg &= ~bit;
- 6f8:	8c 91       	ld	r24, X
- 6fa:	20 95       	com	r18
- 6fc:	82 23       	and	r24, r18
- 6fe:	8c 93       	st	X, r24
+ 856:	8c 91       	ld	r24, X
+ 858:	20 95       	com	r18
+ 85a:	82 23       	and	r24, r18
+ 85c:	8c 93       	st	X, r24
 		SREG = oldSREG;
- 700:	9f bf       	out	0x3f, r25	; 63
- 702:	08 95       	ret
+ 85e:	9f bf       	out	0x3f, r25	; 63
+ 860:	08 95       	ret
 	} else {
 		uint8_t oldSREG = SREG;
- 704:	9f b7       	in	r25, 0x3f	; 63
+ 862:	9f b7       	in	r25, 0x3f	; 63
                 cli();
- 706:	f8 94       	cli
+ 864:	f8 94       	cli
 		*reg |= bit;
- 708:	8c 91       	ld	r24, X
- 70a:	82 2b       	or	r24, r18
- 70c:	8c 93       	st	X, r24
+ 866:	8c 91       	ld	r24, X
+ 868:	82 2b       	or	r24, r18
+ 86a:	8c 93       	st	X, r24
 		SREG = oldSREG;
- 70e:	9f bf       	out	0x3f, r25	; 63
- 710:	08 95       	ret
+ 86c:	9f bf       	out	0x3f, r25	; 63
+ 86e:	08 95       	ret
 
-00000712 <digitalWrite>:
+00000870 <digitalWrite>:
 	}
 }
 
 void digitalWrite(uint8_t pin, uint8_t val)
 {
 	uint8_t timer = digitalPinToTimer(pin);
- 712:	48 2f       	mov	r20, r24
- 714:	50 e0       	ldi	r21, 0x00	; 0
- 716:	ca 01       	movw	r24, r20
- 718:	82 55       	subi	r24, 0x52	; 82
- 71a:	9f 4f       	sbci	r25, 0xFF	; 255
- 71c:	fc 01       	movw	r30, r24
- 71e:	24 91       	lpm	r18, Z+
+ 870:	48 2f       	mov	r20, r24
+ 872:	50 e0       	ldi	r21, 0x00	; 0
+ 874:	ca 01       	movw	r24, r20
+ 876:	82 55       	subi	r24, 0x52	; 82
+ 878:	9f 4f       	sbci	r25, 0xFF	; 255
+ 87a:	fc 01       	movw	r30, r24
+ 87c:	24 91       	lpm	r18, Z+
 	uint8_t bit = digitalPinToBitMask(pin);
- 720:	ca 01       	movw	r24, r20
- 722:	86 56       	subi	r24, 0x66	; 102
- 724:	9f 4f       	sbci	r25, 0xFF	; 255
- 726:	fc 01       	movw	r30, r24
- 728:	94 91       	lpm	r25, Z+
+ 87e:	ca 01       	movw	r24, r20
+ 880:	86 56       	subi	r24, 0x66	; 102
+ 882:	9f 4f       	sbci	r25, 0xFF	; 255
+ 884:	fc 01       	movw	r30, r24
+ 886:	94 91       	lpm	r25, Z+
 	uint8_t port = digitalPinToPort(pin);
- 72a:	4a 57       	subi	r20, 0x7A	; 122
- 72c:	5f 4f       	sbci	r21, 0xFF	; 255
- 72e:	fa 01       	movw	r30, r20
- 730:	34 91       	lpm	r19, Z+
+ 888:	4a 57       	subi	r20, 0x7A	; 122
+ 88a:	5f 4f       	sbci	r21, 0xFF	; 255
+ 88c:	fa 01       	movw	r30, r20
+ 88e:	34 91       	lpm	r19, Z+
 	volatile uint8_t *out;
 
 	if (port == NOT_A_PIN) return;
- 732:	33 23       	and	r19, r19
- 734:	09 f4       	brne	.+2      	; 0x738 <digitalWrite+0x26>
- 736:	40 c0       	rjmp	.+128    	; 0x7b8 <digitalWrite+0xa6>
+ 890:	33 23       	and	r19, r19
+ 892:	09 f4       	brne	.+2      	; 0x896 <digitalWrite+0x26>
+ 894:	40 c0       	rjmp	.+128    	; 0x916 <__stack+0x17>
 
 	// If the pin that support PWM output, we need to turn it off
 	// before doing a digital write.
 	if (timer != NOT_ON_TIMER) turnOffPWM(timer);
- 738:	22 23       	and	r18, r18
- 73a:	51 f1       	breq	.+84     	; 0x790 <digitalWrite+0x7e>
+ 896:	22 23       	and	r18, r18
+ 898:	51 f1       	breq	.+84     	; 0x8ee <digitalWrite+0x7e>
 //
 //static inline void turnOffPWM(uint8_t timer) __attribute__ ((always_inline));
 //static inline void turnOffPWM(uint8_t timer)
 static void turnOffPWM(uint8_t timer)
 {
 	switch (timer)
- 73c:	23 30       	cpi	r18, 0x03	; 3
- 73e:	71 f0       	breq	.+28     	; 0x75c <digitalWrite+0x4a>
- 740:	24 30       	cpi	r18, 0x04	; 4
- 742:	28 f4       	brcc	.+10     	; 0x74e <digitalWrite+0x3c>
- 744:	21 30       	cpi	r18, 0x01	; 1
- 746:	a1 f0       	breq	.+40     	; 0x770 <digitalWrite+0x5e>
- 748:	22 30       	cpi	r18, 0x02	; 2
- 74a:	11 f5       	brne	.+68     	; 0x790 <digitalWrite+0x7e>
- 74c:	14 c0       	rjmp	.+40     	; 0x776 <digitalWrite+0x64>
- 74e:	26 30       	cpi	r18, 0x06	; 6
- 750:	b1 f0       	breq	.+44     	; 0x77e <digitalWrite+0x6c>
- 752:	27 30       	cpi	r18, 0x07	; 7
- 754:	c1 f0       	breq	.+48     	; 0x786 <digitalWrite+0x74>
- 756:	24 30       	cpi	r18, 0x04	; 4
- 758:	d9 f4       	brne	.+54     	; 0x790 <digitalWrite+0x7e>
- 75a:	04 c0       	rjmp	.+8      	; 0x764 <digitalWrite+0x52>
+ 89a:	23 30       	cpi	r18, 0x03	; 3
+ 89c:	71 f0       	breq	.+28     	; 0x8ba <digitalWrite+0x4a>
+ 89e:	24 30       	cpi	r18, 0x04	; 4
+ 8a0:	28 f4       	brcc	.+10     	; 0x8ac <digitalWrite+0x3c>
+ 8a2:	21 30       	cpi	r18, 0x01	; 1
+ 8a4:	a1 f0       	breq	.+40     	; 0x8ce <digitalWrite+0x5e>
+ 8a6:	22 30       	cpi	r18, 0x02	; 2
+ 8a8:	11 f5       	brne	.+68     	; 0x8ee <digitalWrite+0x7e>
+ 8aa:	14 c0       	rjmp	.+40     	; 0x8d4 <digitalWrite+0x64>
+ 8ac:	26 30       	cpi	r18, 0x06	; 6
+ 8ae:	b1 f0       	breq	.+44     	; 0x8dc <digitalWrite+0x6c>
+ 8b0:	27 30       	cpi	r18, 0x07	; 7
+ 8b2:	c1 f0       	breq	.+48     	; 0x8e4 <digitalWrite+0x74>
+ 8b4:	24 30       	cpi	r18, 0x04	; 4
+ 8b6:	d9 f4       	brne	.+54     	; 0x8ee <digitalWrite+0x7e>
+ 8b8:	04 c0       	rjmp	.+8      	; 0x8c2 <digitalWrite+0x52>
 	{
 		#if defined(TCCR1A) && defined(COM1A1)
 		case TIMER1A:   cbi(TCCR1A, COM1A1);    break;
- 75c:	80 91 80 00 	lds	r24, 0x0080
- 760:	8f 77       	andi	r24, 0x7F	; 127
- 762:	03 c0       	rjmp	.+6      	; 0x76a <digitalWrite+0x58>
+ 8ba:	80 91 80 00 	lds	r24, 0x0080
+ 8be:	8f 77       	andi	r24, 0x7F	; 127
+ 8c0:	03 c0       	rjmp	.+6      	; 0x8c8 <digitalWrite+0x58>
 		#endif
 		#if defined(TCCR1A) && defined(COM1B1)
 		case TIMER1B:   cbi(TCCR1A, COM1B1);    break;
- 764:	80 91 80 00 	lds	r24, 0x0080
- 768:	8f 7d       	andi	r24, 0xDF	; 223
- 76a:	80 93 80 00 	sts	0x0080, r24
- 76e:	10 c0       	rjmp	.+32     	; 0x790 <digitalWrite+0x7e>
+ 8c2:	80 91 80 00 	lds	r24, 0x0080
+ 8c6:	8f 7d       	andi	r24, 0xDF	; 223
+ 8c8:	80 93 80 00 	sts	0x0080, r24
+ 8cc:	10 c0       	rjmp	.+32     	; 0x8ee <digitalWrite+0x7e>
 		#if defined(TCCR2) && defined(COM21)
 		case  TIMER2:   cbi(TCCR2, COM21);      break;
 		#endif
 		
 		#if defined(TCCR0A) && defined(COM0A1)
 		case  TIMER0A:  cbi(TCCR0A, COM0A1);    break;
- 770:	84 b5       	in	r24, 0x24	; 36
- 772:	8f 77       	andi	r24, 0x7F	; 127
- 774:	02 c0       	rjmp	.+4      	; 0x77a <digitalWrite+0x68>
+ 8ce:	84 b5       	in	r24, 0x24	; 36
+ 8d0:	8f 77       	andi	r24, 0x7F	; 127
+ 8d2:	02 c0       	rjmp	.+4      	; 0x8d8 <digitalWrite+0x68>
 		#endif
 		
 		#if defined(TIMER0B) && defined(COM0B1)
 		case  TIMER0B:  cbi(TCCR0A, COM0B1);    break;
- 776:	84 b5       	in	r24, 0x24	; 36
- 778:	8f 7d       	andi	r24, 0xDF	; 223
- 77a:	84 bd       	out	0x24, r24	; 36
- 77c:	09 c0       	rjmp	.+18     	; 0x790 <digitalWrite+0x7e>
+ 8d4:	84 b5       	in	r24, 0x24	; 36
+ 8d6:	8f 7d       	andi	r24, 0xDF	; 223
+ 8d8:	84 bd       	out	0x24, r24	; 36
+ 8da:	09 c0       	rjmp	.+18     	; 0x8ee <digitalWrite+0x7e>
 		#endif
 		#if defined(TCCR2A) && defined(COM2A1)
 		case  TIMER2A:  cbi(TCCR2A, COM2A1);    break;
- 77e:	80 91 b0 00 	lds	r24, 0x00B0
- 782:	8f 77       	andi	r24, 0x7F	; 127
- 784:	03 c0       	rjmp	.+6      	; 0x78c <digitalWrite+0x7a>
+ 8dc:	80 91 b0 00 	lds	r24, 0x00B0
+ 8e0:	8f 77       	andi	r24, 0x7F	; 127
+ 8e2:	03 c0       	rjmp	.+6      	; 0x8ea <digitalWrite+0x7a>
 		#endif
 		#if defined(TCCR2A) && defined(COM2B1)
 		case  TIMER2B:  cbi(TCCR2A, COM2B1);    break;
- 786:	80 91 b0 00 	lds	r24, 0x00B0
- 78a:	8f 7d       	andi	r24, 0xDF	; 223
- 78c:	80 93 b0 00 	sts	0x00B0, r24
+ 8e4:	80 91 b0 00 	lds	r24, 0x00B0
+ 8e8:	8f 7d       	andi	r24, 0xDF	; 223
+ 8ea:	80 93 b0 00 	sts	0x00B0, r24
 
 	// If the pin that support PWM output, we need to turn it off
 	// before doing a digital write.
 	if (timer != NOT_ON_TIMER) turnOffPWM(timer);
 
 	out = portOutputRegister(port);
- 790:	e3 2f       	mov	r30, r19
- 792:	f0 e0       	ldi	r31, 0x00	; 0
- 794:	ee 0f       	add	r30, r30
- 796:	ff 1f       	adc	r31, r31
- 798:	ee 58       	subi	r30, 0x8E	; 142
- 79a:	ff 4f       	sbci	r31, 0xFF	; 255
- 79c:	a5 91       	lpm	r26, Z+
- 79e:	b4 91       	lpm	r27, Z+
+ 8ee:	e3 2f       	mov	r30, r19
+ 8f0:	f0 e0       	ldi	r31, 0x00	; 0
+ 8f2:	ee 0f       	add	r30, r30
+ 8f4:	ff 1f       	adc	r31, r31
+ 8f6:	ee 58       	subi	r30, 0x8E	; 142
+ 8f8:	ff 4f       	sbci	r31, 0xFF	; 255
+ 8fa:	a5 91       	lpm	r26, Z+
+ 8fc:	b4 91       	lpm	r27, Z+
 
 	uint8_t oldSREG = SREG;
- 7a0:	2f b7       	in	r18, 0x3f	; 63
+ 8fe:	2f b7       	in	r18, 0x3f	; 63
 	cli();
- 7a2:	f8 94       	cli
+ 900:	f8 94       	cli
 
 	if (val == LOW) {
- 7a4:	66 23       	and	r22, r22
- 7a6:	21 f4       	brne	.+8      	; 0x7b0 <digitalWrite+0x9e>
+ 902:	66 23       	and	r22, r22
+ 904:	21 f4       	brne	.+8      	; 0x90e <__stack+0xf>
 		*out &= ~bit;
- 7a8:	8c 91       	ld	r24, X
- 7aa:	90 95       	com	r25
- 7ac:	89 23       	and	r24, r25
- 7ae:	02 c0       	rjmp	.+4      	; 0x7b4 <digitalWrite+0xa2>
+ 906:	8c 91       	ld	r24, X
+ 908:	90 95       	com	r25
+ 90a:	89 23       	and	r24, r25
+ 90c:	02 c0       	rjmp	.+4      	; 0x912 <__stack+0x13>
 	} else {
 		*out |= bit;
- 7b0:	8c 91       	ld	r24, X
- 7b2:	89 2b       	or	r24, r25
- 7b4:	8c 93       	st	X, r24
+ 90e:	8c 91       	ld	r24, X
+ 910:	89 2b       	or	r24, r25
+ 912:	8c 93       	st	X, r24
 	}
 
 	SREG = oldSREG;
- 7b6:	2f bf       	out	0x3f, r18	; 63
- 7b8:	08 95       	ret
+ 914:	2f bf       	out	0x3f, r18	; 63
+ 916:	08 95       	ret
 
-000007ba <shiftOut>:
+00000918 <shiftOut>:
 	}
 	return value;
 }
 
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
 {
- 7ba:	bf 92       	push	r11
- 7bc:	cf 92       	push	r12
- 7be:	df 92       	push	r13
- 7c0:	ef 92       	push	r14
- 7c2:	ff 92       	push	r15
- 7c4:	0f 93       	push	r16
- 7c6:	1f 93       	push	r17
- 7c8:	cf 93       	push	r28
- 7ca:	df 93       	push	r29
- 7cc:	e8 2e       	mov	r14, r24
- 7ce:	f6 2e       	mov	r15, r22
- 7d0:	b4 2e       	mov	r11, r20
- 7d2:	c7 e0       	ldi	r28, 0x07	; 7
- 7d4:	d0 e0       	ldi	r29, 0x00	; 0
- 7d6:	02 2f       	mov	r16, r18
- 7d8:	10 e0       	ldi	r17, 0x00	; 0
+ 918:	bf 92       	push	r11
+ 91a:	cf 92       	push	r12
+ 91c:	df 92       	push	r13
+ 91e:	ef 92       	push	r14
+ 920:	ff 92       	push	r15
+ 922:	0f 93       	push	r16
+ 924:	1f 93       	push	r17
+ 926:	cf 93       	push	r28
+ 928:	df 93       	push	r29
+ 92a:	e8 2e       	mov	r14, r24
+ 92c:	f6 2e       	mov	r15, r22
+ 92e:	b4 2e       	mov	r11, r20
+ 930:	c7 e0       	ldi	r28, 0x07	; 7
+ 932:	d0 e0       	ldi	r29, 0x00	; 0
+ 934:	02 2f       	mov	r16, r18
+ 936:	10 e0       	ldi	r17, 0x00	; 0
 	uint8_t i;
 
 	for (i = 0; i < 8; i++)  {
 		if (bitOrder == LSBFIRST)
 			digitalWrite(dataPin, !!(val & (1 << i)));
- 7da:	87 e0       	ldi	r24, 0x07	; 7
- 7dc:	c8 2e       	mov	r12, r24
- 7de:	d1 2c       	mov	r13, r1
+ 938:	87 e0       	ldi	r24, 0x07	; 7
+ 93a:	c8 2e       	mov	r12, r24
+ 93c:	d1 2c       	mov	r13, r1
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
 {
 	uint8_t i;
 
 	for (i = 0; i < 8; i++)  {
 		if (bitOrder == LSBFIRST)
- 7e0:	bb 20       	and	r11, r11
- 7e2:	59 f4       	brne	.+22     	; 0x7fa <shiftOut+0x40>
+ 93e:	bb 20       	and	r11, r11
+ 940:	59 f4       	brne	.+22     	; 0x958 <shiftOut+0x40>
 			digitalWrite(dataPin, !!(val & (1 << i)));
- 7e4:	b6 01       	movw	r22, r12
- 7e6:	6c 1b       	sub	r22, r28
- 7e8:	7d 0b       	sbc	r23, r29
- 7ea:	c8 01       	movw	r24, r16
- 7ec:	02 c0       	rjmp	.+4      	; 0x7f2 <shiftOut+0x38>
- 7ee:	95 95       	asr	r25
- 7f0:	87 95       	ror	r24
- 7f2:	6a 95       	dec	r22
- 7f4:	e2 f7       	brpl	.-8      	; 0x7ee <shiftOut+0x34>
- 7f6:	bc 01       	movw	r22, r24
- 7f8:	07 c0       	rjmp	.+14     	; 0x808 <shiftOut+0x4e>
+ 942:	b6 01       	movw	r22, r12
+ 944:	6c 1b       	sub	r22, r28
+ 946:	7d 0b       	sbc	r23, r29
+ 948:	c8 01       	movw	r24, r16
+ 94a:	02 c0       	rjmp	.+4      	; 0x950 <shiftOut+0x38>
+ 94c:	95 95       	asr	r25
+ 94e:	87 95       	ror	r24
+ 950:	6a 95       	dec	r22
+ 952:	e2 f7       	brpl	.-8      	; 0x94c <shiftOut+0x34>
+ 954:	bc 01       	movw	r22, r24
+ 956:	07 c0       	rjmp	.+14     	; 0x966 <shiftOut+0x4e>
 		else	
 			digitalWrite(dataPin, !!(val & (1 << (7 - i))));
- 7fa:	b8 01       	movw	r22, r16
- 7fc:	0c 2e       	mov	r0, r28
- 7fe:	02 c0       	rjmp	.+4      	; 0x804 <shiftOut+0x4a>
- 800:	75 95       	asr	r23
- 802:	67 95       	ror	r22
- 804:	0a 94       	dec	r0
- 806:	e2 f7       	brpl	.-8      	; 0x800 <shiftOut+0x46>
- 808:	61 70       	andi	r22, 0x01	; 1
- 80a:	8e 2d       	mov	r24, r14
- 80c:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
+ 958:	b8 01       	movw	r22, r16
+ 95a:	0c 2e       	mov	r0, r28
+ 95c:	02 c0       	rjmp	.+4      	; 0x962 <shiftOut+0x4a>
+ 95e:	75 95       	asr	r23
+ 960:	67 95       	ror	r22
+ 962:	0a 94       	dec	r0
+ 964:	e2 f7       	brpl	.-8      	; 0x95e <shiftOut+0x46>
+ 966:	61 70       	andi	r22, 0x01	; 1
+ 968:	8e 2d       	mov	r24, r14
+ 96a:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
 			
 		digitalWrite(clockPin, HIGH);
- 810:	8f 2d       	mov	r24, r15
- 812:	61 e0       	ldi	r22, 0x01	; 1
- 814:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
+ 96e:	8f 2d       	mov	r24, r15
+ 970:	61 e0       	ldi	r22, 0x01	; 1
+ 972:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
 		digitalWrite(clockPin, LOW);		
- 818:	8f 2d       	mov	r24, r15
- 81a:	60 e0       	ldi	r22, 0x00	; 0
- 81c:	0e 94 89 03 	call	0x712	; 0x712 <digitalWrite>
- 820:	21 97       	sbiw	r28, 0x01	; 1
+ 976:	8f 2d       	mov	r24, r15
+ 978:	60 e0       	ldi	r22, 0x00	; 0
+ 97a:	0e 94 38 04 	call	0x870	; 0x870 <digitalWrite>
+ 97e:	21 97       	sbiw	r28, 0x01	; 1
 
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
 {
 	uint8_t i;
 
 	for (i = 0; i < 8; i++)  {
- 822:	9f ef       	ldi	r25, 0xFF	; 255
- 824:	cf 3f       	cpi	r28, 0xFF	; 255
- 826:	d9 07       	cpc	r29, r25
- 828:	d9 f6       	brne	.-74     	; 0x7e0 <shiftOut+0x26>
+ 980:	9f ef       	ldi	r25, 0xFF	; 255
+ 982:	cf 3f       	cpi	r28, 0xFF	; 255
+ 984:	d9 07       	cpc	r29, r25
+ 986:	d9 f6       	brne	.-74     	; 0x93e <shiftOut+0x26>
 			digitalWrite(dataPin, !!(val & (1 << (7 - i))));
 			
 		digitalWrite(clockPin, HIGH);
 		digitalWrite(clockPin, LOW);		
 	}
 }
- 82a:	df 91       	pop	r29
- 82c:	cf 91       	pop	r28
- 82e:	1f 91       	pop	r17
- 830:	0f 91       	pop	r16
- 832:	ff 90       	pop	r15
- 834:	ef 90       	pop	r14
- 836:	df 90       	pop	r13
- 838:	cf 90       	pop	r12
- 83a:	bf 90       	pop	r11
- 83c:	08 95       	ret
+ 988:	df 91       	pop	r29
+ 98a:	cf 91       	pop	r28
+ 98c:	1f 91       	pop	r17
+ 98e:	0f 91       	pop	r16
+ 990:	ff 90       	pop	r15
+ 992:	ef 90       	pop	r14
+ 994:	df 90       	pop	r13
+ 996:	cf 90       	pop	r12
+ 998:	bf 90       	pop	r11
+ 99a:	08 95       	ret
 
-0000083e <__tablejump2__>:
- 83e:	ee 0f       	add	r30, r30
- 840:	ff 1f       	adc	r31, r31
+0000099c <__udivmodhi4>:
+ 99c:	aa 1b       	sub	r26, r26
+ 99e:	bb 1b       	sub	r27, r27
+ 9a0:	51 e1       	ldi	r21, 0x11	; 17
+ 9a2:	07 c0       	rjmp	.+14     	; 0x9b2 <__udivmodhi4_ep>
 
-00000842 <__tablejump__>:
- 842:	05 90       	lpm	r0, Z+
- 844:	f4 91       	lpm	r31, Z+
- 846:	e0 2d       	mov	r30, r0
- 848:	09 94       	ijmp
+000009a4 <__udivmodhi4_loop>:
+ 9a4:	aa 1f       	adc	r26, r26
+ 9a6:	bb 1f       	adc	r27, r27
+ 9a8:	a6 17       	cp	r26, r22
+ 9aa:	b7 07       	cpc	r27, r23
+ 9ac:	10 f0       	brcs	.+4      	; 0x9b2 <__udivmodhi4_ep>
+ 9ae:	a6 1b       	sub	r26, r22
+ 9b0:	b7 0b       	sbc	r27, r23
 
-0000084a <__do_global_dtors>:
- 84a:	10 e0       	ldi	r17, 0x00	; 0
- 84c:	c4 ec       	ldi	r28, 0xC4	; 196
- 84e:	d0 e0       	ldi	r29, 0x00	; 0
- 850:	04 c0       	rjmp	.+8      	; 0x85a <.do_global_dtors_start>
+000009b2 <__udivmodhi4_ep>:
+ 9b2:	88 1f       	adc	r24, r24
+ 9b4:	99 1f       	adc	r25, r25
+ 9b6:	5a 95       	dec	r21
+ 9b8:	a9 f7       	brne	.-22     	; 0x9a4 <__udivmodhi4_loop>
+ 9ba:	80 95       	com	r24
+ 9bc:	90 95       	com	r25
+ 9be:	bc 01       	movw	r22, r24
+ 9c0:	cd 01       	movw	r24, r26
+ 9c2:	08 95       	ret
 
-00000852 <.do_global_dtors_loop>:
- 852:	fe 01       	movw	r30, r28
- 854:	0e 94 21 04 	call	0x842	; 0x842 <__tablejump__>
- 858:	22 96       	adiw	r28, 0x02	; 2
+000009c4 <__divmodhi4>:
+ 9c4:	97 fb       	bst	r25, 7
+ 9c6:	09 2e       	mov	r0, r25
+ 9c8:	07 26       	eor	r0, r23
+ 9ca:	0a d0       	rcall	.+20     	; 0x9e0 <__divmodhi4_neg1>
+ 9cc:	77 fd       	sbrc	r23, 7
+ 9ce:	04 d0       	rcall	.+8      	; 0x9d8 <__divmodhi4_neg2>
+ 9d0:	e5 df       	rcall	.-54     	; 0x99c <__udivmodhi4>
+ 9d2:	06 d0       	rcall	.+12     	; 0x9e0 <__divmodhi4_neg1>
+ 9d4:	00 20       	and	r0, r0
+ 9d6:	1a f4       	brpl	.+6      	; 0x9de <__divmodhi4_exit>
 
-0000085a <.do_global_dtors_start>:
- 85a:	c6 3c       	cpi	r28, 0xC6	; 198
- 85c:	d1 07       	cpc	r29, r17
- 85e:	c9 f7       	brne	.-14     	; 0x852 <.do_global_dtors_loop>
- 860:	f8 94       	cli
+000009d8 <__divmodhi4_neg2>:
+ 9d8:	70 95       	com	r23
+ 9da:	61 95       	neg	r22
+ 9dc:	7f 4f       	sbci	r23, 0xFF	; 255
 
-00000862 <__stop_program>:
- 862:	ff cf       	rjmp	.-2      	; 0x862 <__stop_program>
+000009de <__divmodhi4_exit>:
+ 9de:	08 95       	ret
+
+000009e0 <__divmodhi4_neg1>:
+ 9e0:	f6 f7       	brtc	.-4      	; 0x9de <__divmodhi4_exit>
+ 9e2:	90 95       	com	r25
+ 9e4:	81 95       	neg	r24
+ 9e6:	9f 4f       	sbci	r25, 0xFF	; 255
+ 9e8:	08 95       	ret
+
+000009ea <__divmodsi4>:
+ 9ea:	97 fb       	bst	r25, 7
+ 9ec:	09 2e       	mov	r0, r25
+ 9ee:	05 26       	eor	r0, r21
+ 9f0:	0e d0       	rcall	.+28     	; 0xa0e <__divmodsi4_neg1>
+ 9f2:	57 fd       	sbrc	r21, 7
+ 9f4:	04 d0       	rcall	.+8      	; 0x9fe <__divmodsi4_neg2>
+ 9f6:	14 d0       	rcall	.+40     	; 0xa20 <__udivmodsi4>
+ 9f8:	0a d0       	rcall	.+20     	; 0xa0e <__divmodsi4_neg1>
+ 9fa:	00 1c       	adc	r0, r0
+ 9fc:	38 f4       	brcc	.+14     	; 0xa0c <__divmodsi4_exit>
+
+000009fe <__divmodsi4_neg2>:
+ 9fe:	50 95       	com	r21
+ a00:	40 95       	com	r20
+ a02:	30 95       	com	r19
+ a04:	21 95       	neg	r18
+ a06:	3f 4f       	sbci	r19, 0xFF	; 255
+ a08:	4f 4f       	sbci	r20, 0xFF	; 255
+ a0a:	5f 4f       	sbci	r21, 0xFF	; 255
+
+00000a0c <__divmodsi4_exit>:
+ a0c:	08 95       	ret
+
+00000a0e <__divmodsi4_neg1>:
+ a0e:	f6 f7       	brtc	.-4      	; 0xa0c <__divmodsi4_exit>
+ a10:	90 95       	com	r25
+ a12:	80 95       	com	r24
+ a14:	70 95       	com	r23
+ a16:	61 95       	neg	r22
+ a18:	7f 4f       	sbci	r23, 0xFF	; 255
+ a1a:	8f 4f       	sbci	r24, 0xFF	; 255
+ a1c:	9f 4f       	sbci	r25, 0xFF	; 255
+ a1e:	08 95       	ret
+
+00000a20 <__udivmodsi4>:
+ a20:	a1 e2       	ldi	r26, 0x21	; 33
+ a22:	1a 2e       	mov	r1, r26
+ a24:	aa 1b       	sub	r26, r26
+ a26:	bb 1b       	sub	r27, r27
+ a28:	fd 01       	movw	r30, r26
+ a2a:	0d c0       	rjmp	.+26     	; 0xa46 <__udivmodsi4_ep>
+
+00000a2c <__udivmodsi4_loop>:
+ a2c:	aa 1f       	adc	r26, r26
+ a2e:	bb 1f       	adc	r27, r27
+ a30:	ee 1f       	adc	r30, r30
+ a32:	ff 1f       	adc	r31, r31
+ a34:	a2 17       	cp	r26, r18
+ a36:	b3 07       	cpc	r27, r19
+ a38:	e4 07       	cpc	r30, r20
+ a3a:	f5 07       	cpc	r31, r21
+ a3c:	20 f0       	brcs	.+8      	; 0xa46 <__udivmodsi4_ep>
+ a3e:	a2 1b       	sub	r26, r18
+ a40:	b3 0b       	sbc	r27, r19
+ a42:	e4 0b       	sbc	r30, r20
+ a44:	f5 0b       	sbc	r31, r21
+
+00000a46 <__udivmodsi4_ep>:
+ a46:	66 1f       	adc	r22, r22
+ a48:	77 1f       	adc	r23, r23
+ a4a:	88 1f       	adc	r24, r24
+ a4c:	99 1f       	adc	r25, r25
+ a4e:	1a 94       	dec	r1
+ a50:	69 f7       	brne	.-38     	; 0xa2c <__udivmodsi4_loop>
+ a52:	60 95       	com	r22
+ a54:	70 95       	com	r23
+ a56:	80 95       	com	r24
+ a58:	90 95       	com	r25
+ a5a:	9b 01       	movw	r18, r22
+ a5c:	ac 01       	movw	r20, r24
+ a5e:	bd 01       	movw	r22, r26
+ a60:	cf 01       	movw	r24, r30
+ a62:	08 95       	ret
+
+00000a64 <__tablejump2__>:
+ a64:	ee 0f       	add	r30, r30
+ a66:	ff 1f       	adc	r31, r31
+
+00000a68 <__tablejump__>:
+ a68:	05 90       	lpm	r0, Z+
+ a6a:	f4 91       	lpm	r31, Z+
+ a6c:	e0 2d       	mov	r30, r0
+ a6e:	09 94       	ijmp
+
+00000a70 <__do_global_dtors>:
+ a70:	10 e0       	ldi	r17, 0x00	; 0
+ a72:	c4 ec       	ldi	r28, 0xC4	; 196
+ a74:	d0 e0       	ldi	r29, 0x00	; 0
+ a76:	04 c0       	rjmp	.+8      	; 0xa80 <.do_global_dtors_start>
+
+00000a78 <.do_global_dtors_loop>:
+ a78:	fe 01       	movw	r30, r28
+ a7a:	0e 94 34 05 	call	0xa68	; 0xa68 <__tablejump__>
+ a7e:	22 96       	adiw	r28, 0x02	; 2
+
+00000a80 <.do_global_dtors_start>:
+ a80:	c6 3c       	cpi	r28, 0xC6	; 198
+ a82:	d1 07       	cpc	r29, r17
+ a84:	c9 f7       	brne	.-14     	; 0xa78 <.do_global_dtors_loop>
+ a86:	f8 94       	cli
+
+00000a88 <__stop_program>:
+ a88:	ff cf       	rjmp	.-2      	; 0xa88 <__stop_program>

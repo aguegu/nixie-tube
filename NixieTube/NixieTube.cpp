@@ -24,7 +24,7 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 		uint8_t pin_oe, byte section_count)
 {
 	_section_count = section_count;
-	_buff = (byte *) malloc(sizeof(byte) * section_count * 2);
+	_buff = (word *) malloc(sizeof(word) * section_count);
 
 	_pin_dt = pin_din;
 	_pin_st = pin_st;
@@ -37,17 +37,85 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 	pinMode(_pin_oe, OUTPUT);
 
 	digitalWrite(_pin_oe, LOW);
+
+	this->clear(0x01);
 }
 
 void NixieTube::putByte(byte h, byte l)
 {
-
 	shiftOut(_pin_dt, _pin_sh, MSBFIRST, h);
 	shiftOut(_pin_dt, _pin_sh, MSBFIRST, l);
 
 	digitalWrite(_pin_st, LOW);
 	digitalWrite(_pin_st, HIGH);
+}
 
+void NixieTube::display()
+{
+	for (byte i = _section_count; i > 0 ; i--)
+	{
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, highByte(_buff[i-1]));
+		shiftOut(_pin_dt, _pin_sh, MSBFIRST, lowByte(_buff[i-1]));
+	}
+
+	digitalWrite(_pin_st, LOW);
+	digitalWrite(_pin_st, HIGH);
+
+}
+
+void NixieTube::clear(word value)
+{
+	for (byte i = 0; i < _section_count; i++)
+		_buff[i] = value;
+}
+
+void NixieTube::setBackgroundColor(Color color)
+{
+	for (byte i = 0; i < _section_count; i++)
+	{
+		this->setBackgroundColor(i, color);
+	}
+}
+
+void NixieTube::setBackgroundColor(byte index, Color color)
+{
+	index %= _section_count;
+	_buff[index] &= 0x8fff;
+	_buff[index] |= color << 12;
+}
+
+void NixieTube::setNumber(byte index, byte num)
+{
+	_buff[index] &= 0xfc00;
+
+	if (num == 0xff) return;
+
+	num = (num + 9) % 10;
+	_buff[index] |= _BV(num);
+}
+
+void NixieTube::setNumber(byte num)
+{
+	for (byte i = 0; i < _section_count; i++)
+		this->setNumber(i, num);
+}
+
+void NixieTube::setColon(byte index, Colon colon)
+{
+	_buff[index] &= 0xf3ff;
+	_buff[index] |= colon << 10;
+}
+
+void NixieTube::putNumber(long value, byte minLength)
+{
+	for (byte i=0; i< _section_count; i++)
+	{
+		byte num = value % 10;
+		this->setNumber(i, num);
+		if (value==0 && i>=minLength)
+			this->setNumber(i, -1);
+		value /= 10;
+	}
 }
 
 NixieTube::~NixieTube()

@@ -1,24 +1,19 @@
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
 
-NixieTube tube(11, 12, 13, 10);
+NixieTube tube(11, 12, 13, 10, 5);
 
 void setup()
 {
+	//tube.setBackgroundColor(Blue);
 
 }
 
 void loop()
 {
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(0x40, _BV(i));
-		delay(500);
-	}
-
-	for (byte i = 0; i < 8; i++)
-	{
-		tube.putByte(_BV(i), 0x00);
-		delay(500);
-	}
+	static word k = 0;
+	tube.setBackgroundColor((Color)(k%8));
+	tube.putNumber(k++,1);
+	tube.display();
+	delay(1000);
 }

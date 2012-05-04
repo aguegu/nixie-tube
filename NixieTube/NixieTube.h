@@ -41,8 +41,10 @@ public:
 	NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh, uint8_t pin_oe,
 			byte section_count = 1);
 	virtual ~NixieTube();
+
 	void putByte(byte h, byte l);
 	void display();
+
 	void setBackgroundColor(Color color);
 	void setBackgroundColor(byte index, Color color);
 

@@ -36,9 +36,10 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 	pinMode(_pin_sh, OUTPUT);
 	pinMode(_pin_oe, OUTPUT);
 
-	digitalWrite(_pin_oe, LOW);
+	this->setBrightness(0x40);
 
 	this->clear(0x01);
+
 }
 
 void NixieTube::putByte(byte h, byte l)
@@ -106,6 +107,12 @@ void NixieTube::setColon(byte index, Colon colon)
 	_buff[index] |= colon << 10;
 }
 
+void NixieTube::setColon(Colon colon)
+{
+	for (byte i=0; i<_section_count; i++)
+		this->setColon(i, colon);
+}
+
 void NixieTube::putNumber(long value, byte minLength)
 {
 	for (byte i=0; i< _section_count; i++)
@@ -116,6 +123,14 @@ void NixieTube::putNumber(long value, byte minLength)
 			this->setNumber(i, -1);
 		value /= 10;
 	}
+}
+
+void NixieTube::setBrightness(byte brightness)
+{
+	if (digitalPinToTimer(_pin_oe) == NOT_ON_TIMER)
+		digitalWrite(_pin_oe, brightness?LOW:HIGH);
+	else
+		analogWrite(_pin_oe, 0xff - brightness);
 }
 
 NixieTube::~NixieTube()

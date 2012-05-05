@@ -1,7 +1,7 @@
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
 
-NixieTube tube(11, 12, 13, 10, 5);
+NixieTube tube(11, 12, 13, 10, 4);
 
 void setup()
 {
@@ -10,12 +10,12 @@ void setup()
 
 void loop()
 {
-	long k = random(0, 100000);
+	long k = random();
 
 	tube.setBackgroundColor((Color)(k%8));
-	tube.setColon(k % 5, (Colon)(k%4));
+	tube.setColon((Colon)(k%4));
 
-	tube.putNumber(k,5);
+	tube.putNumber(k, 4);
 
 	tube.display();
 	delay(1000);

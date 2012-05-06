@@ -51,7 +51,10 @@ public:
 
 	virtual ~NixieTube();
 
+	void clear(word value = 0x7000);
+
 	void putByte(byte h, byte l);
+	void putWord(byte index, word value = 0x7000);
 	// Test function
 
 	void setBrightness(byte brightness);
@@ -66,12 +69,13 @@ public:
 	void setColon(byte index, Colon colon);
 	void setColon(Colon colon);
 
-	void putNumber(long value, byte index = 0, byte minLength=1);
+	void putNumber(long value, byte index = 0, byte minLength = 1);
 	// print a decimal number with several tubes.
-	// minLength sets how many digits will always be displayed.
+	// Use minLength to set how many digits will always be displayed.
+	// Use index to set the initial number position.
 	// this function will prepose zero to take all tubes within minLength, if necessary.
 
-	void clear(word value = 0x7000);
+
 private:
 
 	word *_buff;

@@ -64,10 +64,16 @@ void NixieTube::display()
 
 }
 
+void NixieTube::putWord(byte index, word value)
+{
+	index %= _section_count;
+	_buff[index] = value;
+}
+
 void NixieTube::clear(word value)
 {
 	for (byte i = 0; i < _section_count; i++)
-		_buff[i] = value;
+		this->putWord(i, value);
 }
 
 void NixieTube::setBackgroundColor(Color color)

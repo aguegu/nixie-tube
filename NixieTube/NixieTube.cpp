@@ -38,30 +38,30 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 
 	this->setBrightness(0x40);
 
-	this->clear(0x01);
+	this->clear();
 
 }
 
-void NixieTube::putByte(byte h, byte l)
+void NixieTube::send(byte data)
 {
-	shiftOut(_pin_dt, _pin_sh, MSBFIRST, h);
-	shiftOut(_pin_dt, _pin_sh, MSBFIRST, l);
-
-	digitalWrite(_pin_st, LOW);
-	digitalWrite(_pin_st, HIGH);
+	for (byte i = 8; i > 0; i--)
+	{
+		digitalWrite(_pin_dt, bitRead(data, i-1));
+		digitalWrite(_pin_sh, LOW);
+		digitalWrite(_pin_sh, HIGH);
+	}
 }
 
 void NixieTube::display()
 {
-	for (byte i = _section_count; i > 0 ; i--)
+	for (byte i = _section_count; i > 0; i--)
 	{
-		shiftOut(_pin_dt, _pin_sh, MSBFIRST, highByte(_buff[i-1]));
-		shiftOut(_pin_dt, _pin_sh, MSBFIRST, lowByte(_buff[i-1]));
+		this->send(highByte(_buff[i-1]));
+		this->send(lowByte(_buff[i-1]));
 	}
 
 	digitalWrite(_pin_st, LOW);
 	digitalWrite(_pin_st, HIGH);
-
 }
 
 void NixieTube::putWord(byte index, word value)
@@ -95,7 +95,8 @@ void NixieTube::setNumber(byte index, byte num)
 {
 	_buff[index] &= 0xfc00;
 
-	if (num == 0xff) return;
+	if (num == 0xff)
+		return;
 
 	num = (num + 9) % 10;
 	_buff[index] |= _BV(num);
@@ -115,17 +116,17 @@ void NixieTube::setColon(byte index, Colon colon)
 
 void NixieTube::setColon(Colon colon)
 {
-	for (byte i=0; i<_section_count; i++)
+	for (byte i = 0; i < _section_count; i++)
 		this->setColon(i, colon);
 }
 
 void NixieTube::putNumber(long value, byte index, byte minLength)
 {
-	for (byte i=index; i< _section_count; i++)
+	for (byte i = index; i < _section_count; i++)
 	{
 		byte num = value % 10;
 		this->setNumber(i, num);
-		if (value==0 && i>=index + minLength)
+		if (value == 0 && i >= index + minLength)
 			this->setNumber(i, -1);
 		value /= 10;
 	}
@@ -134,7 +135,7 @@ void NixieTube::putNumber(long value, byte index, byte minLength)
 void NixieTube::setBrightness(byte brightness)
 {
 	if (digitalPinToTimer(_pin_oe) == NOT_ON_TIMER)
-		digitalWrite(_pin_oe, brightness?LOW:HIGH);
+		digitalWrite(_pin_oe, brightness ? LOW : HIGH);
 	else
 		analogWrite(_pin_oe, 0xff - brightness);
 }

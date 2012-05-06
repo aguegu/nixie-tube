@@ -53,7 +53,6 @@ public:
 
 	void clear(word value = 0x7000);
 
-	void putByte(byte h, byte l);
 	void putWord(byte index, word value = 0x7000);
 	// Test function
 
@@ -75,7 +74,6 @@ public:
 	// Use index to set the initial number position.
 	// this function will prepose zero to take all tubes within minLength, if necessary.
 
-
 private:
 
 	word *_buff;
@@ -84,6 +82,8 @@ private:
 	uint8_t _pin_st; // STCP, #2
 	uint8_t _pin_sh; // SHCP, #3
 	uint8_t _pin_oe; // OE,	 #4
+
+	void send(byte data);
 };
 
 #endif /* NIXIETUBE_H_ */

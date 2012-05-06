@@ -1,23 +1,23 @@
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
 
-NixieTube tube(11, 12, 13, 10, 4);
+NixieTube tube(11, 12, 13, 10, 10);
 
 void setup()
 {
-	//tube.setBackgroundColor(Blue);
-	tube.clear();
+	tube.setBrightness(0xf0);
+
+	for(byte i=0; i<10; i++)
+	{
+		tube.setBackgroundColor(i, (Color)(i%8));
+		tube.setColon(i, (Colon)(i%4));
+		tube.setNumber(i, i);
+	}
+	tube.display();
 }
 
 void loop()
 {
-	long k = random(0, 100);
-
-	tube.setBackgroundColor((Color)(k%8));
-	tube.setColon((Colon)(k%4));
-
-	tube.putNumber(k, 1, 0);
-
-	tube.display();
 	delay(1000);
+	tube.display();
 }

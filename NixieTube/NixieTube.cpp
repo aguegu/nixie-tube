@@ -113,13 +113,13 @@ void NixieTube::setColon(Colon colon)
 		this->setColon(i, colon);
 }
 
-void NixieTube::putNumber(long value, byte minLength)
+void NixieTube::putNumber(long value, byte index, byte minLength)
 {
-	for (byte i=0; i< _section_count; i++)
+	for (byte i=index; i< _section_count; i++)
 	{
 		byte num = value % 10;
 		this->setNumber(i, num);
-		if (value==0 && i>=minLength)
+		if (value==0 && i>=index + minLength)
 			this->setNumber(i, -1);
 		value /= 10;
 	}

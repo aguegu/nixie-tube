@@ -66,13 +66,14 @@ public:
 	void setColon(byte index, Colon colon);
 	void setColon(Colon colon);
 
-	void putNumber(long value, byte minLength=1);
+	void putNumber(long value, byte index = 0, byte minLength=1);
 	// print a decimal number with several tubes.
 	// minLength sets how many digits will always be displayed.
 	// this function will prepose zero to take all tubes within minLength, if necessary.
 
+	void clear(word value = 0x7000);
 private:
-	void clear(word value);
+
 	word *_buff;
 	byte _section_count;
 	uint8_t _pin_dt; // DIN, #1

@@ -120,7 +120,7 @@ void NixieTube::setColon(Colon colon)
 		this->setColon(i, colon);
 }
 
-void NixieTube::putNumber(long value, byte index, byte minLength)
+void NixieTube::putNumber(unsigned long value, byte index, byte minLength)
 {
 	for (byte i = index; i < _section_count; i++)
 	{

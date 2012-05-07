@@ -68,7 +68,7 @@ public:
 	void setColon(byte index, Colon colon);
 	void setColon(Colon colon);
 
-	void putNumber(long value, byte index = 0, byte minLength = 1);
+	void putNumber(unsigned long value, byte index = 0, byte minLength = 1);
 	// print a decimal number with several tubes.
 	// Use minLength to set how many digits will always be displayed.
 	// Use index to set the initial number position.
@@ -81,7 +81,7 @@ private:
 	uint8_t _pin_dt; // DIN, #1
 	uint8_t _pin_st; // STCP, #2
 	uint8_t _pin_sh; // SHCP, #3
-	uint8_t _pin_oe; // OE,	 #4
+	uint8_t _pin_oe; // OE,	 #4, PWM strongly recommended
 
 	void send(byte data);
 };

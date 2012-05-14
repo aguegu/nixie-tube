@@ -77,13 +77,14 @@ public:
 private:
 
 	word *_buff;
-	byte _section_count;
-	uint8_t _pin_dt; // DIN, #1
-	uint8_t _pin_st; // STCP, #2
-	uint8_t _pin_sh; // SHCP, #3
-	uint8_t _pin_oe; // OE,	 #4, PWM strongly recommended
 
-	void send(byte data);
+	const uint8_t _pin_dt; // DIN, #1
+	const uint8_t _pin_st; // STCP, #2
+	const uint8_t _pin_sh; // SHCP, #3
+	const uint8_t _pin_oe; // OE,	 #4, PWM strongly recommended
+	const byte _section_count;
+
+	void send(byte data) const;
 };
 
 #endif /* NIXIETUBE_H_ */

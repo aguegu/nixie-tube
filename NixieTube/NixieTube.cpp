@@ -21,15 +21,11 @@
 #include "NixieTube.h"
 
 NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
-		uint8_t pin_oe, byte section_count)
+		uint8_t pin_oe, byte section_count):
+		_pin_dt(pin_din), _pin_st(pin_st), _pin_sh(pin_sh), _pin_oe(pin_oe),_section_count( section_count)
 {
-	_section_count = section_count;
-	_buff = (word *) malloc(sizeof(word) * section_count);
 
-	_pin_dt = pin_din;
-	_pin_st = pin_st;
-	_pin_sh = pin_sh;
-	_pin_oe = pin_oe;
+	_buff = (word *) malloc(sizeof(word) * section_count);
 
 	pinMode(_pin_dt, OUTPUT);
 	pinMode(_pin_st, OUTPUT);
@@ -42,7 +38,7 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 
 }
 
-void NixieTube::send(byte data)
+void NixieTube::send(byte data) const
 {
 	for (byte i = 8; i > 0; i--)
 	{

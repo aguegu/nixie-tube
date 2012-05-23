@@ -185,7 +185,7 @@ void NixieTube::putCache()
 	char * p = _cache;
 
 	byte index = 0;
-	while (p[index])
+	while (p[index] && index < _cache_length)
 	{
 		if (this->isNumber(p[index]))
 		{

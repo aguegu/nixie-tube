@@ -21,11 +21,13 @@
 #include "NixieTube.h"
 
 NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
-		uint8_t pin_oe, byte section_count):
-		_pin_dt(pin_din), _pin_st(pin_st), _pin_sh(pin_sh), _pin_oe(pin_oe),_section_count( section_count)
+		uint8_t pin_oe, byte section_count) :
+		_pin_dt(pin_din), _pin_st(pin_st), _pin_sh(pin_sh), _pin_oe(pin_oe), _section_count(
+				section_count)
 {
-
+	_cache_length = section_count * 2 + 1;
 	_buff = (word *) malloc(sizeof(word) * section_count);
+	_cache = (char *) malloc(sizeof(char) * _cache_length);
 
 	pinMode(_pin_dt, OUTPUT);
 	pinMode(_pin_st, OUTPUT);
@@ -36,13 +38,15 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 
 	this->clear();
 
+	memset(_cache, 0, _cache_length);
+
 }
 
 void NixieTube::send(byte data) const
 {
 	for (byte i = 8; i > 0; i--)
 	{
-		digitalWrite(_pin_dt, bitRead(data, i-1));
+		digitalWrite(_pin_dt, bitRead(data, i - 1));
 		digitalWrite(_pin_sh, LOW);
 		digitalWrite(_pin_sh, HIGH);
 	}
@@ -50,10 +54,10 @@ void NixieTube::send(byte data) const
 
 void NixieTube::display()
 {
-	for (byte i = _section_count; i > 0; i--)
+	for (byte i = 0; i < _section_count; i++)
 	{
-		this->send(highByte(_buff[i-1]));
-		this->send(lowByte(_buff[i-1]));
+		this->send(highByte(_buff[i]));
+		this->send(lowByte(_buff[i]));
 	}
 
 	digitalWrite(_pin_st, LOW);
@@ -136,8 +140,76 @@ void NixieTube::setBrightness(byte brightness)
 		analogWrite(_pin_oe, 0xff - brightness);
 }
 
+void NixieTube::printf(const char *__fmt, ...)
+{
+	va_list ap;
+	va_start(ap, __fmt);
+	vsnprintf(_cache, _cache_length, __fmt, ap);
+	va_end(ap);
+}
+
+bool NixieTube::isNumber(char c)
+{
+	return(c >= '0' && c<= '9');
+}
+
+bool NixieTube::isColon(char c)
+{
+	return (c == ':' || c == '\'' || c == '.');
+}
+
+Colon NixieTube::getColon(char c)
+{
+	Colon cln = None;
+	switch(c)
+	{
+	case ':':
+		c = Both;
+		break;
+	case '.':
+		c = Lower;
+		break;
+	case '\'':
+		c = Upper;
+		break;
+	default:
+		c = None;
+		break;
+	}
+
+	return cln;
+}
+
+void NixieTube::putCache()
+{
+	char * p = _cache;
+
+	byte index = 0;
+	while (p[index])
+	{
+		if (this->isNumber(p[index]))
+		{
+			this->setNumber(index, *p - 0x30);
+		}
+		else if (this->isColon(p[index]))
+		{
+			byte last_index = index? index -1: 0;
+			if (this->isColon(last_index))
+				this->setColon(index, getColon(p[index]));
+			else
+				this->setColon(last_index, getColon(p[index]));
+		}
+		else
+		{
+			this->setNumber(index, -1);
+		}
+		index++;
+	}
+}
+
 NixieTube::~NixieTube()
 {
 	free(_buff);
+	free(_cache);
 }
 

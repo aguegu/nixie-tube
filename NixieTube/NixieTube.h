@@ -74,9 +74,13 @@ public:
 	// Use index to set the initial number position.
 	// this function will prepose zero to take all tubes within minLength, if necessary.
 
+	void printf(const char *__fmt, ...);
+	void putCache();
+
 private:
 
 	word *_buff;
+	char * _cache;
 
 	const uint8_t _pin_dt; // DIN, #1
 	const uint8_t _pin_st; // STCP, #2
@@ -84,7 +88,13 @@ private:
 	const uint8_t _pin_oe; // OE,	 #4, PWM strongly recommended
 	const byte _section_count;
 
+	byte _cache_length;
+
 	void send(byte data) const;
+	bool isNumber(char c);
+	bool isColon(char);
+
+	Colon getColon(char c);
 };
 
 #endif /* NIXIETUBE_H_ */

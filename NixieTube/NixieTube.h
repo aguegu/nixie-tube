@@ -56,7 +56,7 @@ public:
 	void putWord(byte index, word value = 0x7000);
 	// Test function
 
-	void setBrightness(byte brightness);
+	void setBrightness(byte brightness = 0x20);
 	void display();
 
 	void setBackgroundColor(Color color);

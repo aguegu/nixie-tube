@@ -34,7 +34,7 @@ NixieTube::NixieTube(uint8_t pin_din, uint8_t pin_st, uint8_t pin_sh,
 	pinMode(_pin_sh, OUTPUT);
 	pinMode(_pin_oe, OUTPUT);
 
-	this->setBrightness(0x40);
+	this->setBrightness();
 
 	this->clear();
 
@@ -164,16 +164,16 @@ Colon NixieTube::getColon(char c)
 	switch(c)
 	{
 	case ':':
-		c = Both;
+		cln = Both;
 		break;
 	case '.':
-		c = Lower;
+		cln = Lower;
 		break;
 	case '\'':
-		c = Upper;
+		cln = Upper;
 		break;
 	default:
-		c = None;
+		cln = None;
 		break;
 	}
 
@@ -184,25 +184,29 @@ void NixieTube::putCache()
 {
 	char * p = _cache;
 
+	this->setNumber(-1);
+	this->setColon(None);
+
 	byte index = 0;
+	byte ptr=0;
 	while (p[index] && index < _cache_length)
 	{
 		if (this->isNumber(p[index]))
 		{
-			this->setNumber(index, *p - 0x30);
+			this->setNumber(ptr, p[index] - 0x30);
+			ptr++;
 		}
 		else if (this->isColon(p[index]))
 		{
-			byte last_index = index? index -1: 0;
-			if (this->isColon(last_index))
-				this->setColon(index, getColon(p[index]));
-			else
-				this->setColon(last_index, getColon(p[index]));
+
+			this->setColon(ptr?ptr-1:0, getColon(p[index]));
 		}
 		else
 		{
-			this->setNumber(index, -1);
+			this->setNumber(ptr, -1);
+			ptr++;
 		}
+
 		index++;
 	}
 }

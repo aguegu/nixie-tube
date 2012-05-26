@@ -120,18 +120,6 @@ void NixieTube::setColon(Colon colon)
 		this->setColon(i, colon);
 }
 
-void NixieTube::putNumber(unsigned long value, byte index, byte minLength)
-{
-	for (byte i = index; i < _section_count; i++)
-	{
-		byte num = value % 10;
-		this->setNumber(i, num);
-		if (value == 0 && i >= index + minLength)
-			this->setNumber(i, -1);
-		value /= 10;
-	}
-}
-
 void NixieTube::setBrightness(byte brightness)
 {
 	if (digitalPinToTimer(_pin_oe) == NOT_ON_TIMER)
@@ -146,11 +134,13 @@ void NixieTube::printf(const char *__fmt, ...)
 	va_start(ap, __fmt);
 	vsnprintf(_cache, _cache_length, __fmt, ap);
 	va_end(ap);
+
+	this->putCache();
 }
 
 bool NixieTube::isNumber(char c)
 {
-	return(c >= '0' && c<= '9');
+	return (c >= '0' && c <= '9');
 }
 
 bool NixieTube::isColon(char c)
@@ -161,7 +151,7 @@ bool NixieTube::isColon(char c)
 Colon NixieTube::getColon(char c)
 {
 	Colon cln = None;
-	switch(c)
+	switch (c)
 	{
 	case ':':
 		cln = Both;
@@ -188,7 +178,7 @@ void NixieTube::putCache()
 	this->setColon(None);
 
 	byte index = 0;
-	byte ptr=0;
+	byte ptr = 0;
 	while (p[index] && index < _cache_length)
 	{
 		if (this->isNumber(p[index]))
@@ -199,7 +189,7 @@ void NixieTube::putCache()
 		else if (this->isColon(p[index]))
 		{
 
-			this->setColon(ptr?ptr-1:0, getColon(p[index]));
+			this->setColon(ptr ? ptr - 1 : 0, getColon(p[index]));
 		}
 		else
 		{

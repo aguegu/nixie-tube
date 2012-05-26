@@ -5,8 +5,6 @@ NixieTube tube(11, 12, 13, 10, 8);
 
 void setup()
 {
-	tube.setBrightness(0xf0);
-	tube.setBrightness();
 
 	for(byte i=0; i<10; i++)
 	{
@@ -15,9 +13,6 @@ void setup()
 //		tube.setNumber(i, i);
 	}
 
-	tube.printf("912. :345");
-	tube.putCache();
-
 	tube.display();
 }
 
@@ -25,8 +20,8 @@ void loop()
 {
 	static byte h = 0, m = 0, s = 0, cs = 0;
 
-	tube.printf("%02d:%02d:%02d.%02d", h, m, s, cs);
-	tube.putCache();
+	tube.printf("%02d:%02d:%02d'%02d", h, m, s, cs);
+
 	tube.display();
 	delay(10);
 	cs++;

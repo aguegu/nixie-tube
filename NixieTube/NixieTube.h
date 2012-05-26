@@ -56,7 +56,7 @@ public:
 	void putWord(byte index, word value = 0x7000);
 	// Test function
 
-	void setBrightness(byte brightness = 0x20);
+	void setBrightness(byte brightness = 0x40);
 	void display();
 
 	void setBackgroundColor(Color color);
@@ -68,14 +68,8 @@ public:
 	void setColon(byte index, Colon colon);
 	void setColon(Colon colon);
 
-	void putNumber(unsigned long value, byte index = 0, byte minLength = 1);
-	// print a decimal number with several tubes.
-	// Use minLength to set how many digits will always be displayed.
-	// Use index to set the initial number position.
-	// this function will prepose zero to take all tubes within minLength, if necessary.
-
 	void printf(const char *__fmt, ...);
-	void putCache();
+
 
 private:
 
@@ -93,6 +87,7 @@ private:
 	void send(byte data) const;
 	bool isNumber(char c);
 	bool isColon(char);
+	void putCache();
 
 	Colon getColon(char c);
 };

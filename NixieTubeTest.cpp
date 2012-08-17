@@ -1,17 +1,23 @@
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
 
-NixieTube tube(11, 12, 13, 10, 8);
+#define COUNT	8
+// define how many modules in serial
+
+NixieTube tube(11, 12, 13, 10, COUNT);
+// pin_ds, pin_st. pin_sh, pin_oe(pwm pin is preferred), COUNT
 
 void setup()
 {
 
-	for(byte i=0; i<10; i++)
+	for(byte i=0; i<COUNT; i++)
 	{
-		tube.setBackgroundColor(i, (Color)(i%8));
+		tube.setBackgroundColor(i, (Color)(i%8));	// set different background color for each module
 //		tube.setColon(i, (Colon)(i%4));
 //		tube.setNumber(i, i);
 	}
+
+	tube.setBrightness(0xff);	// brightness control, 0x00(off)-0xff
 
 	tube.display();
 }

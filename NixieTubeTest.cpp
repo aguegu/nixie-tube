@@ -13,7 +13,7 @@
  *
  * Pin Layout, right-side view, input from pins(male)
  *
- *	            /-------------\
+ *              /-------------\
  *              |             |
  *              |             |
  *              |             |

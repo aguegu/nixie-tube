@@ -16,6 +16,22 @@
  * Blog: http://aguegu.net
  * Email: weihong.guan@gmail.com
  *
+ * Pin Layout, right-side view, input from pins(male)
+ *
+ *	            /-------------\
+ *              |             |
+ *              |             |
+ *              |             |
+ *              \-------------/
+ *               |           |
+ * -----------------------------
+ * | SH  | ST  | DS  |
+ * | 5V  | GND | OE  |
+ * -------------------
+ * | 12V | 12V | 12V |
+ * | GND | GND | GND |
+ * -----------------------------
+ *
  */
 
 #include "NixieTube.h"

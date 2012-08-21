@@ -1,5 +1,25 @@
+/* Basic sample code for nixie-tube module for Arduino
+ *
+ * Pin Layout, right-side view, input from pins(male)
+ *
+ *	            /-------------\
+ *              |             |
+ *              |             |
+ *              |             |
+ *              \-------------/
+ *               |           |
+ * -----------------------------
+ * | SH  | ST  | DS  |
+ * | 5V  | GND | OE  |
+ * -------------------
+ * | 12V | 12V | 12V |
+ * | GND | GND | GND |
+ * -----------------------------
+ */
+
 #include "NixieTubeTest.h"
 #include "NixieTube.h"
+
 
 #define COUNT	8
 // define how many modules in serial

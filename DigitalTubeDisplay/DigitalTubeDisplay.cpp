@@ -115,12 +115,12 @@ void DigitalTubeDisplay::printf(const char *__fmt, ...)
 			_cache[ptr] = pgm_read_byte_near(DIGITAL_TUBE_FONT+p[index] - 0x30);
 			ptr++;
 		}
-		else if (p[index] >= 'A' && p[index] <= 'F')
+		else if (p[index] >= 'A' && p[index] <= 'Z')
 		{
 			_cache[ptr] = pgm_read_byte_near(DIGITAL_TUBE_FONT+p[index] - 55);
 			ptr++;
 		}
-		else if (p[index] >= 'a' && p[index] <= 'f')
+		else if (p[index] >= 'a' && p[index] <= 'z')
 		{
 			_cache[ptr] = pgm_read_byte_near(DIGITAL_TUBE_FONT+p[index] - 87);
 			ptr++;

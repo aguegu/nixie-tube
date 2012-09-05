@@ -42,9 +42,10 @@ void setup()
 void loop()
 {
 	static byte s = 0, m=0;
-	dtd.printf("%2d.%02d", m, s);
+	static char c = 'a';
+	dtd.printf("%d.%d.%c", m, s, c++);
 
-	dtd.display(0x10);
+	dtd.display(0x40);
 
 	s++;
 	if (s==100)
@@ -52,4 +53,6 @@ void loop()
 		s = 0;
 		m++;
 	}
+
+	if (c=='z'+1) c='a';
 }

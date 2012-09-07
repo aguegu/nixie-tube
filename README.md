@@ -14,6 +14,10 @@ nixie-tube
  * Library Author: Weihong Guan (aGuegu)
  * Blog: http://aguegu.net
  * Email: weihong.guan@gmail.com
+ * 
+ * Available on DFRobot
+ * http://www.dfrobot.com/index.php?route=product/product&product_id=738#.UEl-Vpanvhk
+ 
 
 
 

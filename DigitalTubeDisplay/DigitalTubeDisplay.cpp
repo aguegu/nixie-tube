@@ -70,7 +70,7 @@ void DigitalTubeDisplay::setDelaySpan(uint16_t span)
 
 void DigitalTubeDisplay::clear(byte val)
 {
-	memset(_cache, val, 4);
+	memset(_cache, val, _digit_length);
 }
 
 void DigitalTubeDisplay::display(word times)

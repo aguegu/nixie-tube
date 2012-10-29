@@ -7,7 +7,7 @@
 
 #include "DigitalTubeFont.h"
 
-const prog_uint8_t DIGITAL_TUBE_FONT[] PROGMEM=
+const uint8_t PROGMEM DIGITAL_TUBE_FONT[] PROGMEM=
 {
 		// 0-10
 		0x3f,
@@ -21,7 +21,7 @@ const prog_uint8_t DIGITAL_TUBE_FONT[] PROGMEM=
 		0x7f,
 		0x6f,
 
-		// a-f
+		// a-z
 		0x5f,	// a
 		0x7c,	// b
 		0x58,	// c

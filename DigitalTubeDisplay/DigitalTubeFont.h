@@ -15,7 +15,7 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const prog_uint8_t DIGITAL_TUBE_FONT[] PROGMEM;
+extern const uint8_t PROGMEM DIGITAL_TUBE_FONT[] PROGMEM;
 
 
 #endif /* DIGITALTUBEFONT_H_ */

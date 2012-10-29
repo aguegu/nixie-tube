@@ -10,31 +10,24 @@
 */
 
 #include "NixieTubeTest.h"
-#include "DigitalTubeDisplay.h"
+#include "VFDTube.h"
 
-//DigitalTubeDisplay dtd(6, 7, 8, 5, A5, A3, 10, 12, A2, A4, 9, 11);
-uint8_t pin_digit[4] = {2, 11, 12, 9};
-DigitalTubeDisplay dtd(pin_digit, 4, 3, 13, 10, 6, 5, 4, 8, 7);
+VFDTube tube(8, 9, 10, 11, 6);
 
 void setup()
 {
-
+	tube.clear(0x300);
+	tube.display();
 }
 
 void loop()
 {
-	static byte s = 0, m=0;
-	static char c = 'a';
-	dtd.printf("%d.%d.%c", m, s, c++);
-
-	dtd.display(0x40);
-
-	s++;
-	if (s==100)
-	{
-		s = 0;
-		m++;
-	}
-
-	if (c=='z'+1) c='a';
+//	static byte val = 0x01;
+//	tube.clear(val);
+//	tube.display();
+//
+//	delay(1000);
+//	val <<= 1;
+//	if (val == 0) val = 0x01;
 }
+

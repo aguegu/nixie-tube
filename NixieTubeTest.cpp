@@ -17,7 +17,7 @@ VFDTube tube(8, 9, 10, 11, 6);
 void setup()
 {
 	tube.clear();
-	tube.printf(" nixie");
+	tube.printf("nixie");
 	tube.display();
 	delay(3000);
 
@@ -43,7 +43,7 @@ void setup()
 
 	tube.clear();
 	tube.setBackgroundColor(Blue);
-	tube.printf("VFD. 22");
+	tube.printf("VFD .22");
 	tube.display();
 	delay(3000);
 

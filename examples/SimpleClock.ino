@@ -46,7 +46,6 @@ NixieTube tube(11, 12, 13, 10, COUNT);
 
 void setup()
 {
-
 	for(byte i=0; i<COUNT; i++)
 	{
 		tube.setBackgroundColor(i, (Color)(i%8));	// set different background color for each module

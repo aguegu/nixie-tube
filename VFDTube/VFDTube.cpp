@@ -130,6 +130,9 @@ void VFDTube::printf(const char *__fmt, ...)
 	byte index = 0;
 	byte ptr = 0;
 
+	for (byte i=0; i<_section_count; i++)
+		_buff[i] &= 0xff00;
+
 	while (cache[index] && ptr < _section_count)
 	{
 		if (this->setChar(ptr, cache[index]))

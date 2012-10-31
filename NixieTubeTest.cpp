@@ -28,7 +28,7 @@
 #include "VFDTube.h"
 
 VFDTube tube(8, 9, 10, 11, 6);
-// DIN on pin #6, OE on pin #9, STCP on pin #10, SHCP on pin #11,
+// DIN on pin #8, OE on pin #9, STCP on pin #10, SHCP on pin #11,
 // 6 for sections count in serial
 
 void setup()

@@ -156,3 +156,11 @@ bool VFDTube::displayable(char c)
 	return ((c >= '0' && c <= '9') or (c >= 'A' && c <= 'Z')
 			or (c >= 'a' && c <= 'z'));
 }
+
+void VFDTube::setBrightness(byte brightness)
+{
+	if (digitalPinToTimer(_pin_oe) == NOT_ON_TIMER)
+		digitalWrite(_pin_oe, brightness ? LOW : HIGH);
+	else
+		analogWrite(_pin_oe, 0xff - brightness);
+}

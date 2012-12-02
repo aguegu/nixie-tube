@@ -27,14 +27,20 @@
 #include "NixieTubeTest.h"
 #include "VFDTube.h"
 
-VFDTube tube(8, 9, 10, 11, 6);
+#define TUBE_COUNT 6
+
+VFDTube tube(8, 9, 10, 11, TUBE_COUNT);
 // DIN on pin #8, OE on pin #9, STCP on pin #10, SHCP on pin #11,
 // 6 for sections count in serial
+// Pin #9 is with PWM output, so the brightness is adjustable
+
 
 void setup()
 {
+	tube.setBrightness(0xc0);	// set brightness, range 0x00 - 0xff
+
 	// set background led color individually
-	for (byte i = 0; i < 6; i++)
+	for (byte i = 0; i < TUBE_COUNT; i++)
 		tube.setBackgroundColor(i, Color(i));
 
 	// display "012345" for 3 seconds
@@ -44,18 +50,6 @@ void setup()
 
 	// display " clock" for 3 seconds
 	tube.printf(" clock");
-	tube.display();
-	delay(3000);
-
-	// set background led color of all sections to green
-	// display " with" for 3 seconds
-	tube.setBackgroundColor(Green);
-	tube.printf(" with");
-	tube.display();
-	delay(3000);
-
-	// display "aGuegu" for 3 seconds
-	tube.printf("aGuegu");
 	tube.display();
 	delay(3000);
 

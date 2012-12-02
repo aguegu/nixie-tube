@@ -67,7 +67,6 @@ void setup()
 }
 
 // display a basic digital clock pattern
-
 void loop()
 {
 	static byte s = 56; // second

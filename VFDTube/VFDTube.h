@@ -38,7 +38,6 @@ public:
 			byte section_count);
 	virtual ~VFDTube();
 
-	void enable(bool on = true);
 	void display();
 
 	void putWord(byte index, word value = 0xff00);

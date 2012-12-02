@@ -19,17 +19,12 @@ VFDTube::VFDTube(uint8_t pin_din, uint8_t pin_oe, uint8_t pin_st,
 	pinMode(_pin_sh, OUTPUT);
 	pinMode(_pin_oe, OUTPUT);
 
-	this->enable();
+	this->setBrightness();
 }
 
 VFDTube::~VFDTube()
 {
 	free(_buff);
-}
-
-void VFDTube::enable(bool on)
-{
-	digitalWrite(_pin_oe, !on);
 }
 
 void VFDTube::send(byte data) const

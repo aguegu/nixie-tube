@@ -143,6 +143,9 @@ void VFDTube::printf(const char *__fmt, ...)
 		index++;
 	}
 
+	if (cache[index] == '.')
+		this->setPoint(ptr-1);
+
 	free(cache);
 }
 

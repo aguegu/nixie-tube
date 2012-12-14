@@ -1,0 +1,164 @@
+/*
+ * VFDTube2.cpp
+ *
+ *  Created on: Dec 3, 2012
+ *      Author: agu
+ */
+
+#include "VFDTube2.h"
+
+VFDTube2::VFDTube2(uint8_t pin_din, uint8_t pin_oe, uint8_t pin_st,
+		uint8_t pin_sh, byte section_count) :
+		_pin_din(pin_din), _pin_oe(pin_oe), _pin_st(pin_st), _pin_sh(pin_sh), _section_count(
+				section_count)
+{
+	_buff = (word *) malloc(sizeof(word) * section_count);
+
+	pinMode(_pin_din, OUTPUT);
+	pinMode(_pin_st, OUTPUT);
+	pinMode(_pin_sh, OUTPUT);
+	pinMode(_pin_oe, OUTPUT);
+
+	this->setBrightness();
+}
+
+VFDTube2::~VFDTube2()
+{
+	free(_buff);
+}
+
+void VFDTube2::send(byte data) const
+{
+	for (byte i = 8; i > 0; i--)
+	{
+		digitalWrite(_pin_din, bitRead(data, i - 1));
+		digitalWrite(_pin_sh, HIGH);
+		digitalWrite(_pin_sh, LOW);
+	}
+}
+
+void VFDTube2::display()
+{
+	for (byte i = 0; i < _section_count; i++)
+	{
+		this->send(highByte(_buff[i]) );
+		this->send(lowByte(_buff[i]) );
+	}
+
+	digitalWrite(_pin_st, HIGH);
+	digitalWrite(_pin_st, LOW);
+
+}
+
+void VFDTube2::putWord(byte index, word value)
+{
+	index %= _section_count;
+	_buff[index] = value;
+}
+
+void VFDTube2::clear(word value)
+{
+	for (byte i = 0; i < _section_count; i++)
+		this->putWord(i, value);
+}
+
+void VFDTube2::setBackgroundColor(Color color)
+{
+	for (byte i = 0; i < _section_count; i++)
+	{
+		this->setBackgroundColor(i, color);
+	}
+}
+
+void VFDTube2::setBackgroundColor(byte index, Color color)
+{
+	index %= _section_count;
+	_buff[index] &= 0xff;
+	_buff[index] |= color << 8;
+}
+
+void VFDTube2::setPoint(byte index)
+{
+	index %= _section_count;
+	_buff[index] |= 0x20;
+}
+
+bool VFDTube2::setChar(byte index, char c)
+{
+	index %= _section_count;
+
+	bool val = displayable(c);
+
+	if (val)
+	{
+		word tmp = _buff[index] & 0xff00;
+
+		if (c >= '0' && c <= '9')
+			tmp |= pgm_read_byte_near(VFDTUBE2_FONT + c - '0');
+		else if (c >= 'A' && c <= 'Z')
+			tmp |= pgm_read_byte_near(VFDTUBE2_FONT + c - 'A' + 10);
+		else if (c >= 'a' && c <= 'z')
+			tmp |= pgm_read_byte_near(VFDTUBE2_FONT + c - 'a' + 10);
+
+		this->putWord(index, tmp);
+	}
+
+	return val;
+}
+
+void VFDTube2::setChar(char c)
+{
+	for (byte i = 0; i < _section_count; i++)
+		this->setChar(i, c);
+}
+
+void VFDTube2::printf(const char *__fmt, ...)
+{
+	word cache_length = _section_count * 2 + 1;
+	char * cache = (char *) malloc(sizeof(char) * cache_length);
+
+	va_list ap;
+	va_start(ap, __fmt);
+	vsnprintf(cache, cache_length, __fmt, ap);
+	va_end(ap);
+
+	byte index = 0;
+	byte ptr = 0;
+
+	for (byte i = 0; i < _section_count; i++)
+		_buff[i] &= 0xff00;
+
+	while (cache[index] && ptr < _section_count)
+	{
+		if (this->setChar(ptr, cache[index]))
+			ptr++;
+		else if (cache[index] == '.')
+			this->setPoint(ptr ? ptr - 1 : 0);
+		else
+		{
+			_buff[ptr] &= 0xff00;
+			ptr++;
+		}
+
+		index++;
+	}
+
+	if (cache[index] == '.')
+		this->setPoint(ptr-1);
+
+	free(cache);
+}
+
+bool VFDTube2::displayable(char c)
+{
+	return ((c >= '0' && c <= '9') or (c >= 'A' && c <= 'Z')
+			or (c >= 'a' && c <= 'z'));
+}
+
+void VFDTube2::setBrightness(byte brightness)
+{
+	if (digitalPinToTimer(_pin_oe) == NOT_ON_TIMER)
+		digitalWrite(_pin_oe, brightness ? LOW : HIGH);
+	else
+		analogWrite(_pin_oe, 0xff - brightness);
+}

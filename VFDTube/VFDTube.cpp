@@ -41,13 +41,18 @@ void VFDTube::display()
 {
 	for (byte i = 0; i < _section_count; i++)
 	{
-		this->send(highByte(_buff[i]));
-		this->send(lowByte(_buff[i]));
+		this->send(highByte(_buff[i]) );
+		this->send(lowByte(_buff[i]) );
 	}
 
 	digitalWrite(_pin_st, HIGH);
 	digitalWrite(_pin_st, LOW);
+}
 
+void VFDTube::display(word millis)
+{
+	this->display();
+	delay(millis);
 }
 
 void VFDTube::putWord(byte index, word value)
@@ -83,6 +88,19 @@ void VFDTube::setPoint(byte index)
 	_buff[index] |= 0x40;
 }
 
+void VFDTube::setPattern(byte index, byte pattern)
+{
+	word tmp = _buff[index] & 0xff40;
+	tmp |= pattern;
+	this->putWord(index, tmp);
+}
+
+byte VFDTube::getPattern(byte index)
+{
+	byte pattern = _buff[index] & 0x00bf;
+	return pattern;
+}
+
 bool VFDTube::setChar(byte index, char c)
 {
 	index %= _section_count;
@@ -91,16 +109,14 @@ bool VFDTube::setChar(byte index, char c)
 
 	if (val)
 	{
-		word tmp = _buff[index] & 0xff00;
-
 		if (c >= '0' && c <= '9')
-			tmp |= pgm_read_byte_near(VFDTUBE_FONT + c - '0');
+			this->setPattern(index, pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
 		else if (c >= 'A' && c <= 'Z')
-			tmp |= pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10);
+			this->setPattern(index,
+					pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
 		else if (c >= 'a' && c <= 'z')
-			tmp |= pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10);
-
-		this->putWord(index, tmp);
+			this->setPattern(index,
+					pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
 	}
 
 	return val;
@@ -125,7 +141,7 @@ void VFDTube::printf(const char *__fmt, ...)
 	byte index = 0;
 	byte ptr = 0;
 
-	for (byte i=0; i<_section_count; i++)
+	for (byte i = 0; i < _section_count; i++)
 		_buff[i] &= 0xff00;
 
 	while (cache[index] && ptr < _section_count)
@@ -144,7 +160,7 @@ void VFDTube::printf(const char *__fmt, ...)
 	}
 
 	if (cache[index] == '.')
-		this->setPoint(ptr-1);
+		this->setPoint(ptr - 1);
 
 	free(cache);
 }

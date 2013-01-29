@@ -13,10 +13,10 @@
 #define SECOND	0
 #define MINUTE	1
 #define HOUR 	2
-#define Date	3
-#define Month	4
-#define Weekday	5
-#define Year	6
+#define DAY_OF_MONTH	3
+#define MONTH	4
+#define DAY_OF_WEEK	5
+#define YEAR	6
 
 class Ds1302
 {

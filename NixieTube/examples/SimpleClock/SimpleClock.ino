@@ -34,9 +34,7 @@
  * -----------------------------
  */
 
-#include "NixieTubeTest.h"
 #include "NixieTube.h"
-
 
 #define COUNT	8
 // define how many modules in serial

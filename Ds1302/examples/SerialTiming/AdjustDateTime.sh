@@ -11,10 +11,10 @@ stty -F $port $baud cs8 -cstopb -parenb cread clocal
 exec 3> $port
 sleep 2
 
-date +"[%T %D %w]" >&3 
+date +"[%T %D %w]" >$port 
 printf "mcu reply: \e[1;34m"
 sleep 2
-head $port -n 1
+head $port -n 2
 echo -e "\e[0mdone."
 
 exec 3>&-

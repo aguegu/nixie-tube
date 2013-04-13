@@ -48,15 +48,15 @@ void VFDTube::display(word millis) {
 	delay(millis);
 }
 
-void VFDTube::putWord(byte index, word value) {
+void VFDTube::setSection(byte index, word value) {
 	index %= _section_count;
-	_buff[index + index] = value & 0xff;
-	_buff[index + index + 1] = value >> 8;
+	_buff[index + index] = highByte(value);
+	_buff[index + index + 1] = lowByte(value);
 }
 
 void VFDTube::clear(word value) {
 	for (byte i = 0; i < _section_count; i++)
-		this->putWord(i, value);
+		this->setSection(i, value);
 }
 
 void VFDTube::setBackgroundColor(Color color) {
@@ -67,24 +67,21 @@ void VFDTube::setBackgroundColor(Color color) {
 
 void VFDTube::setBackgroundColor(byte index, Color color) {
 	index %= _section_count;
-	_buff[index * _BYTE_PER_SECTION] &= 0xff;
-	_buff[index * _BYTE_PER_SECTION + 1] |= color << 8;
+	_buff[index * _BYTE_PER_SECTION] = color;
 }
 
 void VFDTube::setPoint(byte index) {
 	index %= _section_count;
-	_buff[index] |= 0x40;
+	_buff[index * _BYTE_PER_SECTION + 1] |= 0x40;
 }
 
 void VFDTube::setPattern(byte index, byte pattern) {
-	word tmp = _buff[index] & 0xff40;
-	tmp |= pattern;
-	this->putWord(index, tmp);
+	_buff[index * _BYTE_PER_SECTION + 1] &= 0x40;
+	_buff[index * _BYTE_PER_SECTION + 1] |= pattern;
 }
 
 byte VFDTube::getPattern(byte index) {
-	byte pattern = _buff[index] & 0x00bf;
-	return pattern;
+	return _buff[index * _BYTE_PER_SECTION + 1] & 0xbf;
 }
 
 bool VFDTube::setChar(byte index, char c) {
@@ -124,7 +121,7 @@ void VFDTube::printf(const char *__fmt, ...) {
 	byte ptr = 0;
 
 	for (byte i = 0; i < _section_count; i++)
-		_buff[i] &= 0xff00;
+		_buff[i * _BYTE_PER_SECTION + 1] = 0x00;
 
 	while (cache[index] && ptr < _section_count) {
 		if (this->setChar(ptr, cache[index]))
@@ -132,7 +129,7 @@ void VFDTube::printf(const char *__fmt, ...) {
 		else if (cache[index] == '.')
 			this->setPoint(ptr ? ptr - 1 : 0);
 		else {
-			_buff[ptr] &= 0xff00;
+			_buff[ptr * _BYTE_PER_SECTION + 1] = 0x00;
 			ptr++;
 		}
 

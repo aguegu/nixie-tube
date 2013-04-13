@@ -56,7 +56,7 @@ public:
 
 private:
 
-	word *_buff;
+	byte *_buff;
 
 	const uint8_t _pin_din; // DIN
 	const uint8_t _pin_oe; // OE, pin with PWM output is recommended to enable brightness adjustment
@@ -64,6 +64,7 @@ private:
 	const uint8_t _pin_sh; // SHCP
 
 	const byte _section_count;
+	static const byte _BYTE_PER_SECTION = 2;
 
 	void send(byte data) const;
 	bool displayable(char c);

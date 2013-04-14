@@ -29,6 +29,7 @@ public:
 
 	void shiftLatch() const;
 	void setOE(bool high = true) const;
+	void setBrightness(byte brightness = 0xff) const;
 
 protected:
 

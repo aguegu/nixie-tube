@@ -2,18 +2,27 @@
 
 #include "tubetrain.h"
 
-TubeTrain tt(4, 7, 6, 5);
+TubeTrain tt(4, 7, 6, 5, 2);
 
 void setup() {
-
+	tt.getTube(0).setChar('6');
 }
 
 void loop() {
-	static word i = 0x01;
-	tt.display(i);
-	delay(200);
+	static char c = '0';
+	static byte x = 0;
 
-	i <<= 1;
-	if (!i)
-		i = 0x01;
+	tt.getTube(1).setChar(c);
+	//tt.getTube(1).setChar('0' + 9 - (c - '0'));
+
+	tt.callAnimation();
+	tt.display();
+	delay(0x20);
+	x++;
+
+	if (!(x & 0x1f)) {
+		c++;
+		if (c > '9')
+			c = '0';
+	}
 }

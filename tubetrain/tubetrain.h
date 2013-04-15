@@ -14,12 +14,18 @@
 
 class TubeTrain {
 public:
-	TubeTrain(uint8_t pin_din, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
+	TubeTrain(uint8_t pin_din, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe, byte count);
 	virtual ~TubeTrain();
-	void display(word);
+	void display();
+	void callAnimation();
+
+	Iv22& getTube(byte index);
+
 private:
 	Drv74hc595 _chip;
-	Iv22 * _train[2];
+	const byte _count;
+	Iv22 ** _train;
+
 };
 
 #endif /* TUBE_TRAIN_H_ */

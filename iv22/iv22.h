@@ -32,12 +32,14 @@ public:
 	void setValue(word value = 0xff00);
 	void setBackgroundColor(Color color);
 
-	void setPattern(byte pattern);
+	void setPatternTo(byte pattern);
+
 	void setPoint(bool on);
 	bool setChar(char c);
 	byte getPattern(void);
 
 	byte * getBuff();
+	void transform();
 
 private:
 
@@ -45,6 +47,12 @@ private:
 	static const byte _BYTE_PER_SECTION = 2;
 
 	bool isDisplayable(char c);
+	byte _frame;
+	byte _pattern_from, _pattern_to;
+	void setPattern(byte pattern);
+	void (Iv22::*_transform_effect)();
+	void transformBlink();
+	void transformRoll();
 };
 
 #endif /* IV22_H_ */

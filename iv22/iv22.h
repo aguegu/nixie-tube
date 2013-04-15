@@ -50,9 +50,15 @@ private:
 	byte _frame;
 	byte _pattern_from, _pattern_to;
 	void setPattern(byte pattern);
+
 	void (Iv22::*_transform_effect)();
+
 	void transformBlink();
 	void transformRoll();
+	void transformSlip();
+	void transformType();
+
+	byte getPatternIndex(byte pattern);
 };
 
 #endif /* IV22_H_ */

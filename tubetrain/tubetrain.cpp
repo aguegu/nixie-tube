@@ -24,7 +24,6 @@ TubeTrain::~TubeTrain() {
 }
 
 void TubeTrain::display() {
-
 	for (byte i = 0; i < _count; i++) {
 		_chip.shiftSend(_train[i]->getBuff(), 2);
 	}
@@ -40,3 +39,4 @@ void TubeTrain::callAnimation() {
 Iv22& TubeTrain::getTube(byte index) {
 	return *_train[index];
 }
+

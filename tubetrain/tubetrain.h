@@ -19,7 +19,7 @@ public:
 	void display(word);
 private:
 	Drv74hc595 _chip;
-	Iv22 _train;
+	Iv22 * _train[2];
 };
 
 #endif /* TUBE_TRAIN_H_ */

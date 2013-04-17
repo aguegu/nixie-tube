@@ -22,7 +22,9 @@ TubeTrain::~TubeTrain() {
 	free(_train);
 }
 
-void TubeTrain::initTube(byte index, Tube *tube){
+void TubeTrain::initTube(byte index, Tube *tube) {
+	if (index >= _count)
+		return;
 	_train[index] = tube;
 }
 
@@ -33,9 +35,9 @@ void TubeTrain::display() {
 	_chip.shiftLatch();
 }
 
-void TubeTrain::callAnimation() {
+void TubeTrain::runEffect() {
 	for (byte i = 0; i < _count; i++) {
-		(_train[i])->transform();
+		(_train[i])->runEffect();
 	}
 }
 

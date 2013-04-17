@@ -16,7 +16,7 @@ public:
 	virtual ~Tube();
 	virtual byte * getBuff();
 	virtual byte getBuffLength() = 0;
-	virtual void transform();
+	virtual void runEffect() = 0;
 protected:
 	Tube();
 	byte *_buff;

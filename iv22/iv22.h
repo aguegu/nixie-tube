@@ -32,14 +32,15 @@ public:
 	void setValue(word value = 0xff00);
 	void setBackgroundColor(Color color);
 
-	void setPatternTo(byte pattern);
+	void setPatternDest(byte pattern);
+	void setPatternCurrent(byte pattern);
+	byte getPatternCurrent(void);
 
-	void setPoint(bool on);
+	void setPoint(byte on);
 	bool setChar(char c);
-	byte getPattern(void);
 
-	void transform();
-	byte getBuffLength();
+	void runEffect(void);
+	byte getBuffLength(void);
 
 private:
 
@@ -48,14 +49,14 @@ private:
 	bool isDisplayable(char c);
 	byte _frame;
 	byte _pattern_from, _pattern_to;
-	void setPattern(byte pattern);
+	bool _effect_enable;
 
-	void (Iv22::*_transform_effect)();
+	void (Iv22::*_effect)();
 
-	void transformBlink();
-	void transformRoll();
-	void transformSlip();
-	void transformType();
+	void effectBlink();
+	void effectRoll();
+	void effectSlip();
+	void effectStroke();
 
 	byte getPatternIndex(byte pattern);
 };

@@ -15,7 +15,8 @@ Iv22::Iv22() {
 	_pattern_from = 0xa4;
 	_pattern_to = 0x00;
 
-	_transform_effect = &Iv22::transformType;
+	_effect = &Iv22::effectStroke;
+	_effect_enable = false;
 }
 
 Iv22::~Iv22() {
@@ -31,21 +32,21 @@ void Iv22::setBackgroundColor(Color color) {
 	_buff[0] = color;
 }
 
-void Iv22::setPoint(bool on) {
+void Iv22::setPoint(byte on) {
 	bitWrite(_buff[1], 6, on);
 }
 
-void Iv22::setPattern(byte pattern) {
+void Iv22::setPatternCurrent(byte pattern) {
 	_buff[1] &= 0x40;
 	_buff[1] |= pattern;
 }
 
-void Iv22::setPatternTo(byte pattern) {
+void Iv22::setPatternDest(byte pattern) {
 	_pattern_to &= 0x40;
 	_pattern_to |= pattern;
 }
 
-byte Iv22::getPattern(void) {
+byte Iv22::getPatternCurrent(void) {
 	return _buff[1] & 0xbf;
 }
 
@@ -55,11 +56,11 @@ bool Iv22::setChar(char c) {
 
 	if (val) {
 		if (c >= '0' && c <= '9')
-			this->setPatternTo(pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
+			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
 		else if (c >= 'A' && c <= 'Z')
-			this->setPatternTo(pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
+			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
 		else if (c >= 'a' && c <= 'z')
-			this->setPatternTo(pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
+			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
 	}
 
 	return val;
@@ -70,29 +71,29 @@ bool Iv22::isDisplayable(char c) {
 			or (c >= 'a' && c <= 'z'));
 }
 
-void Iv22::transform() {
+void Iv22::runEffect() {
 
 	if (_pattern_from == _pattern_to)
 		return;
 
 	if (_frame < 16) {
-		(this->*_transform_effect)();
+		(this->*_effect)();
 		_frame++;
 	} else {
 		_pattern_from = _pattern_to;
 		_frame = 0;
-		this->setPattern(_pattern_to);
+		this->setPatternCurrent(_pattern_to);
 	}
 }
 
-void Iv22::transformBlink() {
-	this->setPattern(_frame & 0x02 ? _pattern_to : _pattern_from);
+void Iv22::effectBlink() {
+	this->setPatternCurrent(_frame & 0x02 ? _pattern_to : _pattern_from);
 }
 
 static const byte PROGMEM ROLL_MASK[4] = { 0xbe, 0xb8, 0xb0, 0x80 };
-void Iv22::transformRoll() {
+void Iv22::effectRoll() {
 
-	this->setPattern(
+	this->setPatternCurrent(
 			_frame < 8 ?
 					_pattern_from
 							& pgm_read_byte_near(ROLL_MASK + (_frame >> 1)) :
@@ -101,9 +102,9 @@ void Iv22::transformRoll() {
 }
 
 static const byte PROGMEM SLIP_MASK[4] = { 0xab, 0xab, 0x22, 0x00 };
-void Iv22::transformSlip() {
+void Iv22::effectSlip() {
 
-	this->setPattern(
+	this->setPatternCurrent(
 			_frame < 8 ?
 					_pattern_from
 							& pgm_read_byte_near(SLIP_MASK + (_frame >> 1)) :
@@ -113,31 +114,30 @@ void Iv22::transformSlip() {
 
 static const uint8_t PROGMEM STROCK_ORDER[] = { 2, 4, 7, 5, 1, 8, 0, // 0
 		1, 8, 8, 5, 8, 8, 8, // 1
-		0, 1, 8, 3, 8, 4, 7, // 2
+		7, 4, 8, 3, 8, 1, 0, // 2
 		0, 1, 3, 8, 8, 5, 7, // 3
-		2, 3, 8, 8, 1, 8, 5, // 4
+		5, 1, 8, 8, 3, 8, 2, // 4
 		0, 2, 8, 8, 3, 5, 7, // 5
-		0, 2, 4, 7, 5, 3, 8, // 6
+		0, 2, 8, 4, 7, 5, 3, // 6
 		0, 8, 8, 1, 8, 8, 5, // 7
 		1, 0, 2, 4, 7, 5, 3, // 8
 		3, 8, 2, 0, 1, 5, 7, // 9
 		};
 
-void Iv22::transformType() {
-	//byte tmp = tube.getPattern(index);
+void Iv22::effectStroke() {
 
 	if (_frame < 7) {
 		byte index = this->getPatternIndex(_pattern_from);
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + 6 - _frame);
-		byte tmp = this->getPattern();
+		byte tmp = this->getPatternCurrent();
 		bitClear(tmp, c);
-		setPattern(tmp);
+		this->setPatternCurrent(tmp);
 	} else if (_frame > 8) {
 		byte index = this->getPatternIndex(_pattern_to);
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + _frame - 9);
-		byte tmp = this->getPattern();
+		byte tmp = this->getPatternCurrent();
 		bitSet(tmp, c);
-		setPattern(tmp);
+		this->setPatternCurrent(tmp);
 	}
 }
 

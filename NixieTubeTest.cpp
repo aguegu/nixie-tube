@@ -5,6 +5,8 @@
 TubeTrain tt(4, 7, 6, 5, 2);
 
 void setup() {
+	tt.initTube(0, new Iv22());
+	tt.initTube(1, new Iv22());
 	((Iv22 &)(tt.getTube(0))).setChar('6');
 }
 

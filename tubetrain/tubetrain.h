@@ -19,6 +19,7 @@ public:
 	virtual ~TubeTrain();
 	void display();
 	void callAnimation();
+	void initTube(byte index, Tube * tube);
 
 	Tube& getTube(byte index);
 

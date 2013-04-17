@@ -15,8 +15,10 @@ public:
 	Tube();
 	virtual ~Tube();
 	virtual byte * getBuff();
+	virtual void transform();
 protected:
 	byte *_buff;
+	virtual bool isDisplayable(char c);
 };
 
 #endif /* TUBE_H_ */

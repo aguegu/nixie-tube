@@ -13,10 +13,14 @@ TubeTrain::TubeTrain(uint8_t pin_din, uint8_t pin_sh, uint8_t pin_st,
 	_train = (Tube **) malloc(sizeof(Tube*) * _count);
 
 	for (byte i = 0; i < _count; i++)
-		_train[i] = new Iv22();
+		_train[i] = NULL;
 
 	_chip.setOE(LOW);
 
+}
+
+void TubeTrain::initTube(byte index, Tube *tube){
+	_train[index] = tube;
 }
 
 TubeTrain::~TubeTrain() {
@@ -32,11 +36,11 @@ void TubeTrain::display() {
 
 void TubeTrain::callAnimation() {
 	for (byte i = 0; i < _count; i++) {
-		((Iv22 *)_train[i])->transform();
+		(_train[i])->transform();
 	}
 }
 
 Tube& TubeTrain::getTube(byte index) {
-	return *((Iv22 *)_train[index]);
+	return *(_train[index]);
 }
 

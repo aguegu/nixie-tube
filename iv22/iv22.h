@@ -37,7 +37,7 @@ public:
 	byte getPatternCurrent(void);
 
 	void setPoint(byte on);
-	bool setChar(char c);
+	void setChar(char c);
 
 	void runEffect(void);
 	byte getBuffLength(void);
@@ -46,7 +46,7 @@ private:
 
 	static const byte _BUFF_LENGTH = 2;
 
-	bool isDisplayable(char c);
+	byte convertCharToIndex(char c);
 	byte _frame;
 	byte _pattern_from, _pattern_to;
 	bool _effect_enable;

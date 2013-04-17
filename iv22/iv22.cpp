@@ -50,37 +50,27 @@ byte Iv22::getPatternCurrent(void) {
 	return _buff[1] & 0xbf;
 }
 
-bool Iv22::setChar(char c) {
+void Iv22::setChar(char c) {
 
-	bool val = isDisplayable(c);
+	byte index = convertCharToIndex(c);
 
-	if (val) {
-		if (c >= '0' && c <= '9')
-			_effect_enable ?
-					this->setPatternDest(
-							pgm_read_byte_near(VFDTUBE_FONT + c - '0')) :
-					this->setPatternCurrent(
-							pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
-		else if (c >= 'A' && c <= 'Z')
-			_effect_enable ?
-					this->setPatternCurrent(
-							pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10)) :
-					this->setPatternDest(
-							pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
-		else if (c >= 'a' && c <= 'z')
-			_effect_enable ?
-					this->setPatternDest(
-							pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10)) :
-					this->setPatternDest(
-							pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
-	}
+	if (index == 255)
+		return;
 
-	return val;
+	_effect_enable ?
+			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + index)) :
+			this->setPatternCurrent(pgm_read_byte_near(VFDTUBE_FONT + index));
 }
 
-bool Iv22::isDisplayable(char c) {
-	return ((c >= '0' && c <= '9') or (c >= 'A' && c <= 'Z')
-			or (c >= 'a' && c <= 'z'));
+byte Iv22::convertCharToIndex(char c) {
+	byte index = 255;
+	if (c >= '0' && c <= '9')
+		index = c - '0';
+	else if (c >= 'A' && c <= 'Z')
+		index = c - 'A' + 10;
+	else if (c >= 'a' && c <= 'z')
+		index = c - 'a' + 10;
+	return index;
 }
 
 void Iv22::runEffect() {
@@ -88,7 +78,7 @@ void Iv22::runEffect() {
 	if (_pattern_from == _pattern_to)
 		return;
 
-	// finish effect in 16 units
+// finish effect in 16 units
 	if (_frame < 16) {
 		(this->*_effect)();
 		_frame++;

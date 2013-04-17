@@ -20,7 +20,7 @@ public:
 protected:
 	Tube();
 	byte *_buff;
-	virtual bool isDisplayable(char c) = 0;
+	virtual byte convertCharToIndex(char c) = 0;
 };
 
 #endif /* TUBE_H_ */

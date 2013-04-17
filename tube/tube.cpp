@@ -18,7 +18,3 @@ Tube::~Tube() {
 byte * Tube::getBuff() {
 	return _buff;
 }
-
-bool Tube::isDisplayable(char c) {
-	return (c >= '0') && (c <= '9');
-}

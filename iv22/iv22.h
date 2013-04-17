@@ -38,12 +38,12 @@ public:
 
 	void setPoint(byte on);
 	void setChar(char c);
+	void setEffectEnable(bool);
 
 	void runEffect(void);
 	byte getBuffLength(void);
 
 private:
-
 	static const byte _BUFF_LENGTH = 2;
 
 	byte convertCharToIndex(char c);

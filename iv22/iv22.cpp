@@ -23,6 +23,10 @@ Iv22::~Iv22() {
 	free(_buff);
 }
 
+void Iv22::setEffectEnable(bool en) {
+	_effect_enable = en;
+}
+
 void Iv22::setValue(word value) {
 	_buff[0] = highByte(value);
 	_buff[1] = lowByte(value);
@@ -131,12 +135,14 @@ void Iv22::effectStroke() {
 
 	if (_frame < 7) {
 		byte index = this->getPatternIndex(_pattern_from);
+		if (index > 9) return;
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + 6 - _frame);
 		byte tmp = this->getPatternCurrent();
 		bitClear(tmp, c);
 		this->setPatternCurrent(tmp);
 	} else if (_frame > 8) {
 		byte index = this->getPatternIndex(_pattern_to);
+		if (index > 9) return;
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + _frame - 9);
 		byte tmp = this->getPatternCurrent();
 		bitSet(tmp, c);

@@ -9,7 +9,7 @@
 #define IV22_H_
 
 #include "Arduino.h"
-#include "drv_74hc595.h"
+#include "tube.h"
 
 static const byte PROGMEM VFDTUBE_FONT[] = {
 		// 0-9
@@ -20,7 +20,7 @@ static const byte PROGMEM VFDTUBE_FONT[] = {
 		0x37, 0x38, 0xb8, 0x1f, 0x2f, 0x18, 0x2c, 0x1c, 0xb0, 0x90, 0x0e, 0x0f,
 		0x2a, 0x1a, };
 
-class Iv22 {
+class Iv22: public Tube {
 public:
 
 	enum Color {
@@ -38,12 +38,10 @@ public:
 	bool setChar(char c);
 	byte getPattern(void);
 
-	byte * getBuff();
 	void transform();
 
 private:
 
-	byte *_buff;
 	static const byte _BYTE_PER_SECTION = 2;
 
 	bool isDisplayable(char c);

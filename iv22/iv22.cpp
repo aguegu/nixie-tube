@@ -70,10 +70,6 @@ bool Iv22::isDisplayable(char c) {
 			or (c >= 'a' && c <= 'z'));
 }
 
-byte * Iv22::getBuff() {
-	return _buff;
-}
-
 void Iv22::transform() {
 
 	if (_pattern_from == _pattern_to)

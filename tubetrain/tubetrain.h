@@ -10,6 +10,7 @@
 
 #include "Arduino.h"
 #include "drv_74hc595.h"
+#include "tube.h"
 #include "iv22.h"
 
 class TubeTrain {
@@ -19,12 +20,12 @@ public:
 	void display();
 	void callAnimation();
 
-	Iv22& getTube(byte index);
+	Tube& getTube(byte index);
 
 private:
 	Drv74hc595 _chip;
 	const byte _count;
-	Iv22 ** _train;
+	Tube ** _train;
 
 };
 

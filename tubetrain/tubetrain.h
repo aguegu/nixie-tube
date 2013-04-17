@@ -18,7 +18,6 @@ public:
 	TubeTrain(uint8_t pin_din, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe, byte count);
 	virtual ~TubeTrain();
 	void display();
-	void runEffect();
 	void initTube(byte index, Tube * tube);
 
 	Tube& getTube(byte index);

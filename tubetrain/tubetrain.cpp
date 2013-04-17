@@ -29,16 +29,12 @@ void TubeTrain::initTube(byte index, Tube *tube) {
 }
 
 void TubeTrain::display() {
+
 	for (byte i = 0; i < _count; i++) {
+		_train[i]->runEffect();
 		_chip.shiftSend(_train[i]->getBuff(), _train[i]->getBuffLength());
 	}
 	_chip.shiftLatch();
-}
-
-void TubeTrain::runEffect() {
-	for (byte i = 0; i < _count; i++) {
-		(_train[i])->runEffect();
-	}
 }
 
 Tube& TubeTrain::getTube(byte index) {

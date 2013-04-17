@@ -18,7 +18,6 @@ void loop() {
 	//tt.getTube(1).setChar(c);
 	//tt.getTube(1).setChar('0' + 9 - (c - '0'));
 
-	tt.runEffect();
 	tt.display();
 	delay(0x20);
 	x++;

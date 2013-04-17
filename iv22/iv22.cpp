@@ -16,7 +16,7 @@ Iv22::Iv22() {
 	_pattern_to = 0x00;
 
 	_effect = &Iv22::effectStroke;
-	_effect_enable = false;
+	_effect_enable = true;
 }
 
 Iv22::~Iv22() {
@@ -56,11 +56,23 @@ bool Iv22::setChar(char c) {
 
 	if (val) {
 		if (c >= '0' && c <= '9')
-			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
+			_effect_enable ?
+					this->setPatternDest(
+							pgm_read_byte_near(VFDTUBE_FONT + c - '0')) :
+					this->setPatternCurrent(
+							pgm_read_byte_near(VFDTUBE_FONT + c - '0'));
 		else if (c >= 'A' && c <= 'Z')
-			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
+			_effect_enable ?
+					this->setPatternCurrent(
+							pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10)) :
+					this->setPatternDest(
+							pgm_read_byte_near(VFDTUBE_FONT + c - 'A' + 10));
 		else if (c >= 'a' && c <= 'z')
-			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
+			_effect_enable ?
+					this->setPatternDest(
+							pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10)) :
+					this->setPatternDest(
+							pgm_read_byte_near(VFDTUBE_FONT + c - 'a' + 10));
 	}
 
 	return val;
@@ -76,6 +88,7 @@ void Iv22::runEffect() {
 	if (_pattern_from == _pattern_to)
 		return;
 
+	// finish effect in 16 units
 	if (_frame < 16) {
 		(this->*_effect)();
 		_frame++;

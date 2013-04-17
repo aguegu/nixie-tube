@@ -12,11 +12,13 @@
 
 class Tube {
 public:
-	Tube();
+
 	virtual ~Tube();
 	virtual byte * getBuff();
+	virtual byte getBuffLength() = 0;
 	virtual void transform();
 protected:
+	Tube();
 	byte *_buff;
 	virtual bool isDisplayable(char c);
 };

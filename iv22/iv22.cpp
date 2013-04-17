@@ -8,7 +8,7 @@
 #include "iv22.h"
 
 Iv22::Iv22() {
-	_buff = (byte *) malloc(sizeof(byte) * _BYTE_PER_SECTION);
+	_buff = (byte *) malloc(sizeof(byte) * _BUFF_LENGTH);
 	_buff[0] = 0x07;
 	_buff[1] = 0x00;
 	_frame = 0;
@@ -146,4 +146,8 @@ byte Iv22::getPatternIndex(byte pattern) {
 	for (i = 0; i < 10 && pattern != pgm_read_byte_near(VFDTUBE_FONT + i); i++)
 		;
 	return i;
+}
+
+byte Iv22::getBuffLength() {
+	return _BUFF_LENGTH;
 }

@@ -16,20 +16,19 @@ TubeTrain::TubeTrain(uint8_t pin_din, uint8_t pin_sh, uint8_t pin_st,
 		_train[i] = NULL;
 
 	_chip.setOE(LOW);
-
-}
-
-void TubeTrain::initTube(byte index, Tube *tube){
-	_train[index] = tube;
 }
 
 TubeTrain::~TubeTrain() {
 	free(_train);
 }
 
+void TubeTrain::initTube(byte index, Tube *tube){
+	_train[index] = tube;
+}
+
 void TubeTrain::display() {
 	for (byte i = 0; i < _count; i++) {
-		_chip.shiftSend(_train[i]->getBuff(), 2);
+		_chip.shiftSend(_train[i]->getBuff(), _train[i]->getBuffLength());
 	}
 	_chip.shiftLatch();
 }

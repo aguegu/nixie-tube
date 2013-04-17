@@ -21,8 +21,8 @@ static const byte PROGMEM VFDTUBE_FONT[] = {
 		0x2a, 0x1a, };
 
 class Iv22: public Tube {
-public:
 
+public:
 	enum Color {
 		White, Yellow, Magenta, Red, Cyan, Green, Blue, Black,
 	};
@@ -39,10 +39,11 @@ public:
 	byte getPattern(void);
 
 	void transform();
+	byte getBuffLength();
 
 private:
 
-	static const byte _BYTE_PER_SECTION = 2;
+	static const byte _BUFF_LENGTH = 2;
 
 	bool isDisplayable(char c);
 	byte _frame;

@@ -28,11 +28,7 @@ void Iv22::setEffectEnable(bool en) {
 }
 
 void Iv22::setValue(word value) {
-	setBuff((byte[]){highByte(value), lowByte(value)}, _BUFF_LENGTH );
-}
-
-void Iv22::setColor(Tube::Color color) {
-	_buff[0] = color;
+	setBuff((byte[] ) { highByte(value), lowByte(value) }, _BUFF_LENGTH);
 }
 
 void Iv22::setPoint(byte on) {
@@ -133,14 +129,16 @@ static const uint8_t PROGMEM STROCK_ORDER[] = { 2, 4, 7, 5, 1, 8, 0, // 0
 void Iv22::effectStroke() {
 	if (_frame < 7) {
 		byte index = this->getPatternIndex(_pattern_from);
-		if (index > 9) return;
+		if (index > 9)
+			return;
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + 6 - _frame);
 		byte tmp = this->getPatternCurrent();
 		bitClear(tmp, c);
 		this->setPatternCurrent(tmp);
 	} else if (_frame > 8) {
 		byte index = this->getPatternIndex(_pattern_to);
-		if (index > 9) return;
+		if (index > 9)
+			return;
 		byte c = pgm_read_byte_near(STROCK_ORDER + 7 * index + _frame - 9);
 		byte tmp = this->getPatternCurrent();
 		bitSet(tmp, c);
@@ -157,4 +155,11 @@ byte Iv22::getPatternIndex(byte pattern) {
 
 byte Iv22::getBuffLength() {
 	return _BUFF_LENGTH;
+}
+
+static const uint8_t PROGMEM COLORS[] = { 0x07, 0x06, 0x05, 0x04, 0x03, 0x02,
+		0x01, 0x00 };
+
+void Iv22::setColor(Tube::Color color) {
+	_buff[0] = pgm_read_byte_near(COLORS + color);
 }

@@ -41,3 +41,19 @@ Tube& TubeTrain::getTube(byte index) {
 	return *(_train[index]);
 }
 
+void TubeTrain::printf(const char *__fmt, ...) {
+
+	byte length = _count + 1;
+	char *s = (char *) malloc(sizeof(char) * length);
+
+	va_list ap;
+	va_start(ap, __fmt);
+	vsnprintf(s, length, __fmt, ap);
+	va_end(ap);
+
+	for (byte i = 0; i < _count; i++)
+		(_train[i])->setChar(s[i]);
+
+	free(s);
+}
+

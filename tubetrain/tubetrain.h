@@ -10,6 +10,7 @@
 
 #include "Arduino.h"
 #include "drv_74hc595.h"
+
 #include "tube.h"
 #include "iv22.h"
 
@@ -21,6 +22,7 @@ public:
 	void initTube(byte index, Tube * tube);
 
 	Tube& getTube(byte index);
+	void printf(const char *__fmt, ...);
 
 private:
 	Drv74hc595 _chip;

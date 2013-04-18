@@ -132,7 +132,6 @@ static const uint8_t PROGMEM STROCK_ORDER[] = { 2, 4, 7, 5, 1, 8, 0, // 0
 		};
 
 void Iv22::effectStroke() {
-
 	if (_frame < 7) {
 		byte index = this->getPatternIndex(_pattern_from);
 		if (index > 9) return;

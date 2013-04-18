@@ -20,7 +20,7 @@ void loop() {
 		tt.printf("%02d", c);
 
 		tt.setPoint(0, c & 0x01);
-		((Iv22 &)(tt.getTube(0))).setColor(Tube::Red);
+		((Iv22 &)(tt.getTube(0))).setColor((Tube::Color)(c & 0x07));
 
 		c++;
 		c %= 100;

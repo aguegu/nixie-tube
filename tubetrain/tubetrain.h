@@ -24,6 +24,7 @@ public:
 	Tube& getTube(byte index);
 	void printf(const char *__fmt, ...);
 	void setPoint(byte index, byte point);
+	void setColor(byte index, Tube::Color color);
 
 private:
 	Drv74hc595 _chip;

@@ -60,8 +60,11 @@ void TubeTrain::printf(const char *__fmt, ...) {
 void TubeTrain::setPoint(byte index, byte point) {
 	if (index >= _count)
 		return;
-
 	(_train[index])->setPoint(point);
 }
 
-
+void TubeTrain::setColor(byte index, Tube::Color color) {
+	if (index >= _count)
+		return;
+	(_train[index])->setColor(color);
+}

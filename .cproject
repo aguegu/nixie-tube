@@ -43,12 +43,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTube}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Sig16}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/VFDTube2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/drv_74hc595}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tubetrain}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv22}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv17}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -71,12 +71,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTube}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Sig16}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/VFDTube2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/drv_74hc595}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tubetrain}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv22}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv17}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>

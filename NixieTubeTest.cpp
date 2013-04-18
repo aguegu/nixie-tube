@@ -1,32 +1,40 @@
 #include "NixieTubeTest.h"
 
 #include "tubetrain.h"
+#include "iv22.h"
+#include "iv17.h"
 
-TubeTrain tt(4, 7, 6, 5, 2);
+void update();
+
+TubeTrain tt(4, 6, 7, 5, 1);
 
 void setup() {
-	tt.initTube(0, new Iv22());
-	tt.initTube(1, new Iv22());
-	((Iv22 &)(tt.getTube(0))).setEffectEnable(true);
-	((Iv22 &)(tt.getTube(1))).setEffectEnable(true);
+	tt.initTube(0, new Iv17());
 }
 
 void loop() {
-	static byte c = 0;
-	static byte x = 0;
+	static byte t = 0;
 
 	// update content every 0x20 units
-	if (!(x & 0x1f)) {
-		tt.printf("%02d", c);
-
-		tt.setPoint(0, c & 0x01);
-		((Iv22 &)(tt.getTube(0))).setColor((Tube::Color)(c & 0x07));
-
-		c++;
-		c %= 100;
+	if (!(t & 0x1f)) {
+		update();
 	}
 
 	tt.display();
 	delay(0x20);
-	x++;
+	t++;
+}
+
+void update() {
+	static byte c = 0;
+
+	tt.getTube(0).setBuff((byte[]){0, 0, (byte)(0x01<<c)}, 3);
+
+//		tt.printf("%02d", c);
+//		tt.setPoint(0, c & 0x01);
+//		((Iv22 &)(tt.getTube(0))).setColor((Tube::Color)(c & 0x07));
+
+	c++;
+	c &= 0x07;
+
 }

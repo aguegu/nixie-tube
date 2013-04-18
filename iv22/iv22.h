@@ -23,9 +23,6 @@ static const byte PROGMEM VFDTUBE_FONT[] = {
 class Iv22: public Tube {
 
 public:
-	enum Color {
-		White, Yellow, Magenta, Red, Cyan, Green, Blue, Black,
-	};
 
 	Iv22();
 	virtual ~Iv22();

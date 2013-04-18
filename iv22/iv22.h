@@ -30,7 +30,7 @@ public:
 	Iv22();
 	virtual ~Iv22();
 	void setValue(word value = 0xff00);
-	void setBackgroundColor(Color color);
+	void setColor(Tube::Color color);
 
 	void setPatternDest(byte pattern);
 	void setPatternCurrent(byte pattern);

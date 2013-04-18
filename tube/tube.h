@@ -13,6 +13,10 @@
 class Tube {
 public:
 
+	enum Color {
+		Black, Blue, Green, Cyan, Red, Magenta, Yellow, White,
+	};
+
 	virtual ~Tube();
 	virtual byte * getBuff();
 	virtual byte getBuffLength() = 0;
@@ -20,6 +24,7 @@ public:
 	virtual void runEffect() = 0;
 	virtual void setChar(char c) = 0;
 	virtual void setPoint(byte c) = 0;
+	virtual void setColor(Tube::Color color) = 0;
 protected:
 	Tube();
 	byte *_buff;

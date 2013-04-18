@@ -31,7 +31,7 @@ void Iv22::setValue(word value) {
 	setBuff((byte[]){highByte(value), lowByte(value)}, _BUFF_LENGTH );
 }
 
-void Iv22::setBackgroundColor(Color color) {
+void Iv22::setColor(Tube::Color color) {
 	_buff[0] = color;
 }
 

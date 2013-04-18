@@ -57,3 +57,9 @@ void TubeTrain::printf(const char *__fmt, ...) {
 	free(s);
 }
 
+void TubeTrain::setPoint(byte index, byte point) {
+	if (index >= _count)
+		return;
+
+	(_train[index])->setPoint(point);
+}

@@ -15,17 +15,17 @@ void loop() {
 	static byte c = 0;
 	static byte x = 0;
 
-	tt.printf("%02d", c);
+	// update content every 0x20 units
+	if (!(x & 0x1f)) {
+		tt.printf("%02d", c);
 
-//	((Iv22 &)(tt.getTube(1))).setChar(c);
-//	//tt.getTube(1).setChar(c);
-//	((Iv22 &)(tt.getTube(0))).setChar('0' + 9 - (c - '0'));
+		tt.setPoint(0, c & 0x01);
+
+		c++;
+		c %= 100;
+	}
 
 	tt.display();
 	delay(0x20);
 	x++;
-
-	if (!(x & 0x1f)) {
-		c++;
-	}
 }

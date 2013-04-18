@@ -18,6 +18,7 @@ public:
 	virtual byte getBuffLength() = 0;
 	virtual void runEffect() = 0;
 	virtual void setChar(char c) = 0;
+	virtual void setPoint(byte c) = 0;
 protected:
 	Tube();
 	byte *_buff;

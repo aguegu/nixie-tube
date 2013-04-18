@@ -28,7 +28,7 @@ void loop() {
 void update() {
 	static byte c = 0;
 
-	tt.getTube(0).setBuff((byte[]){0, 0, (byte)(0x01<<c)}, 3);
+	tt.getTube(0).setBuff((byte[]){0, (byte)(0x01<<c), 0}, 3);
 
 //		tt.printf("%02d", c);
 //		tt.setPoint(0, c & 0x01);

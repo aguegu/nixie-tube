@@ -18,3 +18,7 @@ Tube::~Tube() {
 byte * Tube::getBuff() {
 	return _buff;
 }
+
+void Tube::setBuff(byte *p, byte length){
+	memcpy(_buff, p, min(getBuffLength(), length));
+}

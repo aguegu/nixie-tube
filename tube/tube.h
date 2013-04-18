@@ -16,6 +16,7 @@ public:
 	virtual ~Tube();
 	virtual byte * getBuff();
 	virtual byte getBuffLength() = 0;
+	void setBuff(byte *p, byte length);
 	virtual void runEffect() = 0;
 	virtual void setChar(char c) = 0;
 	virtual void setPoint(byte c) = 0;

@@ -28,8 +28,7 @@ void Iv22::setEffectEnable(bool en) {
 }
 
 void Iv22::setValue(word value) {
-	_buff[0] = highByte(value);
-	_buff[1] = lowByte(value);
+	setBuff((byte[]){highByte(value), lowByte(value)}, _BUFF_LENGTH );
 }
 
 void Iv22::setBackgroundColor(Color color) {

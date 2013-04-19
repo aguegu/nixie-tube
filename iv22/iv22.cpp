@@ -7,6 +7,15 @@
 
 #include "iv22.h"
 
+static const byte PROGMEM IV22_FONT[] = {
+		// 0-9
+		0xb7, 0x22, 0x9b, 0xab, 0x2e, 0xad, 0xbd, 0x23, 0xbf, 0xaf,
+
+		// a-z
+		0xbb, 0xbc, 0x98, 0xba, 0x9f, 0x1d, 0xb5, 0x3c, 0x14, 0xa2, 0x9c, 0x94,
+		0x37, 0x38, 0xb8, 0x1f, 0x2f, 0x18, 0x2c, 0x1c, 0xb0, 0x90, 0x0e, 0x0f,
+		0x2a, 0x1a, };
+
 Iv22::Iv22() {
 	_buff = (byte *) malloc(sizeof(byte) * _BUFF_LENGTH);
 	_buff[0] = 0x07;
@@ -57,8 +66,8 @@ void Iv22::setChar(char c) {
 		return;
 
 	_effect_enable ?
-			this->setPatternDest(pgm_read_byte_near(VFDTUBE_FONT + index)) :
-			this->setPatternCurrent(pgm_read_byte_near(VFDTUBE_FONT + index));
+			this->setPatternDest(pgm_read_byte_near(IV22_FONT + index)) :
+			this->setPatternCurrent(pgm_read_byte_near(IV22_FONT + index));
 }
 
 byte Iv22::convertCharToIndex(char c) {
@@ -148,7 +157,7 @@ void Iv22::effectStroke() {
 
 byte Iv22::getPatternIndex(byte pattern) {
 	byte i;
-	for (i = 0; i < 10 && pattern != pgm_read_byte_near(VFDTUBE_FONT + i); i++)
+	for (i = 0; i < 10 && pattern != pgm_read_byte_near(IV22_FONT + i); i++)
 		;
 	return i;
 }

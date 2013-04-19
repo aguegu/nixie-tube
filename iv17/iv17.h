@@ -21,15 +21,11 @@ public:
 	;
 	void setChar(char c);
 	void setPoint(byte c);
-	void setColor(Tube::Color color) {
-	}
-	;
+	void setColor(Tube::Color color);
 private:
 	static const byte _BUFF_LENGTH = 3;
 
-	byte convertCharToIndex(char c) {
-		return 0;
-	}
+	byte convertCharToIndex(char c);
 };
 
 #endif /* IV17_H_ */

@@ -19,12 +19,8 @@ public:
 	void runEffect() {
 	}
 	;
-	void setChar(char c) {
-	}
-	;
-	void setPoint(byte c) {
-	}
-	;
+	void setChar(char c);
+	void setPoint(byte c);
 	void setColor(Tube::Color color) {
 	}
 	;

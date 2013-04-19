@@ -24,6 +24,7 @@ public:
 	void printf(const char *__fmt, ...);
 	void setPoint(byte index, byte point);
 	void setColor(byte index, Tube::Color color);
+	void setChar(byte index, char c);
 
 private:
 	Drv74hc595 _chip;

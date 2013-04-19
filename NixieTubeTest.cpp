@@ -17,7 +17,7 @@ void loop() {
 
 	// update content every 0x20 units
 	if (!(t & 0x1f)) {
-		//update();
+		update();
 	}
 
 	tt.display();
@@ -25,16 +25,21 @@ void loop() {
 	t++;
 }
 
-void update() {
-	static byte c = 0;
+byte start = 'A';
 
-	tt.getTube(0).setBuff((byte[]){0,0,  (byte)(0x01<<c)}, 3);
+void update() {
+	static byte c = start;
+
+	//tt.getTube(0).setBuff((byte[]){0,0,  (byte)(0x01<<c)}, 3);
 
 //		tt.printf("%02d", c);
 //		tt.setPoint(0, c & 0x01);
 //		((Iv22 &)(tt.getTube(0))).setColor((Tube::Color)(c & 0x07));
 
+	//tt.setPoint(0, c & 0x03);
+	tt.setChar(0, c + 10 - 'A');
 	c++;
-	c &= 0x07;
+	if (c > 'Z')
+		c = start;
 
 }

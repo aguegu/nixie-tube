@@ -67,3 +67,9 @@ void TubeTrain::setColor(byte index, Tube::Color color) {
 		return;
 	(_train[index])->setColor(color);
 }
+
+void TubeTrain::setChar(byte index, char c) {
+	if (index >= _count)
+		return;
+	(_train[index])->setChar(c);
+}

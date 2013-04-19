@@ -30,7 +30,17 @@
 							<tool command="avr-gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release">
 								<option id="it.baeyens.avreclipse.assembler.option.debug.level.22469911" name="Generate Debugging Info" superClass="it.baeyens.avreclipse.assembler.option.debug.level" value="it.baeyens.avreclipse.assembler.option.debug.level.none" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.asm.option.include.paths.1193182990" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/arduino}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/standard}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/NixieTube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
+									<listOptionValue builtIn="false" value="../NixieTubeTest/VFDTube2"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/drv_74hc595}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tubetrain}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv22}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv17}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.237159600" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -38,17 +48,17 @@
 								<option id="it.baeyens.avreclipse.compiler.option.debug.level.1349471076" name="Generate Debugging Info" superClass="it.baeyens.avreclipse.compiler.option.debug.level" value="it.baeyens.avreclipse.compiler.option.debug.level.none" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.compiler.option.optimize.1229451333" name="Optimization Level" superClass="it.baeyens.avreclipse.compiler.option.optimize" value="it.baeyens.avreclipse.compiler.optimize.size" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.compiler.option.incpath.83382774" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.compiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTube}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/VFDTube2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/drv_74hc595}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tubetrain}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv22}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tube}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv17}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/arduino}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/standard}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/NixieTube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
+									<listOptionValue builtIn="false" value="../NixieTubeTest/VFDTube2"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/drv_74hc595}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tubetrain}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv22}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv17}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -66,17 +76,17 @@
 								<option id="it.baeyens.avreclipse.cppcompiler.option.debug.level.1244205041" name="Generate Debugging Info" superClass="it.baeyens.avreclipse.cppcompiler.option.debug.level" value="it.baeyens.avreclipse.cppcompiler.option.debug.level.none" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.optimize.718166427" name="Optimization Level" superClass="it.baeyens.avreclipse.cppcompiler.option.optimize" value="it.baeyens.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.incpath.404803734" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.cppcompiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTube}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/VFDTube2}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/drv_74hc595}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tubetrain}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv22}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/tube}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/iv17}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/arduino}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/Arduino_Uno/standard}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/NixieTube}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/DigitalTubeDisplay}&quot;"/>
+									<listOptionValue builtIn="false" value="../NixieTubeTest/VFDTube2"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/drv_74hc595}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/tubetrain}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv22}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NixieTubeTest/NixieTubeTest/iv17}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -92,9 +102,7 @@
 							</tool>
 							<tool id="it.baeyens.avreclipse.tool.linker.winavr.app.release.1782124606" name="AVR C Linker" superClass="it.baeyens.avreclipse.tool.linker.winavr.app.release"/>
 							<tool command="avr-gcc" commandLinePattern="${COMMAND} -Os -Wl,--gc-sections  ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -lm" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="it.baeyens.avreclipse.tool.cpplinker.app.release.1612619751" name="AVR C++ Linker" superClass="it.baeyens.avreclipse.tool.cpplinker.app.release">
-								<option id="it.baeyens.avreclipse.cpplinker.option.libs.1826873105" name="Libraries (-l)" superClass="it.baeyens.avreclipse.cpplinker.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="&quot;${ARDUINOBOARDNAME}&quot;"/>
-								</option>
+								<option id="it.baeyens.avreclipse.cpplinker.option.libs.1826873105" name="Libraries (-l)" superClass="it.baeyens.avreclipse.cpplinker.option.libs" valueType="libs"/>
 								<option id="it.baeyens.avreclipse.cpplinker.option.libpath.564686622" name="Libraries Path (-L)" superClass="it.baeyens.avreclipse.cpplinker.option.libpath" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}}/${ConfigName}&quot;"/>
 								</option>
@@ -113,9 +121,8 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tube|tubetrain/examples|iv17|DigitalTubeDisplay|VFDTube/examples|VFDTube2/examples|genpattern|iv22|examples|Sig16|NixieTube/examples" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="iv17|VFDTube/examples|DigitalTubeDisplay|tube|VFDTube2/examples|iv22|genpattern|examples|Sig16|tubetrain/examples|NixieTube/examples" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="examples" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="DigitalTubeDisplay"/>
-						<entry excluding="examples" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Sig16"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="iv17"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="iv22"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tube"/>
